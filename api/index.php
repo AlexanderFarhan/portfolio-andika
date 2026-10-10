@@ -1,6 +1,38 @@
 <?php
 
-// 1. Prepare required directories in /tmp (writable environment in Vercel Serverless)
+// 1. Direct Static File Handler (Fallback to guarantee assets load with proper Content-Type)
+$uri = urldecode(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH));
+$publicFile = __DIR__ . '/../public' . $uri;
+
+if ($uri !== '/' && file_exists($publicFile) && !is_dir($publicFile)) {
+    $extension = strtolower(pathinfo($publicFile, PATHINFO_EXTENSION));
+    $mimeType = match ($extension) {
+        'css' => 'text/css; charset=utf-8',
+        'js', 'mjs' => 'application/javascript; charset=utf-8',
+        'svg' => 'image/svg+xml',
+        'png' => 'image/png',
+        'jpg', 'jpeg' => 'image/jpeg',
+        'webp' => 'image/webp',
+        'gif' => 'image/gif',
+        'ico' => 'image/x-icon',
+        'woff' => 'font/woff',
+        'woff2' => 'font/woff2',
+        'ttf' => 'font/ttf',
+        'otf' => 'font/otf',
+        'eot' => 'application/vnd.ms-fontobject',
+        'json' => 'application/json',
+        'pdf' => 'application/pdf',
+        default => mime_content_type($publicFile) ?: 'application/octet-stream',
+    };
+
+    header("Content-Type: $mimeType");
+    header("Cache-Control: public, max-age=31536000, immutable");
+    header("Content-Length: " . filesize($publicFile));
+    readfile($publicFile);
+    exit;
+}
+
+// 2. Prepare required directories in /tmp (writable environment in Vercel Serverless)
 $directories = [
     '/tmp/storage/framework/views',
     '/tmp/storage/framework/cache/data',
@@ -15,7 +47,7 @@ foreach ($directories as $dir) {
     }
 }
 
-// 2. Setup SQLite Database in /tmp if not using external DB
+// 3. Setup SQLite Database in /tmp if not using external DB
 $dbConnection = getenv('DB_CONNECTION') ?: 'sqlite';
 if ($dbConnection === 'sqlite') {
     $srcDb = __DIR__ . '/../database/database.sqlite';
@@ -32,7 +64,7 @@ if ($dbConnection === 'sqlite') {
     $_ENV['DB_DATABASE'] = $tmpDb;
 }
 
-// 3. Set cache and view compilation path to /tmp
+// 4. Set cache and view compilation path to /tmp
 putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
 putenv('APP_CONFIG_CACHE=/tmp/bootstrap/cache/config.php');
 putenv('APP_EVENTS_CACHE=/tmp/bootstrap/cache/events.php');
@@ -47,5 +79,5 @@ $_ENV['APP_PACKAGES_CACHE'] = '/tmp/bootstrap/cache/packages.php';
 $_ENV['APP_ROUTES_CACHE'] = '/tmp/bootstrap/cache/routes.php';
 $_ENV['APP_SERVICES_CACHE'] = '/tmp/bootstrap/cache/services.php';
 
-// 4. Forward to standard public/index.php
+// 5. Forward request to Laravel public index
 require __DIR__ . '/../public/index.php';
