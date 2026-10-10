@@ -19,6 +19,7 @@
     "APP_ENV": "production",
     "APP_DEBUG": "false",
     "APP_KEY": "base64:TA9I5f9qdiRgv93T/lsA7IgespwTXnbeqQucQ1SxUZ0=",
+    "ASSET_URL": "/",
     "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",
     "CACHE_STORE": "array",
     "SESSION_DRIVER": "cookie",

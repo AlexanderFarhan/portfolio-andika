@@ -4,6 +4,13 @@
 $uri = urldecode(parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH));
 $publicFile = __DIR__ . '/../public' . $uri;
 
+if (!file_exists($publicFile) && str_starts_with($uri, '/public/')) {
+    $publicFile = __DIR__ . '/..' . $uri;
+}
+if (!file_exists($publicFile)) {
+    $publicFile = __DIR__ . '/../dist' . $uri;
+}
+
 if ($uri !== '/' && file_exists($publicFile) && !is_dir($publicFile)) {
     $extension = strtolower(pathinfo($publicFile, PATHINFO_EXTENSION));
     $mimeType = match ($extension) {
