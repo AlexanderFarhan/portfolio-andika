@@ -21,9 +21,19 @@
 
 ---
 
-## 🚀 Panduan Deployment Cloud (Render / Railway / Koyeb)
+## 🚀 Panduan Deployment Cloud (100% Gratis Selamanya)
 
-### Opsi A: Deploy ke Render (Direkomendasikan - Gratis)
+### Opsi 1: Deploy ke Vercel (100% Gratis Selamanya, Super Cepat, Tanpa Sleep)
+
+1. Buka **[vercel.com](https://vercel.com)** dan klik **Sign In** dengan akun GitHub Anda (`AlexanderFarhan`).
+2. Klik tombol **Add New...** > **Project**.
+3. Pilih repository **`portfolio-andika`** dan klik **Import**.
+4. Semua pengaturan (Framework, Root Directory, dan Routes) sudah otomatis terkonfigurasi melalui `vercel.json`!
+5. Klik **Deploy**. Dalam waktu sekitar 1 menit, website Anda langsung aktif dengan domain gratis HTTPS (misalnya `portfolio-andika.vercel.app`)!
+
+---
+
+### Opsi 2: Deploy ke Render (Web Service Gratis)
 
 1. **Buka [render.com](https://render.com)** dan login menggunakan akun GitHub Anda (`AlexanderFarhan`).
 2. Klik **New +** > **Blueprint** (atau **Web Service**).
