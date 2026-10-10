@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && node -e \"const fs = require('fs'); fs.mkdirSync('dist', {recursive: true}); fs.cpSync('public/build', 'dist/build', {recursive: true}); fs.cpSync('public/images', 'dist/images', {recursive: true}); if (fs.existsSync('public/favicon.ico')) fs.copyFileSync('public/favicon.ico', 'dist/favicon.ico'); if (fs.existsSync('public/robots.txt')) fs.copyFileSync('public/robots.txt', 'dist/robots.txt');\"",
         "dev": "vite"
     },
     "devDependencies": {
