@@ -2,6 +2,8 @@
 
 > Website Portofolio Interaktif & Sistem Manajemen Konten (CMS) berbasis Laravel 12 & Vite.
 
+🌐 **Live URL:** [https://portfolio-andika-theta.vercel.app](https://portfolio-andika-theta.vercel.app)
+
 ---
 
 ## 🌟 Fitur Utama
