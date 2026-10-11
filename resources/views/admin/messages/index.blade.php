@@ -8,39 +8,39 @@
     <div class="row g-3 mb-4">
         <div class="col-md-4">
             <div class="p-3 rounded-3 glass-card d-flex align-items-center gap-3">
-                <div class="p-2 rounded-2 bg-primary bg-opacity-15 text-primary fs-5">
-                    <i class="bi bi-envelope-at-fill"></i>
+                <div class="stat-icon-badge badge-primary">
+                    <i class="bi bi-envelope-at-fill fs-5"></i>
                 </div>
                 <div class="overflow-hidden">
-                    <small class="text-muted d-block" style="font-size: 0.72rem;">Email Publik Portofolio</small>
-                    <div class="fw-bold small text-truncate text-white">{{ $profile->email }}</div>
+                    <small class="text-subtle d-block fw-semibold mb-1" style="font-size: 0.75rem;">Email Publik Portofolio</small>
+                    <div class="fw-bold small text-truncate" style="color: var(--text-primary);">{{ $profile->email }}</div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="p-3 rounded-3 glass-card d-flex align-items-center gap-3">
-                <div class="p-2 rounded-2 bg-success bg-opacity-15 text-success fs-5">
-                    <i class="bi bi-whatsapp"></i>
+                <div class="stat-icon-badge badge-success">
+                    <i class="bi bi-whatsapp fs-5"></i>
                 </div>
                 <div class="overflow-hidden">
-                    <small class="text-muted d-block" style="font-size: 0.72rem;">Nomor WhatsApp / Kontak</small>
-                    <div class="fw-bold small text-truncate text-white">{{ $profile->phone }}</div>
+                    <small class="text-subtle d-block fw-semibold mb-1" style="font-size: 0.75rem;">Nomor WhatsApp / Kontak</small>
+                    <div class="fw-bold small text-truncate" style="color: var(--text-primary);">{{ $profile->phone }}</div>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="p-3 rounded-3 glass-card d-flex align-items-center justify-content-between gap-3">
                 <div class="d-flex align-items-center gap-3 overflow-hidden">
-                    <div class="p-2 rounded-2 bg-info bg-opacity-15 text-info fs-5">
-                        <i class="bi bi-geo-alt-fill"></i>
+                    <div class="stat-icon-badge badge-info">
+                        <i class="bi bi-geo-alt-fill fs-5"></i>
                     </div>
                     <div class="overflow-hidden">
-                        <small class="text-muted d-block" style="font-size: 0.72rem;">Lokasi Domisili</small>
-                        <div class="fw-bold small text-truncate text-white">{{ $profile->location }}</div>
+                        <small class="text-subtle d-block fw-semibold mb-1" style="font-size: 0.75rem;">Lokasi Domisili</small>
+                        <div class="fw-bold small text-truncate" style="color: var(--text-primary);">{{ $profile->location }}</div>
                     </div>
                 </div>
                 <a href="{{ route('admin.profile.edit') }}" class="btn btn-sm btn-outline-custom text-nowrap" title="Edit Kontak">
-                    <i class="bi bi-pencil-square"></i> Edit
+                    <i class="bi bi-pencil-square me-1"></i> Edit
                 </a>
             </div>
         </div>
