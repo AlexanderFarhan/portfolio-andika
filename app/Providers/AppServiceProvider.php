@@ -11,7 +11,30 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('db.connector.pgsql', function () {
+            return new class extends \Illuminate\Database\Connectors\PostgresConnector {
+                protected function getDsn(array $config)
+                {
+                    $dsn = parent::getDsn($config);
+                    if (!empty($config['endpoint'])) {
+                        $dsn .= ";options='endpoint={$config['endpoint']}'";
+                    } elseif (isset($config['host']) && str_contains($config['host'], 'neon.tech')) {
+                        $parts = explode('.', $config['host']);
+                        $endpoint = str_replace('-pooler', '', $parts[0]);
+                        $dsn .= ";options='endpoint={$endpoint}'";
+                    }
+                    return $dsn;
+                }
+
+                public function getOptions(array $config)
+                {
+                    if (isset($config['options']) && !is_array($config['options'])) {
+                        unset($config['options']);
+                    }
+                    return parent::getOptions($config);
+                }
+            };
+        });
     }
 
     /**

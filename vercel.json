@@ -40,6 +40,13 @@
     "CACHE_STORE": "array",
     "SESSION_DRIVER": "cookie",
     "LOG_CHANNEL": "stderr",
-    "FILESYSTEM_DISK": "public"
+    "FILESYSTEM_DISK": "public",
+    "DB_CONNECTION": "pgsql",
+    "DB_HOST": "ep-mute-forest-b5nddaym-pooler.c-7.us-east-2.aws.neon.tech",
+    "DB_PORT": "5432",
+    "DB_DATABASE": "neondb",
+    "DB_USERNAME": "neondb_owner",
+    "DB_PASSWORD": "npg_nvVXoB9fSI7d",
+    "DB_SSLMODE": "require"
   }
 }
