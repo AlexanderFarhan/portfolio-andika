@@ -192,12 +192,62 @@
             const sidebar = document.getElementById('adminSidebar');
             const toggleBtn = document.getElementById('toggleSidebarBtn');
             const closeBtn = document.getElementById('closeSidebarBtn');
+            const sidebarNav = document.querySelector('.admin-sidebar-nav');
 
             if (toggleBtn && sidebar) {
                 toggleBtn.addEventListener('click', () => sidebar.classList.toggle('show'));
             }
             if (closeBtn && sidebar) {
                 closeBtn.addEventListener('click', () => sidebar.classList.remove('show'));
+            }
+
+            // Maintain sidebar scroll position so clicking menu items keeps position
+            if (sidebarNav) {
+                const restoreScroll = () => {
+                    const savedScroll = sessionStorage.getItem('admin_sidebar_scroll');
+                    if (savedScroll !== null) {
+                        sidebarNav.scrollTop = parseInt(savedScroll, 10);
+                    }
+
+                    // Ensure currently active menu item stays clearly in view
+                    const activeItem = sidebarNav.querySelector('.admin-nav-item.active');
+                    if (activeItem) {
+                        const rect = activeItem.getBoundingClientRect();
+                        const navRect = sidebarNav.getBoundingClientRect();
+                        if (rect.top < navRect.top || rect.bottom > navRect.bottom || savedScroll === null) {
+                            activeItem.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+                        }
+                    }
+                };
+
+                restoreScroll();
+                requestAnimationFrame(restoreScroll);
+                setTimeout(restoreScroll, 60);
+
+                if (toggleBtn && sidebar) {
+                    toggleBtn.addEventListener('click', () => {
+                        if (sidebar.classList.contains('show')) {
+                            setTimeout(restoreScroll, 50);
+                        }
+                    });
+                }
+
+                // Save scroll position whenever user scrolls
+                sidebarNav.addEventListener('scroll', () => {
+                    sessionStorage.setItem('admin_sidebar_scroll', sidebarNav.scrollTop);
+                }, { passive: true });
+
+                // Save scroll position immediately when user clicks any menu link
+                sidebarNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        sessionStorage.setItem('admin_sidebar_scroll', sidebarNav.scrollTop);
+                    });
+                });
+
+                // Also ensure position is saved on unload
+                window.addEventListener('beforeunload', () => {
+                    sessionStorage.setItem('admin_sidebar_scroll', sidebarNav.scrollTop);
+                });
             }
         });
 
