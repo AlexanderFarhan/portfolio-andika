@@ -24,7 +24,7 @@
             </div>
 
             <nav class="admin-sidebar-nav flex-grow-1">
-                <small class="text-uppercase text-muted fw-bold px-3 mb-2" style="font-size: 0.75rem;">Menu Utama</small>
+                <small class="text-uppercase admin-sidebar-heading fw-bold px-3 mb-2" style="font-size: 0.75rem;">Menu Utama</small>
                 <a href="{{ route('admin.dashboard') }}" class="admin-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="bi bi-speedometer2"></i> Dashboard
                 </a>
@@ -35,7 +35,7 @@
                     <i class="bi bi-info-circle"></i> Tentang Saya (About)
                 </a>
 
-                <small class="text-uppercase text-muted fw-bold px-3 mt-3 mb-2" style="font-size: 0.75rem;">Konten Portofolio</small>
+                <small class="text-uppercase admin-sidebar-heading fw-bold px-3 mt-3 mb-2" style="font-size: 0.75rem;">Konten Portofolio</small>
                 <a href="{{ route('admin.projects.index') }}" class="admin-nav-item {{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">
                     <i class="bi bi-kanban"></i> Projects
                 </a>
@@ -52,7 +52,7 @@
                     <i class="bi bi-award"></i> Certificates
                 </a>
 
-                <small class="text-uppercase text-muted fw-bold px-3 mt-3 mb-2" style="font-size: 0.75rem;">Interaksi & Media</small>
+                <small class="text-uppercase admin-sidebar-heading fw-bold px-3 mt-3 mb-2" style="font-size: 0.75rem;">Interaksi & Media</small>
                 <a href="{{ route('admin.messages.index') }}" class="admin-nav-item d-flex justify-content-between align-items-center {{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">
                     <span><i class="bi bi-chat-left-text me-2"></i> Messages</span>
                     @php

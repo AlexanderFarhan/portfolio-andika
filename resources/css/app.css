@@ -862,6 +862,21 @@ body.admin-body {
     border-radius: 4px;
 }
 
+.admin-sidebar-heading,
+.admin-sidebar-nav small {
+    color: var(--text-primary) !important;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    font-weight: 700 !important;
+    opacity: 0.9;
+}
+
+[data-theme="light"] .admin-sidebar-heading,
+[data-theme="light"] .admin-sidebar-nav small {
+    color: var(--text-primary) !important;
+    opacity: 0.9;
+}
+
 .admin-main {
     margin-left: 270px;
     width: calc(100% - 270px);
