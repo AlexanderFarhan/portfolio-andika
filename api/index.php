@@ -54,9 +54,41 @@ foreach ($directories as $dir) {
     }
 }
 
-// 3. Setup SQLite Database in /tmp if not using external DB
-$dbConnection = getenv('DB_CONNECTION') ?: 'sqlite';
-if ($dbConnection === 'sqlite') {
+// 3. Setup Database Connection (Neon PostgreSQL Default)
+$dbConnection = $_ENV['DB_CONNECTION'] ?? $_SERVER['DB_CONNECTION'] ?? getenv('DB_CONNECTION') ?: 'pgsql';
+
+if ($dbConnection === 'pgsql') {
+    $dbHost = $_ENV['DB_HOST'] ?? $_SERVER['DB_HOST'] ?? getenv('DB_HOST') ?: 'ep-mute-forest-b5nddaym-pooler.c-7.us-east-2.aws.neon.tech';
+    $dbPort = $_ENV['DB_PORT'] ?? $_SERVER['DB_PORT'] ?? getenv('DB_PORT') ?: '5432';
+    $dbName = $_ENV['DB_DATABASE'] ?? $_SERVER['DB_DATABASE'] ?? getenv('DB_DATABASE') ?: 'neondb';
+    $dbUser = $_ENV['DB_USERNAME'] ?? $_SERVER['DB_USERNAME'] ?? getenv('DB_USERNAME') ?: 'neondb_owner';
+    $dbPass = $_ENV['DB_PASSWORD'] ?? $_SERVER['DB_PASSWORD'] ?? getenv('DB_PASSWORD') ?: 'npg_nvVXoB9fSI7d';
+    $dbSsl  = $_ENV['DB_SSLMODE'] ?? $_SERVER['DB_SSLMODE'] ?? getenv('DB_SSLMODE') ?: 'require';
+
+    putenv("DB_CONNECTION=pgsql");
+    putenv("DB_HOST={$dbHost}");
+    putenv("DB_PORT={$dbPort}");
+    putenv("DB_DATABASE={$dbName}");
+    putenv("DB_USERNAME={$dbUser}");
+    putenv("DB_PASSWORD={$dbPass}");
+    putenv("DB_SSLMODE={$dbSsl}");
+
+    $_ENV['DB_CONNECTION'] = 'pgsql';
+    $_ENV['DB_HOST'] = $dbHost;
+    $_ENV['DB_PORT'] = $dbPort;
+    $_ENV['DB_DATABASE'] = $dbName;
+    $_ENV['DB_USERNAME'] = $dbUser;
+    $_ENV['DB_PASSWORD'] = $dbPass;
+    $_ENV['DB_SSLMODE'] = $dbSsl;
+
+    $_SERVER['DB_CONNECTION'] = 'pgsql';
+    $_SERVER['DB_HOST'] = $dbHost;
+    $_SERVER['DB_PORT'] = $dbPort;
+    $_SERVER['DB_DATABASE'] = $dbName;
+    $_SERVER['DB_USERNAME'] = $dbUser;
+    $_SERVER['DB_PASSWORD'] = $dbPass;
+    $_SERVER['DB_SSLMODE'] = $dbSsl;
+} elseif ($dbConnection === 'sqlite') {
     $srcDb = __DIR__ . '/../database/database.sqlite';
     $tmpDb = '/tmp/database.sqlite';
 

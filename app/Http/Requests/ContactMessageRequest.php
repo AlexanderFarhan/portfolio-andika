@@ -17,7 +17,7 @@ class ContactMessageRequest extends FormRequest
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:150',
             'subject' => 'required|string|max:150',
-            'message' => 'required|string|min:10|max:3000',
+            'message' => 'required|string|min:3|max:3000',
         ];
     }
 
@@ -29,7 +29,7 @@ class ContactMessageRequest extends FormRequest
             'email.email' => 'Format email tidak valid.',
             'subject.required' => 'Subjek pesan wajib diisi.',
             'message.required' => 'Isi pesan tidak boleh kosong.',
-            'message.min' => 'Isi pesan minimal 10 karakter.',
+            'message.min' => 'Isi pesan minimal 3 karakter.',
         ];
     }
 }
