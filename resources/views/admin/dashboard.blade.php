@@ -63,10 +63,8 @@
                 </div>
             </div>
             <div class="d-flex align-items-baseline gap-2">
-                <div class="fs-2 fw-bold text-danger">{{ $stats['messages_count'] }}</div>
-                @if($stats['unread_messages_count'] > 0)
-                    <span class="badge bg-danger rounded-pill">{{ $stats['unread_messages_count'] }} baru</span>
-                @endif
+                <div class="fs-2 fw-bold text-danger" id="dashboardMessagesCount">{{ $stats['messages_count'] }}</div>
+                <span class="badge bg-danger rounded-pill" id="dashboardUnreadBadge" style="{{ $stats['unread_messages_count'] > 0 ? '' : 'display: none;' }}">{{ $stats['unread_messages_count'] }} baru</span>
             </div>
             <a href="{{ route('admin.messages.index') }}" class="small text-subtle text-decoration-none d-flex align-items-center gap-1 mt-2">
                 Buka Inbox <i class="bi bi-arrow-right"></i>
@@ -125,9 +123,8 @@
                 <a href="{{ route('admin.messages.index') }}" class="btn btn-sm btn-outline-custom">Lihat Semua</a>
             </div>
 
-            @if($recentMessages->count() > 0)
-                <div class="list-group list-group-flush bg-transparent">
-                    @foreach($recentMessages as $msg)
+                <div class="list-group list-group-flush bg-transparent" id="recentMessagesList">
+                    @forelse($recentMessages as $msg)
                         <div class="list-group-item bg-transparent px-0 py-3 border-subtle">
                             <div class="d-flex justify-content-between align-items-start mb-1">
                                 <h6 class="mb-0 fw-bold {{ !$msg->is_read ? 'text-primary' : '' }}">
@@ -136,7 +133,7 @@
                                         <span class="badge bg-primary ms-1" style="font-size: 0.65rem;">BARU</span>
                                     @endif
                                 </h6>
-                                <small class="text-muted" style="font-size: 0.75rem;">{{ $msg->created_at->diffForHumans() }}</small>
+                                <small class="text-muted" style="font-size: 0.75rem;">{{ $msg->created_at ? $msg->created_at->diffForHumans() : 'baru saja' }}</small>
                             </div>
                             <div class="fw-medium small mb-1">{{ $msg->subject }}</div>
                             <p class="small text-subtle text-truncate mb-2">{{ $msg->message }}</p>
@@ -144,14 +141,13 @@
                                 Baca Selengkapnya
                             </a>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="text-center py-4 text-subtle" id="emptyRecentMessages">
+                            <i class="bi bi-inbox fs-1 d-block mb-2 opacity-50"></i>
+                            Belum ada pesan kontak yang masuk.
+                        </div>
+                    @endforelse
                 </div>
-            @else
-                <div class="text-center py-4 text-subtle">
-                    <i class="bi bi-inbox fs-1 d-block mb-2 opacity-50"></i>
-                    Belum ada pesan kontak yang masuk.
-                </div>
-            @endif
         </div>
     </div>
 

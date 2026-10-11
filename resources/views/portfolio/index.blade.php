@@ -698,6 +698,25 @@
                                         const result = await response.json().catch(() => null);
 
                                         if (response.ok && result && result.success) {
+                                            // Play soft success chime
+                                            try {
+                                                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                                                if (AudioContext) {
+                                                    const ctx = new AudioContext();
+                                                    const osc = ctx.createOscillator();
+                                                    const gain = ctx.createGain();
+                                                    osc.type = 'sine';
+                                                    osc.frequency.setValueAtTime(659.25, ctx.currentTime);
+                                                    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.12);
+                                                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                                                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                                                    osc.connect(gain);
+                                                    gain.connect(ctx.destination);
+                                                    osc.start(ctx.currentTime);
+                                                    osc.stop(ctx.currentTime + 0.4);
+                                                }
+                                            } catch(e) {}
+
                                             const nameVal = formData.get('name') || '';
                                             const subjectVal = formData.get('subject') || '';
                                             const msgVal = formData.get('message') || '';
@@ -706,19 +725,26 @@
                                             const waUrl = `https://wa.me/${phoneVal}?text=${waText}`;
 
                                             alertBox.innerHTML = `
-                                                <div class="alert alert-success alert-dismissible fade show p-3 mb-3 border border-success" role="alert">
-                                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                                        <i class="bi bi-check-circle-fill fs-5 text-success"></i>
-                                                        <strong class="text-white">${result.message || 'Pesan Anda berhasil dikirim!'}</strong>
-                                                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert alert-success alert-dismissible fade show p-3 p-md-4 mb-4 border border-success shadow-lg" role="alert" style="background: rgba(16, 185, 129, 0.12); backdrop-filter: blur(8px);">
+                                                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <i class="bi bi-check-circle-fill fs-4 text-success"></i>
+                                                            <strong class="text-white fs-6">${result.message || 'Pesan Anda berhasil dikirim secara realtime!'}</strong>
+                                                        </div>
+                                                        <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 py-1 px-2 d-inline-flex align-items-center gap-1">
+                                                            <span class="live-pulse-dot" style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                                                            Terkoneksi Real-Time
+                                                        </span>
+                                                        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>
-                                                    <p class="small text-subtle mb-2">Anda juga dapat meneruskan salinan pesan ini langsung ke WhatsApp agar dapat direspon lebih cepat:</p>
-                                                    <a href="${waUrl}" target="_blank" class="btn btn-sm btn-success text-white d-inline-flex align-items-center gap-2 fw-semibold">
+                                                    <p class="small text-subtle mb-3">Pesan Anda telah langsung masuk ke inbox admin Andika Amansyah. Anda juga dapat meneruskan salinannya ke WhatsApp untuk komunikasi lebih cepat:</p>
+                                                    <a href="${waUrl}" target="_blank" class="btn btn-sm btn-success text-white d-inline-flex align-items-center gap-2 fw-semibold px-3 py-2 shadow-sm">
                                                         <i class="bi bi-whatsapp fs-6"></i> Kirim Salinan ke WhatsApp
                                                     </a>
                                                 </div>
                                             `;
                                             form.reset();
+                                            alertBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                                         } else {
                                             let errorMsg = 'Gagal mengirim pesan. Silakan coba kembali.';
                                             if (result && result.errors) {

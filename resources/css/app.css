@@ -967,3 +967,39 @@ body.admin-body::-webkit-scrollbar-thumb:hover,
     border-bottom: 1px solid var(--border-color);
     vertical-align: middle;
 }
+
+/* Realtime Notification Styles */
+.live-pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: livePulse 2s infinite;
+}
+
+@keyframes livePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.table-success-highlight {
+    animation: flashRow 3.5s ease-out;
+}
+
+@keyframes flashRow {
+    0% {
+        background-color: rgba(16, 185, 129, 0.35) !important;
+    }
+    100% {
+        background-color: transparent !important;
+    }
+}

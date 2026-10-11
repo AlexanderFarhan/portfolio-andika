@@ -64,6 +64,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('certificates', CertificateController::class);
     Route::resource('social-links', SocialLinkController::class);
     Route::resource('messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
+    Route::get('/messages-poll', [ContactMessageController::class, 'poll'])->name('messages.poll');
 
     // One-click helper to migrate and seed cloud database
     Route::get('/migrate-db', function () {

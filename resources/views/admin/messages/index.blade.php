@@ -50,8 +50,14 @@
 <div class="glass-card p-4">
     <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mb-4">
         <div>
-            <h2 class="h5 fw-bold mb-1 font-heading">Pesan Kontak dari Pengunjung</h2>
-            <p class="text-subtle small mb-0">Total {{ $messages->total() }} pesan masuk melalui form kontak website</p>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <h2 class="h5 fw-bold mb-0 font-heading">Pesan Kontak dari Pengunjung</h2>
+                <span class="badge bg-success bg-opacity-15 text-success small border border-success border-opacity-25 px-2 py-1 d-inline-flex align-items-center gap-1">
+                    <span class="live-pulse-dot" style="width: 7px; height: 7px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                    Live Sync
+                </span>
+            </div>
+            <p class="text-subtle small mb-0" id="messagesCountSubtitle">Total {{ $messages->total() }} pesan masuk melalui form kontak website</p>
         </div>
     </div>
 
@@ -67,7 +73,7 @@
                     <th class="text-end" style="width: 120px;">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="messagesTableBody">
                 @forelse($messages as $msg)
                     <tr class="{{ !$msg->is_read ? 'table-active' : '' }}">
                         <td>
@@ -88,7 +94,7 @@
                             <small class="text-muted text-truncate d-block" style="max-width: 250px;">{{ $msg->message }}</small>
                         </td>
                         <td>
-                            <span class="small text-muted">{{ $msg->created_at->format('d M Y, H:i') }}</span>
+                            <span class="small text-muted">{{ $msg->created_at ? $msg->created_at->format('d M Y, H:i') : '-' }}</span>
                         </td>
                         <td class="text-end">
                             <div class="btn-group btn-group-sm">
@@ -106,7 +112,7 @@
                         </td>
                     </tr>
                 @empty
-                    <tr>
+                    <tr id="emptyMessagesRow">
                         <td colspan="6" class="text-center py-4 text-subtle">Kotak masuk masih kosong. Belum ada pesan.</td>
                     </tr>
                 @endforelse

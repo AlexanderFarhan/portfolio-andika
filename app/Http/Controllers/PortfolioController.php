@@ -51,7 +51,11 @@ class PortfolioController extends Controller
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'Pesan Anda berhasil dikirim! Terima kasih telah menghubungi saya.',
+                'message' => 'Pesan Anda berhasil dikirim secara realtime! Terima kasih telah menghubungi saya.',
+                'data' => [
+                    'id' => $message->id,
+                    'name' => $message->name,
+                ]
             ]);
         }
 
