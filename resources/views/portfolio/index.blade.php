@@ -620,12 +620,14 @@
                     <h3 class="h4 fw-bold text-white mb-2 font-heading">Kirimkan Pesan</h3>
                     <p class="small text-subtle mb-4">Saya akan membalas pesan Anda sesegera mungkin.</p>
 
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
+                    <div id="contactAlertContainer">
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                    </div>
 
                     <form action="{{ route('portfolio.contact') }}" method="POST" id="contactForm">
                         @csrf
@@ -667,6 +669,69 @@
                             <i class="bi bi-send-fill me-2"></i> Kirim Pesan Sekarang
                         </button>
                     </form>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const form = document.getElementById('contactForm');
+                            const submitBtn = document.getElementById('contactSubmitBtn');
+                            const alertBox = document.getElementById('contactAlertContainer');
+
+                            if (form && submitBtn && alertBox) {
+                                form.addEventListener('submit', async function(e) {
+                                    e.preventDefault();
+                                    const originalBtnText = submitBtn.innerHTML;
+                                    submitBtn.disabled = true;
+                                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim pesan...';
+                                    alertBox.innerHTML = '';
+
+                                    try {
+                                        const formData = new FormData(form);
+                                        const response = await fetch(form.action, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Accept': 'application/json',
+                                                'X-Requested-With': 'XMLHttpRequest'
+                                            },
+                                            body: formData
+                                        });
+
+                                        const result = await response.json().catch(() => null);
+
+                                        if (response.ok && result && result.success) {
+                                            alertBox.innerHTML = `
+                                                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2 mb-3" role="alert">
+                                                    <i class="bi bi-check-circle-fill fs-5"></i>
+                                                    <div>${result.message || 'Pesan Anda berhasil dikirim!'}</div>
+                                                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            `;
+                                            form.reset();
+                                        } else {
+                                            let errorMsg = 'Gagal mengirim pesan. Silakan coba kembali.';
+                                            if (result && result.errors) {
+                                                errorMsg = Object.values(result.errors).flat().join('<br>');
+                                            } else if (result && result.message) {
+                                                errorMsg = result.message;
+                                            }
+                                            alertBox.innerHTML = `
+                                                <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 mb-3" role="alert">
+                                                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                                                    <div>${errorMsg}</div>
+                                                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                </div>
+                                            `;
+                                        }
+                                    } catch (err) {
+                                        form.submit();
+                                        return;
+                                    } finally {
+                                        submitBtn.disabled = false;
+                                        submitBtn.innerHTML = originalBtnText;
+                                    }
+                                });
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>

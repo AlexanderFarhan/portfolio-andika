@@ -841,6 +841,25 @@ body.admin-body {
     bottom: 0;
     z-index: 1000;
     transition: transform var(--transition-base);
+    overflow-x: hidden !important;
+}
+
+.admin-sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap !important;
+    overflow-y: auto;
+    overflow-x: hidden !important;
+    padding-right: 2px;
+}
+
+.admin-sidebar-nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.admin-sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
 }
 
 .admin-main {

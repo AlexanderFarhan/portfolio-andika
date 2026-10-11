@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
             guests: '/admin/login',
             users: '/admin/dashboard'
         );
+        $middleware->validateCsrfTokens(except: [
+            'contact',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

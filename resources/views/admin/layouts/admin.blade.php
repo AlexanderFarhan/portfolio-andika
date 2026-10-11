@@ -22,7 +22,7 @@
                 </button>
             </div>
 
-            <nav class="nav flex-column flex-grow-1 overflow-auto">
+            <nav class="admin-sidebar-nav flex-grow-1">
                 <small class="text-uppercase text-muted fw-bold px-3 mb-2" style="font-size: 0.75rem;">Menu Utama</small>
                 <a href="{{ route('admin.dashboard') }}" class="admin-nav-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                     <i class="bi bi-speedometer2"></i> Dashboard
