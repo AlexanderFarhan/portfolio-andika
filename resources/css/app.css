@@ -945,27 +945,106 @@ body.admin-body::-webkit-scrollbar-thumb:hover,
 }
 
 .table-custom {
-    color: var(--text-primary);
-    background: var(--bg-card);
+    --bs-table-color: var(--text-primary);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--border-color);
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: var(--text-primary);
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
+    --bs-table-active-color: var(--text-primary);
+    --bs-table-active-bg: rgba(56, 189, 248, 0.08);
+    --bs-table-hover-color: var(--text-primary);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.04);
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+    border-color: var(--border-color) !important;
     border-radius: var(--border-radius-card);
     overflow: hidden;
 }
 
+.table-custom > :not(caption) > * > * {
+    background-color: transparent !important;
+    color: inherit;
+    border-bottom: 1px solid var(--border-color) !important;
+    box-shadow: none !important;
+}
+
+.table-custom tbody tr {
+    background-color: transparent !important;
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+}
+
+.table-custom tbody tr:hover,
+.table-custom tbody tr:hover > * {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+.table-custom tbody tr.table-active,
+.table-custom tbody tr.table-active > * {
+    background-color: rgba(56, 189, 248, 0.08) !important;
+    color: var(--text-primary) !important;
+}
+
 .table-custom th {
-    background: rgba(255, 255, 255, 0.03);
-    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: var(--text-muted) !important;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color) !important;
 }
 
 .table-custom td {
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color) !important;
     vertical-align: middle;
+    color: var(--text-primary);
+}
+
+/* Light mode support for tables */
+[data-theme="light"] .table-custom {
+    --bs-table-color: var(--text-primary);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--border-color);
+    --bs-table-active-color: var(--text-primary);
+    --bs-table-active-bg: rgba(2, 132, 199, 0.07);
+    --bs-table-hover-bg: rgba(15, 23, 42, 0.03);
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .table-custom th {
+    background: rgba(15, 23, 42, 0.03) !important;
+    color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .table-custom tbody tr:hover,
+[data-theme="light"] .table-custom tbody tr:hover > * {
+    background-color: rgba(15, 23, 42, 0.03) !important;
+}
+
+[data-theme="light"] .table-custom tbody tr.table-active,
+[data-theme="light"] .table-custom tbody tr.table-active > * {
+    background-color: rgba(2, 132, 199, 0.07) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Pagination dark mode */
+.pagination {
+    --bs-pagination-bg: var(--bg-card);
+    --bs-pagination-border-color: var(--border-color);
+    --bs-pagination-color: var(--text-secondary);
+    --bs-pagination-hover-bg: var(--bg-card-hover);
+    --bs-pagination-hover-border-color: var(--primary);
+    --bs-pagination-hover-color: var(--primary);
+    --bs-pagination-active-bg: var(--primary);
+    --bs-pagination-active-border-color: var(--primary);
+    --bs-pagination-active-color: #ffffff;
+    --bs-pagination-disabled-bg: rgba(255, 255, 255, 0.02);
+    --bs-pagination-disabled-border-color: var(--border-color);
+    --bs-pagination-disabled-color: var(--text-muted);
 }
 
 /* Realtime Notification Styles */
