@@ -944,17 +944,21 @@ body.admin-body::-webkit-scrollbar-thumb:hover,
     border-left: 3px solid var(--primary);
 }
 
+/* ==========================================================================
+   CUSTOM TABLE STYLES (Admin & Data Tables)
+   ========================================================================== */
 .table-custom {
     --bs-table-color: var(--text-primary);
+    --bs-table-color-state: var(--text-primary);
+    --bs-table-color-type: var(--text-primary);
+    --bs-table-active-color: var(--text-primary);
+    --bs-table-hover-color: var(--text-primary);
     --bs-table-bg: transparent;
+    --bs-table-bg-state: transparent;
     --bs-table-border-color: var(--border-color);
     --bs-table-accent-bg: transparent;
     --bs-table-striped-color: var(--text-primary);
     --bs-table-striped-bg: rgba(255, 255, 255, 0.02);
-    --bs-table-active-color: var(--text-primary);
-    --bs-table-active-bg: rgba(56, 189, 248, 0.08);
-    --bs-table-hover-color: var(--text-primary);
-    --bs-table-hover-bg: rgba(255, 255, 255, 0.04);
     color: var(--text-primary) !important;
     background-color: transparent !important;
     border-color: var(--border-color) !important;
@@ -964,14 +968,39 @@ body.admin-body::-webkit-scrollbar-thumb:hover,
 
 .table-custom > :not(caption) > * > * {
     background-color: transparent !important;
-    color: inherit;
+    color: var(--text-primary) !important;
     border-bottom: 1px solid var(--border-color) !important;
     box-shadow: none !important;
 }
 
+/* Headers: Status, Pengirim, Email, Subjek Pesan, Waktu Diterima, Aksi */
+.table-custom th,
+.table-custom thead th,
+.table-custom > thead > tr > th {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Cells */
+.table-custom td,
+.table-custom tbody td,
+.table-custom > tbody > tr > td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color) !important;
+    vertical-align: middle;
+    color: var(--text-primary) !important;
+}
+
+/* Body Rows */
 .table-custom tbody tr {
     background-color: transparent !important;
-    color: var(--text-primary);
+    color: var(--text-primary) !important;
     transition: background-color var(--transition-fast);
 }
 
@@ -980,44 +1009,61 @@ body.admin-body::-webkit-scrollbar-thumb:hover,
     background-color: rgba(255, 255, 255, 0.04) !important;
 }
 
+/* Unread / Active Rows */
 .table-custom tbody tr.table-active,
 .table-custom tbody tr.table-active > * {
     background-color: rgba(56, 189, 248, 0.08) !important;
     color: var(--text-primary) !important;
 }
 
-.table-custom th {
-    background: rgba(255, 255, 255, 0.03) !important;
-    color: var(--text-muted) !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color) !important;
-}
-
-.table-custom td {
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-color) !important;
-    vertical-align: middle;
-    color: var(--text-primary);
-}
-
-/* Light mode support for tables */
-[data-theme="light"] .table-custom {
-    --bs-table-color: var(--text-primary);
-    --bs-table-bg: transparent;
-    --bs-table-border-color: var(--border-color);
-    --bs-table-active-color: var(--text-primary);
-    --bs-table-active-bg: rgba(2, 132, 199, 0.07);
-    --bs-table-hover-bg: rgba(15, 23, 42, 0.03);
+/* Cell typography & colors in Dark Mode */
+.table-custom td .fw-semibold,
+.table-custom td .fw-bold {
     color: var(--text-primary) !important;
 }
 
-[data-theme="light"] .table-custom th {
-    background: rgba(15, 23, 42, 0.03) !important;
-    color: var(--text-muted) !important;
+.table-custom td .text-primary {
+    color: var(--primary) !important;
+}
+
+.table-custom td .text-muted,
+.table-custom td small.text-muted,
+.table-custom td span.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.table-custom td .text-subtle,
+.table-custom td a.text-subtle {
+    color: var(--text-secondary) !important;
+}
+
+.table-custom td a.text-subtle:hover {
+    color: var(--primary) !important;
+}
+
+/* Light mode overrides */
+[data-theme="light"] .table-custom {
+    --bs-table-color: var(--text-primary);
+    --bs-table-color-state: var(--text-primary);
+    --bs-table-color-type: var(--text-primary);
+    --bs-table-active-color: var(--text-primary);
+    --bs-table-hover-color: var(--text-primary);
+    --bs-table-bg: transparent;
+    --bs-table-border-color: var(--border-color);
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .table-custom th,
+[data-theme="light"] .table-custom thead th,
+[data-theme="light"] .table-custom > thead > tr > th {
+    background: rgba(15, 23, 42, 0.04) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .table-custom td,
+[data-theme="light"] .table-custom tbody td,
+[data-theme="light"] .table-custom > tbody > tr > td {
+    color: var(--text-primary) !important;
 }
 
 [data-theme="light"] .table-custom tbody tr:hover,
@@ -1029,6 +1075,30 @@ body.admin-body::-webkit-scrollbar-thumb:hover,
 [data-theme="light"] .table-custom tbody tr.table-active > * {
     background-color: rgba(2, 132, 199, 0.07) !important;
     color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .table-custom td .fw-semibold,
+[data-theme="light"] .table-custom td .fw-bold {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .table-custom td .text-primary {
+    color: var(--primary) !important;
+}
+
+[data-theme="light"] .table-custom td .text-muted,
+[data-theme="light"] .table-custom td small.text-muted,
+[data-theme="light"] .table-custom td span.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .table-custom td .text-subtle,
+[data-theme="light"] .table-custom td a.text-subtle {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .table-custom td a.text-subtle:hover {
+    color: var(--primary) !important;
 }
 
 /* Pagination dark mode */
