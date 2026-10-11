@@ -818,6 +818,18 @@ a:hover {
 /* ==========================================================================
    ADMIN DASHBOARD STYLES
    ========================================================================== */
+body.admin-body {
+    overflow-x: auto;
+}
+
+.admin-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    position: relative;
+    overflow-x: auto;
+}
+
 .admin-sidebar {
     width: 270px;
     min-height: 100vh;
@@ -833,9 +845,19 @@ a:hover {
 
 .admin-main {
     margin-left: 270px;
+    width: calc(100% - 270px);
+    max-width: calc(100% - 270px);
+    min-width: 0;
     min-height: 100vh;
     background: var(--bg-primary);
     padding: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-content {
+    width: 100%;
+    min-width: 0;
 }
 
 @media (max-width: 991.98px) {
@@ -847,8 +869,41 @@ a:hover {
     }
     .admin-main {
         margin-left: 0;
+        width: 100%;
+        max-width: 100%;
         padding: 1.25rem;
     }
+}
+
+/* Custom Scrollbars for Admin and Horizontal Scrolling */
+.admin-main::-webkit-scrollbar,
+body.admin-body::-webkit-scrollbar,
+.admin-wrapper::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.admin-main::-webkit-scrollbar-track,
+body.admin-body::-webkit-scrollbar-track,
+.admin-wrapper::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.admin-main::-webkit-scrollbar-thumb,
+body.admin-body::-webkit-scrollbar-thumb,
+.admin-wrapper::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.35);
+    border-radius: 4px;
+}
+
+.admin-main::-webkit-scrollbar-thumb:hover,
+body.admin-body::-webkit-scrollbar-thumb:hover,
+.admin-wrapper::-webkit-scrollbar-thumb:hover,
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: rgba(56, 189, 248, 0.7);
 }
 
 .admin-nav-item {

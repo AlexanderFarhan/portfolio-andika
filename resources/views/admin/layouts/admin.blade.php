@@ -6,8 +6,8 @@
     <title>@yield('title', 'Admin Dashboard') | Andika Amansyah Portfolio</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-dark text-light">
-    <div class="d-flex">
+<body class="bg-dark text-light admin-body">
+    <div class="d-flex admin-wrapper">
         <!-- Admin Sidebar -->
         <aside class="admin-sidebar d-flex flex-column p-3" id="adminSidebar">
             <div class="d-flex align-items-center justify-content-between mb-4 px-2">
@@ -143,7 +143,7 @@
             @endif
 
             <!-- Main Page Content -->
-            <main>
+            <main class="admin-content">
                 @yield('content')
             </main>
         </div>
