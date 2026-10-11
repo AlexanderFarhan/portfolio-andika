@@ -698,11 +698,24 @@
                                         const result = await response.json().catch(() => null);
 
                                         if (response.ok && result && result.success) {
+                                            const nameVal = formData.get('name') || '';
+                                            const subjectVal = formData.get('subject') || '';
+                                            const msgVal = formData.get('message') || '';
+                                            const phoneVal = '{{ preg_replace("/[^0-9]/", "", $profile->phone ?? "6281234567890") }}';
+                                            const waText = encodeURIComponent(`Halo Mas Andika, saya ${nameVal}.\n\nSubjek: ${subjectVal}\n\nPesan:\n${msgVal}`);
+                                            const waUrl = `https://wa.me/${phoneVal}?text=${waText}`;
+
                                             alertBox.innerHTML = `
-                                                <div class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2 mb-3" role="alert">
-                                                    <i class="bi bi-check-circle-fill fs-5"></i>
-                                                    <div>${result.message || 'Pesan Anda berhasil dikirim!'}</div>
-                                                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <div class="alert alert-success alert-dismissible fade show p-3 mb-3 border border-success" role="alert">
+                                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                                        <i class="bi bi-check-circle-fill fs-5 text-success"></i>
+                                                        <strong class="text-white">${result.message || 'Pesan Anda berhasil dikirim!'}</strong>
+                                                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                    <p class="small text-subtle mb-2">Anda juga dapat meneruskan salinan pesan ini langsung ke WhatsApp agar dapat direspon lebih cepat:</p>
+                                                    <a href="${waUrl}" target="_blank" class="btn btn-sm btn-success text-white d-inline-flex align-items-center gap-2 fw-semibold">
+                                                        <i class="bi bi-whatsapp fs-6"></i> Kirim Salinan ke WhatsApp
+                                                    </a>
                                                 </div>
                                             `;
                                             form.reset();

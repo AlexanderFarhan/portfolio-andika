@@ -64,4 +64,15 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('certificates', CertificateController::class);
     Route::resource('social-links', SocialLinkController::class);
     Route::resource('messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
+
+    // One-click helper to migrate and seed cloud database
+    Route::get('/migrate-db', function () {
+        try {
+            \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+            \Illuminate\Support\Facades\Artisan::call('db:seed', ['--force' => true]);
+            return redirect()->route('admin.dashboard')->with('success', 'Database cloud berhasil dimigrasikan dan di-seed!');
+        } catch (\Throwable $e) {
+            return redirect()->route('admin.dashboard')->with('error', 'Gagal migrasi database: ' . $e->getMessage());
+        }
+    })->name('migrate.db');
 });
