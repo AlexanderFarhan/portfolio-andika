@@ -686,11 +686,14 @@
 
                                     try {
                                         const formData = new FormData(form);
-                                        const response = await fetch(form.action, {
+                                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                                        const actionUrl = form.getAttribute('action') || '/contact';
+                                        const response = await fetch(actionUrl, {
                                             method: 'POST',
                                             headers: {
                                                 'Accept': 'application/json',
-                                                'X-Requested-With': 'XMLHttpRequest'
+                                                'X-Requested-With': 'XMLHttpRequest',
+                                                'X-CSRF-TOKEN': csrfToken
                                             },
                                             body: formData
                                         });

@@ -48,7 +48,7 @@ class PortfolioController extends Controller
     {
         $message = ContactMessage::create($request->validated());
 
-        if ($request->ajax() || $request->wantsJson()) {
+        if ($request->ajax() || $request->wantsJson() || $request->header('X-Requested-With') === 'XMLHttpRequest' || $request->acceptsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Pesan Anda berhasil dikirim secara realtime! Terima kasih telah menghubungi saya.',
@@ -59,7 +59,7 @@ class PortfolioController extends Controller
             ]);
         }
 
-        return redirect()->to(url()->previous() . '#contact')
+        return redirect('/#contact')
             ->with('success', 'Pesan Anda berhasil dikirim! Terima kasih telah menghubungi saya.');
     }
 

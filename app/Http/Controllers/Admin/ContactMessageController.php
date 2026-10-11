@@ -10,7 +10,7 @@ class ContactMessageController extends Controller
 {
     public function index()
     {
-        $messages = ContactMessage::orderBy('created_at', 'desc')->paginate(15);
+        $messages = ContactMessage::orderBy('id', 'desc')->paginate(15);
         $profile = \App\Models\Profile::first();
         return view('admin.messages.index', compact('messages', 'profile'));
     }

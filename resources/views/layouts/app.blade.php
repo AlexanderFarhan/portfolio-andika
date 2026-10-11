@@ -10,6 +10,8 @@
     <meta property="og:description" content="Mahasiswa Teknologi Informasi UBSI — System Analysis, Problem Solving, Web Development &amp; Networking.">
     <meta property="og:type" content="website">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title', 'Andika Amansyah | Web Resume & Portfolio')</title>
 
     <!-- Google Fonts & Stylesheets compiled via Vite -->

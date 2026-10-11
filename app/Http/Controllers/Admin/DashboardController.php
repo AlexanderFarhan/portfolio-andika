@@ -28,8 +28,8 @@ class DashboardController extends Controller
             'unread_messages_count' => ContactMessage::where('is_read', false)->count(),
         ];
 
-        $recentProjects = Project::orderBy('created_at', 'desc')->take(5)->get();
-        $recentMessages = ContactMessage::orderBy('created_at', 'desc')->take(5)->get();
+        $recentProjects = Project::orderBy('id', 'desc')->take(5)->get();
+        $recentMessages = ContactMessage::orderBy('id', 'desc')->take(5)->get();
         $profile = Profile::first();
 
         return view('admin.dashboard', compact('stats', 'recentProjects', 'recentMessages', 'profile'));

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin Dashboard') | Andika Amansyah Portfolio</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -116,6 +117,11 @@
                         </span>
                     </a>
 
+                    <!-- Test Chime Button -->
+                    <button type="button" class="btn btn-sm btn-outline-custom p-2" id="testChimeBtn" title="Tes Bunyi Notifikasi Pesan Masuk">
+                        <i class="bi bi-volume-up-fill text-info"></i>
+                    </button>
+
                     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Ganti Tema">
                         <i class="bi bi-sun-fill text-warning"></i>
                     </button>
@@ -212,14 +218,23 @@
                     return null;
                 }
             }
-            document.addEventListener('click', () => { getAudioContext(); }, { once: true });
+
+            // Prime AudioContext on first user interaction
+            ['click', 'keydown', 'touchstart', 'pointerdown'].forEach(evt => {
+                document.addEventListener(evt, () => {
+                    getAudioContext();
+                    if ('Notification' in window && Notification.permission === 'default') {
+                        try { Notification.requestPermission(); } catch(e) {}
+                    }
+                }, { once: true });
+            });
 
             function playChime() {
                 try {
                     const ctx = getAudioContext();
                     if (!ctx) return;
 
-                    // Chime note 1 (D5)
+                    // Chime note 1 (D5 - 587.33 Hz)
                     const osc1 = ctx.createOscillator();
                     const gain1 = ctx.createGain();
                     osc1.type = 'sine';
@@ -231,7 +246,7 @@
                     osc1.start(ctx.currentTime);
                     osc1.stop(ctx.currentTime + 0.35);
 
-                    // Chime note 2 (A5)
+                    // Chime note 2 (A5 - 880 Hz)
                     const osc2 = ctx.createOscillator();
                     const gain2 = ctx.createGain();
                     osc2.type = 'sine';
@@ -243,6 +258,26 @@
                     osc2.start(ctx.currentTime + 0.12);
                     osc2.stop(ctx.currentTime + 0.65);
                 } catch(e) {}
+            }
+
+            // Test chime button handler in topbar
+            const testChimeBtn = document.getElementById('testChimeBtn');
+            if (testChimeBtn) {
+                testChimeBtn.addEventListener('click', () => {
+                    playChime();
+                    if ('Notification' in window && Notification.permission === 'default') {
+                        Notification.requestPermission();
+                    }
+                    const toastEl = document.getElementById('liveMessageToast');
+                    if (toastEl && window.bootstrap && window.bootstrap.Toast) {
+                        const nameEl = document.getElementById('toastSenderName');
+                        const subjEl = document.getElementById('toastSubject');
+                        if (nameEl) nameEl.innerText = 'Tes Notifikasi Suara';
+                        if (subjEl) subjEl.innerText = 'Audio chime dan toast berfungsi dengan sempurna!';
+                        const toast = new bootstrap.Toast(toastEl);
+                        toast.show();
+                    }
+                });
             }
 
             const originalTitle = document.title;
@@ -258,7 +293,8 @@
             async function checkLiveMessages() {
                 try {
                     const res = await fetch(`${pollUrl}?after_id=${lastKnownId}`, {
-                        headers: { 'Accept': 'application/json' }
+                        headers: { 'Accept': 'application/json' },
+                        credentials: 'same-origin'
                     });
                     if (!res.ok) return;
                     const data = await res.json();
@@ -285,6 +321,11 @@
                         dashboardUnreadBadge.style.display = data.unread_count > 0 ? 'inline-block' : 'none';
                     }
 
+                    // Always sync latest ID to prevent redundant querying
+                    if (data.latest_id !== undefined) {
+                        lastKnownId = Math.max(lastKnownId, data.latest_id);
+                    }
+
                     // Handle newly arrived messages
                     if (data.has_new && data.new_messages && data.new_messages.length > 0) {
                         playChime();
@@ -305,6 +346,16 @@
                             const toast = new bootstrap.Toast(toastEl);
                             toast.show();
                         }
+
+                        // Native Desktop notification if permitted
+                        try {
+                            if ('Notification' in window && Notification.permission === 'granted') {
+                                new Notification(`🔔 Pesan Masuk: ${latest.name}`, {
+                                    body: `${latest.subject}\n"${latest.message.substring(0, 80)}..."`,
+                                    icon: '/favicon.ico'
+                                });
+                            }
+                        } catch(e) {}
 
                         // Live inject row into messages table if open
                         const tableBody = document.getElementById('messagesTableBody');
@@ -360,8 +411,6 @@
                                 recentList.prepend(item);
                             });
                         }
-
-                        lastKnownId = Math.max(lastKnownId, data.latest_id);
                     }
                 } catch(e) {}
             }
