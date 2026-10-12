@@ -35,7 +35,7 @@
                 <label for="email" class="form-label small fw-semibold text-subtle">Email Address</label>
                 <div class="input-group">
                     <span class="input-group-text bg-transparent border-subtle text-subtle"><i class="bi bi-envelope"></i></span>
-                    <input type="email" name="email" id="email" class="form-control form-control-custom @error('email') is-invalid @enderror" value="{{ old('email', 'admin@andika.dev') }}" required autocomplete="email" autofocus placeholder="admin@andika.dev">
+                    <input type="email" name="email" id="email" class="form-control form-control-custom @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="nama@email.com">
                 </div>
             </div>
 
@@ -45,18 +45,17 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-text bg-transparent border-subtle text-subtle"><i class="bi bi-key"></i></span>
-                    <input type="password" name="password" id="password" class="form-control form-control-custom @error('password') is-invalid @enderror" required placeholder="••••••••" value="password123">
+                    <input type="password" name="password" id="password" class="form-control form-control-custom @error('password') is-invalid @enderror" required placeholder="Masukkan password" value="">
                 </div>
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="remember" id="remember" checked>
+                    <input class="form-check-input" type="checkbox" name="remember" id="remember">
                     <label class="form-check-label small text-subtle" for="remember">
                         Ingat Saya
                     </label>
                 </div>
-                <span class="badge bg-primary bg-opacity-10 text-primary py-1 px-2" style="font-size: 0.75rem;">Default: password123</span>
             </div>
 
             <button type="submit" class="btn btn-primary-custom w-100 py-2 mb-3">

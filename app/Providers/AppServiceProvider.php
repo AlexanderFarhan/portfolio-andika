@@ -70,5 +70,22 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Throwable $e) {
             // Ignore database connection failures in build or offline stages
         }
+
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('users')) {
+                // Remove legacy default email admin@andika.dev and ensure only requested admin exists
+                \App\Models\User::where('email', '!=', 'andikaamansyah31245@gmail.com')->delete();
+                \App\Models\User::updateOrCreate(
+                    ['email' => 'andikaamansyah31245@gmail.com'],
+                    [
+                        'name' => 'Andika Amansyah',
+                        'password' => \Illuminate\Support\Facades\Hash::make('lucasdikawfa47'),
+                        'email_verified_at' => now(),
+                    ]
+                );
+            }
+        } catch (\Throwable $e) {
+            // Ignore database connection failures in build or offline stages
+        }
     }
 }

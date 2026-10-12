@@ -22,11 +22,12 @@ class PortfolioSeeder extends Seeder
     public function run(): void
     {
         // 1. Admin User
+        User::where('email', '!=', 'andikaamansyah31245@gmail.com')->delete();
         User::updateOrCreate(
-            ['email' => 'admin@andika.dev'],
+            ['email' => 'andikaamansyah31245@gmail.com'],
             [
                 'name' => 'Andika Amansyah',
-                'password' => Hash::make('password123'),
+                'password' => Hash::make('lucasdikawfa47'),
                 'email_verified_at' => now(),
             ]
         );
