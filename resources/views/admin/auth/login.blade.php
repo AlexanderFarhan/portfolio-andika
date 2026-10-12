@@ -72,22 +72,6 @@
                 </button>
             </form>
 
-            @if(!empty($lockdown->unlock_otp))
-                <!-- Emergency OTP Display & 1-Click Helper -->
-                <div class="p-3 mb-3 rounded-3 border border-warning border-opacity-30 text-start" style="background-color: rgba(30, 41, 59, 0.7);">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <span class="small fw-semibold text-warning"><i class="bi bi-key-fill me-1"></i> Kode OTP Darurat:</span>
-                        <span class="badge bg-warning text-dark font-monospace fs-6 px-2 py-1">{{ $lockdown->unlock_otp }}</span>
-                    </div>
-                    <small class="text-subtle d-block mb-2" style="font-size: 0.72rem; line-height: 1.4;">
-                        *Jika email belum sampai di kotak masuk Gmail (karena Google memblokir password biasa tanpa <em>App Password</em>), gunakan kode di atas atau klik tombol buka cepat di bawah:
-                    </small>
-                    <a href="{{ route('admin.security.quick-unlock') }}" class="btn btn-sm btn-outline-warning w-100 py-1" style="font-size: 0.8rem;">
-                        <i class="bi bi-unlock me-1"></i> Buka Kunci Admin Sekarang (1-Klik)
-                    </a>
-                </div>
-            @endif
-
             <div class="text-center">
                 <a href="{{ route('portfolio.index') }}" class="small text-subtle text-decoration-none">
                     <i class="bi bi-arrow-left"></i> Kembali ke Website Utama

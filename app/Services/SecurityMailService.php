@@ -16,10 +16,21 @@ class SecurityMailService
     /**
      * Send remote-lock security alert email.
      */
-    public static function sendSecurityAlert(string $attemptedEmail, string $ip, string $userAgent, string $remoteLockUrl): bool
-    {
+    public static function sendSecurityAlert(
+        string $attemptedEmail,
+        string $ip,
+        string $userAgent,
+        string $remoteLockUrl,
+        int $attempts = 1,
+        bool $isAutoLocked = false
+    ): bool {
         $timeString = now()->timezone('Asia/Jakarta')->format('d M Y, H:i:s') . ' WIB';
-        $subject = '🚨 [PERINGATAN KEAMANAN] Percobaan Masuk Paksa Admin Dideteksi!';
+
+        if ($isAutoLocked) {
+            $subject = '🚨 [LOCKDOWN AKTIF] Portal Admin Telah Dikunci Otomatis (3x Gagal Masuk)!';
+        } else {
+            $subject = "🚨 [PERINGATAN KEAMANAN] Percobaan Masuk Gagal Ke-{$attempts} Dideteksi!";
+        }
 
         $htmlContent = view('emails.security-alert', [
             'attemptedEmail' => $attemptedEmail,
@@ -27,6 +38,8 @@ class SecurityMailService
             'userAgent' => $userAgent,
             'timeString' => $timeString,
             'remoteLockUrl' => $remoteLockUrl,
+            'attempts' => $attempts,
+            'isAutoLocked' => $isAutoLocked,
         ])->render();
 
         return static::dispatchEmail(

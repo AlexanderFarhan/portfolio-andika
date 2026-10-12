@@ -66,16 +66,14 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             RateLimiter::clear($throttleKey);
+            AdminLockdown::resetFailedAttempts();
             $request->session()->regenerate();
 
             return redirect()->intended(route('admin.dashboard'))
                 ->with('success', 'Selamat datang kembali, ' . Auth::user()->name . '!');
         }
 
-        // Increment failed attempt counter
-        RateLimiter::hit($throttleKey, 300);
-
-        // Security Intrusion Tracking
+        // Security Intrusion Tracking & 3-Strikes Auto-Lockout
         $attemptedEmail = (string) $credentials['email'];
         $ip = $request->ip() ?? 'Unknown IP';
         $userAgent = $request->userAgent() ?? 'Unknown Browser';
@@ -83,19 +81,59 @@ class AuthController extends Controller
         // 1. Log security warning in system logs
         Log::warning("Unauthorized admin login attempt: Email: {$attemptedEmail}, IP: {$ip}, UA: {$userAgent}");
 
-        // 2. Prepare remote lock token in AdminLockdown state
-        $lockdown = AdminLockdown::registerFailedAttempt($attemptedEmail, $ip, $userAgent);
-        $remoteLockUrl = route('admin.security.remote-lock', ['token' => $lockdown->lock_token]);
+        // 2. Track failed attempt in database
+        $result = AdminLockdown::recordFailedAttempt($attemptedEmail, $ip, $userAgent);
+        $attempts = $result['attempts'];
+        $remaining = $result['remaining'];
+        $isAutoLocked = $result['is_locked'];
+        $remoteLockUrl = route('admin.security.remote-lock', ['token' => $result['lock_token']]);
 
-        // 3. Dispatch security alert email to andikaamansyah427@gmail.com with remote lock button
+        // 3. Handle 3rd failed attempt: AUTOMATIC LOCKDOWN!
+        if ($isAutoLocked) {
+            $otp = $result['otp'];
+
+            // Dispatch OTP code directly to andikaamansyah427@gmail.com via Resend API
+            try {
+                SecurityMailService::sendUnlockOtp($otp, route('admin.login'));
+            } catch (\Throwable $e) {
+                Log::error('Gagal mengirimkan email OTP auto-lock: ' . $e->getMessage());
+            }
+
+            // Dispatch alert email informing auto-lockout
+            try {
+                SecurityMailService::sendSecurityAlert(
+                    $attemptedEmail,
+                    $ip,
+                    $userAgent,
+                    $remoteLockUrl,
+                    3,
+                    true
+                );
+            } catch (\Throwable $e) {
+                Log::error('Failed to dispatch auto-lock security alert email: ' . $e->getMessage());
+            }
+
+            return redirect()->route('admin.login')->withErrors([
+                'email' => '🚨 Batas 3 kali percobaan login gagal tercapai! Halaman admin telah DIKUNCI OTOMATIS demi keamanan. Kode Verifikasi (OTP) telah dikirimkan ke andikaamansyah427@gmail.com untuk membuka portal.',
+            ]);
+        }
+
+        // 4. Failed attempt 1 or 2: Dispatch alert email with remote lock option
         try {
-            SecurityMailService::sendSecurityAlert($attemptedEmail, $ip, $userAgent, $remoteLockUrl);
+            SecurityMailService::sendSecurityAlert(
+                $attemptedEmail,
+                $ip,
+                $userAgent,
+                $remoteLockUrl,
+                $attempts,
+                false
+            );
         } catch (\Throwable $e) {
             Log::error('Failed to dispatch security alert email: ' . $e->getMessage());
         }
 
         return back()->withErrors([
-            'email' => 'Kredensial login yang Anda masukkan tidak sesuai. Peringatan keamanan telah dikirimkan ke email pemilik.',
+            'email' => "Kredensial login tidak sesuai (Percobaan {$attempts} dari 3). Peringatan keamanan: Tersisa {$remaining} kesempatan lagi sebelum halaman admin dikunci otomatis!",
         ])->onlyInput('email');
     }
 

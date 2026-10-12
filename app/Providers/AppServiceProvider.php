@@ -81,6 +81,8 @@ class AppServiceProvider extends ServiceProvider
                 \Illuminate\Support\Facades\Schema::create('admin_lockdowns', function (\Illuminate\Database\Schema\Blueprint $table) {
                     $table->id();
                     $table->boolean('is_locked')->default(false);
+                    $table->integer('failed_attempts')->default(0);
+                    $table->timestamp('last_failed_at')->nullable();
                     $table->string('lock_token', 100)->nullable();
                     $table->string('unlock_otp', 20)->nullable();
                     $table->timestamp('otp_expires_at')->nullable();
@@ -92,6 +94,17 @@ class AppServiceProvider extends ServiceProvider
                     $table->timestamp('last_alert_sent_at')->nullable();
                     $table->timestamps();
                 });
+            } else {
+                if (!\Illuminate\Support\Facades\Schema::hasColumn('admin_lockdowns', 'failed_attempts')) {
+                    \Illuminate\Support\Facades\Schema::table('admin_lockdowns', function (\Illuminate\Database\Schema\Blueprint $table) {
+                        $table->integer('failed_attempts')->default(0);
+                    });
+                }
+                if (!\Illuminate\Support\Facades\Schema::hasColumn('admin_lockdowns', 'last_failed_at')) {
+                    \Illuminate\Support\Facades\Schema::table('admin_lockdowns', function (\Illuminate\Database\Schema\Blueprint $table) {
+                        $table->timestamp('last_failed_at')->nullable();
+                    });
+                }
             }
         } catch (\Throwable $e) {
             // Ignore database connection failures in build or offline stages
