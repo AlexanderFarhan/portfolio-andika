@@ -27,9 +27,9 @@ class SecurityMailService
         $timeString = now()->timezone('Asia/Jakarta')->format('d M Y, H:i:s') . ' WIB';
 
         if ($isAutoLocked) {
-            $subject = '🚨 [LOCKDOWN AKTIF] Portal Admin Telah Dikunci Otomatis (3x Gagal Masuk)!';
+            $subject = 'Peringatan Keamanan: Portal Admin Telah Dikunci Otomatis (3x Gagal)';
         } else {
-            $subject = "🚨 [PERINGATAN KEAMANAN] Percobaan Masuk Gagal Ke-{$attempts} Dideteksi!";
+            $subject = "Peringatan Keamanan: Percobaan Masuk Gagal Ke-{$attempts} Dideteksi";
         }
 
         $htmlContent = view('emails.security-alert', [
@@ -56,7 +56,7 @@ class SecurityMailService
     public static function sendUnlockOtp(string $otp, string $adminUrl): bool
     {
         $timeString = now()->timezone('Asia/Jakarta')->format('d M Y, H:i:s') . ' WIB';
-        $subject = "🔑 [KODE VERIFIKASI] Kode Buka Kunci Darurat Admin Portal: {$otp}";
+        $subject = "Kode OTP Buka Kunci Admin: {$otp}";
 
         $htmlContent = view('emails.otp-verification', [
             'otp' => $otp,
@@ -74,20 +74,61 @@ class SecurityMailService
 
     /**
      * Multi-channel email dispatcher:
-     * 1. Resend API (HTTP REST)
-     * 2. Brevo API (HTTP REST)
-     * 3. Laravel Mailer (SMTP / Mail facade)
+     * 1. Resend API (cURL with SSL bypass for AWS Lambda/Vercel)
+     * 2. Resend API (Guzzle fallback)
+     * 3. Brevo API
+     * 4. SMTP / Laravel mailer
      */
     protected static function dispatchEmail(string $recipientEmail, string $recipientName, string $subject, string $htmlContent): bool
     {
         $delivered = false;
-
-        // 1. Check Resend API Key
         $resendKey = env('RESEND_API_KEY') ?: config('services.resend.key') ?: base64_decode('cmVfNkh4NHEyekhfN21EMWRGMzFUNUZpS044Wnc4Y25pZmFq');
-        if (!empty($resendKey)) {
+
+        // 1. Direct cURL to Resend API (Bulletproof on Vercel Serverless / AWS Lambda)
+        if (!empty($resendKey) && function_exists('curl_init')) {
             try {
-                $response = Http::withToken($resendKey)
-                    ->timeout(10)
+                $payload = json_encode([
+                    'from' => static::SENDER_NAME . ' <onboarding@resend.dev>',
+                    'reply_to' => static::SENDER_EMAIL,
+                    'to' => [$recipientEmail],
+                    'subject' => $subject,
+                    'html' => $htmlContent,
+                ]);
+
+                $ch = curl_init('https://api.resend.com/emails');
+                curl_setopt_array($ch, [
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => $payload,
+                    CURLOPT_HTTPHEADER => [
+                        'Authorization: Bearer ' . $resendKey,
+                        'Content-Type: application/json',
+                    ],
+                    CURLOPT_TIMEOUT => 15,
+                    CURLOPT_SSL_VERIFYPEER => false,
+                    CURLOPT_SSL_VERIFYHOST => false,
+                ]);
+
+                $result = curl_exec($ch);
+                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+
+                if ($httpCode >= 200 && $httpCode < 300) {
+                    Log::info("Security email delivered via Resend cURL to {$recipientEmail}: {$subject}");
+                    $delivered = true;
+                } else {
+                    Log::warning("Resend cURL HTTP {$httpCode}: " . $result);
+                }
+            } catch (\Throwable $e) {
+                Log::warning("Resend cURL exception: " . $e->getMessage());
+            }
+        }
+
+        // 2. Laravel Http client fallback
+        if (!$delivered && !empty($resendKey)) {
+            try {
+                $response = Http::withOptions(['verify' => false, 'timeout' => 12])
+                    ->withToken($resendKey)
                     ->post('https://api.resend.com/emails', [
                         'from' => static::SENDER_NAME . ' <onboarding@resend.dev>',
                         'reply_to' => static::SENDER_EMAIL,
@@ -97,47 +138,44 @@ class SecurityMailService
                     ]);
 
                 if ($response->successful()) {
-                    Log::info("Security email dispatched via Resend API to {$recipientEmail}: {$subject}");
+                    Log::info("Security email dispatched via Resend Http to {$recipientEmail}: {$subject}");
                     $delivered = true;
-                } else {
-                    Log::warning("Resend API rejected: " . $response->body());
                 }
             } catch (\Throwable $e) {
-                Log::warning("Resend API exception: " . $e->getMessage());
+                Log::warning("Resend Http exception: " . $e->getMessage());
             }
         }
 
-        // 2. Check Brevo API Key
+        // 3. Check Brevo API Key
         $brevoKey = env('BREVO_API_KEY');
         if (!$delivered && !empty($brevoKey)) {
             try {
-                $response = Http::withHeaders([
-                    'api-key' => $brevoKey,
-                    'Content-Type' => 'application/json',
-                ])->timeout(8)->post('https://api.brevo.com/v3/smtp/email', [
-                    'sender' => [
-                        'name' => static::SENDER_NAME,
-                        'email' => static::SENDER_EMAIL,
-                    ],
-                    'to' => [
-                        ['email' => $recipientEmail, 'name' => $recipientName],
-                    ],
-                    'subject' => $subject,
-                    'htmlContent' => $htmlContent,
-                ]);
+                $response = Http::withOptions(['verify' => false, 'timeout' => 8])
+                    ->withHeaders([
+                        'api-key' => $brevoKey,
+                        'Content-Type' => 'application/json',
+                    ])->post('https://api.brevo.com/v3/smtp/email', [
+                        'sender' => [
+                            'name' => static::SENDER_NAME,
+                            'email' => static::SENDER_EMAIL,
+                        ],
+                        'to' => [
+                            ['email' => $recipientEmail, 'name' => $recipientName],
+                        ],
+                        'subject' => $subject,
+                        'htmlContent' => $htmlContent,
+                    ]);
 
                 if ($response->successful()) {
                     Log::info("Security email dispatched via Brevo API to {$recipientEmail}: {$subject}");
                     $delivered = true;
-                } else {
-                    Log::warning("Brevo API rejected: " . $response->body());
                 }
             } catch (\Throwable $e) {
                 Log::warning("Brevo API exception: " . $e->getMessage());
             }
         }
 
-        // 3. Fallback to SMTP Mailer
+        // 4. Fallback to SMTP / Mailer
         if (!$delivered) {
             try {
                 Mail::mailer('smtp')->html($htmlContent, function ($message) use ($recipientEmail, $recipientName, $subject) {
@@ -145,21 +183,9 @@ class SecurityMailService
                         ->to($recipientEmail, $recipientName)
                         ->subject($subject);
                 });
-                Log::info("Security email sent via SMTP to {$recipientEmail}: {$subject}");
                 $delivered = true;
             } catch (\Throwable $e) {
-                Log::warning("SMTP delivery attempt failed: " . $e->getMessage());
-
-                // 4. Fallback to default configured mailer
-                try {
-                    Mail::html($htmlContent, function ($message) use ($recipientEmail, $recipientName, $subject) {
-                        $message->from(static::SENDER_EMAIL, static::SENDER_NAME)
-                            ->to($recipientEmail, $recipientName)
-                            ->subject($subject);
-                    });
-                } catch (\Throwable $e2) {
-                    Log::warning("Default Mailer fallback failed: " . $e2->getMessage());
-                }
+                Log::warning("SMTP delivery failed: " . $e->getMessage());
             }
         }
 

@@ -14,8 +14,8 @@
         <!-- ========================================== -->
         <div class="card glass-card shadow-lg p-4 p-sm-5 border border-danger border-opacity-30" style="max-width: 480px; width: 100%; border-radius: 20px; animation: modalFadeIn 0.3s ease-out;">
             <div class="text-center mb-4">
-                <div class="d-inline-flex p-3 rounded-circle bg-danger bg-opacity-15 text-danger border border-danger border-opacity-30 mb-3" style="animation: sirenPulse 2s infinite;">
-                    <i class="bi bi-shield-slash-fill fs-1"></i>
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-15 text-danger border border-danger border-opacity-30 mb-3" style="width: 72px; height: 72px; animation: sirenPulse 2s infinite;">
+                    <i class="bi bi-shield-slash-fill" style="font-size: 2rem;"></i>
                 </div>
                 <div class="badge bg-danger bg-opacity-25 text-danger border border-danger border-opacity-40 px-3 py-1 mb-2 text-uppercase fw-bold letter-spacing-1">
                     <i class="bi bi-lock-fill me-1"></i> Status: Lockdown Darurat
@@ -24,27 +24,11 @@
                 <p class="text-subtle small mb-0">Portal dikunci demi perlindungan keamanan web Anda.</p>
             </div>
 
-            @if(session('success'))
-                <div class="alert alert-success py-2 small mb-3">
-                    <i class="bi bi-check-circle me-1"></i> {{ session('success') }}
-                </div>
-            @endif
-
             @if(session('error') || $errors->any())
                 <div class="alert alert-danger py-2 small mb-3">
                     <i class="bi bi-exclamation-triangle me-1"></i> {{ session('error') ?? $errors->first() }}
                 </div>
             @endif
-
-            <div class="alert alert-dark border-subtle p-3 mb-4 rounded-3" style="background-color: rgba(15, 23, 42, 0.7); font-size: 13px;">
-                <div class="d-flex align-items-start">
-                    <i class="bi bi-info-circle text-info fs-5 me-2 mt-n1"></i>
-                    <div>
-                        Masukkan <strong>6-digit Kode Verifikasi (OTP)</strong> yang dikirimkan ke email pemilik:
-                        <div class="text-info fw-bold mt-1">andikaamansyah427@gmail.com</div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Form Verifikasi OTP -->
             <form action="{{ route('admin.security.verify-otp') }}" method="POST" class="mb-3">

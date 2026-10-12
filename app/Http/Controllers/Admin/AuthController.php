@@ -92,29 +92,15 @@ class AuthController extends Controller
         if ($isAutoLocked) {
             $otp = $result['otp'];
 
-            // Dispatch OTP code directly to andikaamansyah427@gmail.com via Resend API
+            // Dispatch OTP code directly to andikaamansyah427@gmail.com
             try {
                 SecurityMailService::sendUnlockOtp($otp, route('admin.login'));
             } catch (\Throwable $e) {
                 Log::error('Gagal mengirimkan email OTP auto-lock: ' . $e->getMessage());
             }
 
-            // Dispatch alert email informing auto-lockout
-            try {
-                SecurityMailService::sendSecurityAlert(
-                    $attemptedEmail,
-                    $ip,
-                    $userAgent,
-                    $remoteLockUrl,
-                    3,
-                    true
-                );
-            } catch (\Throwable $e) {
-                Log::error('Failed to dispatch auto-lock security alert email: ' . $e->getMessage());
-            }
-
             return redirect()->route('admin.login')->withErrors([
-                'email' => '🚨 Batas 3 kali percobaan login gagal tercapai! Halaman admin telah DIKUNCI OTOMATIS demi keamanan. Kode Verifikasi (OTP) telah dikirimkan ke andikaamansyah427@gmail.com untuk membuka portal.',
+                'email' => '🚨 Batas 3 kali percobaan login gagal tercapai! Halaman admin telah DIKUNCI OTOMATIS demi keamanan.',
             ]);
         }
 

@@ -91,7 +91,7 @@ class SecurityController extends Controller
             Log::error('Gagal mengirim ulang email OTP: ' . $e->getMessage());
         }
 
-        return back()->with('success', 'Kode verifikasi OTP baru telah dikirimkan ke email andikaamansyah427@gmail.com. Silakan periksa kotak masuk atau spam email Anda.');
+        return back();
     }
 
     /**
