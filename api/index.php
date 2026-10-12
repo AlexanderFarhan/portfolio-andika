@@ -55,7 +55,7 @@ foreach ($directories as $dir) {
 }
 
 // Ensure fresh Blade compilation on new deployment instances in /tmp
-$buildHash = md5(__DIR__ . '_' . @filemtime(__DIR__ . '/../resources/views/layouts/app.blade.php') . '_' . @filemtime(__FILE__) . '_v8');
+$buildHash = md5(__DIR__ . '_' . @filemtime(__DIR__ . '/../resources/views/portfolio/index.blade.php') . '_' . @filemtime(__FILE__) . '_v9');
 $deployMarker = '/tmp/.deployed_' . $buildHash;
 if (!file_exists($deployMarker)) {
     if (is_dir('/tmp/storage/framework/views')) {

@@ -95,8 +95,23 @@
                     </p>
                     <div class="d-flex align-items-center gap-2">
                         @if(isset($socialLinks))
+                            @php
+                                $ftProfPhone = isset($profile->phone) ? preg_replace('/[^0-9]/', '', $profile->phone) : '';
+                                if (str_starts_with($ftProfPhone, '0')) $ftProfPhone = '62' . substr($ftProfPhone, 1);
+                                elseif (str_starts_with($ftProfPhone, '8')) $ftProfPhone = '62' . $ftProfPhone;
+
+                                $ftProfEmail = $profile->email ?? '';
+                            @endphp
                             @foreach($socialLinks as $soc)
-                                <a href="{{ $soc->url }}" target="_blank" class="btn-icon-round" aria-label="{{ $soc->platform }}" title="{{ $soc->platform }}">
+                                @php
+                                    $sUrl = $soc->url;
+                                    if (strtolower($soc->platform) === 'whatsapp' && !empty($ftProfPhone)) {
+                                        $sUrl = 'https://api.whatsapp.com/send?phone=' . $ftProfPhone . '&text=' . urlencode('Halo Andika, saya melihat portofolio Anda');
+                                    } elseif (strtolower($soc->platform) === 'email' && !empty($ftProfEmail)) {
+                                        $sUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($ftProfEmail) . '&su=' . urlencode('Diskusi Tawaran Proyek / Kerjasama');
+                                    }
+                                @endphp
+                                <a href="{{ $sUrl }}" target="_blank" rel="noopener noreferrer" class="btn-icon-round" aria-label="{{ $soc->platform }}" title="{{ $soc->platform }}">
                                     <i class="bi {{ $soc->icon }}"></i>
                                 </a>
                             @endforeach

@@ -562,6 +562,21 @@
             </p>
         </div>
 
+@php
+    $rawProfPhone = preg_replace('/[^0-9]/', '', $profile->phone ?? '');
+    if (str_starts_with($rawProfPhone, '0')) {
+        $cleanProfPhone = '62' . substr($rawProfPhone, 1);
+    } elseif (str_starts_with($rawProfPhone, '8')) {
+        $cleanProfPhone = '62' . $rawProfPhone;
+    } else {
+        $cleanProfPhone = $rawProfPhone ?: '6288225825512';
+    }
+
+    $cleanProfEmail = $profile->email ?? 'andikaamansyah427@gmail.com';
+    $gmailProfUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($cleanProfEmail) . '&su=' . urlencode('Diskusi Tawaran Proyek / Kerjasama');
+    $waProfUrl = 'https://api.whatsapp.com/send?phone=' . $cleanProfPhone . '&text=' . urlencode('Halo Andika, saya melihat portofolio Anda');
+@endphp
+
         <div class="row g-4 align-items-stretch">
             <!-- Contact Info Cards Left -->
             <div class="col-lg-5 reveal">
@@ -572,8 +587,8 @@
                         </div>
                         <div>
                             <span class="small text-muted d-block">Kirim Email Langsung:</span>
-                            <a href="mailto:{{ $profile->email ?? 'andika.amansyah@gmail.com' }}" class="fw-bold text-decoration-none" style="color: var(--text-primary);">
-                                {{ $profile->email ?? 'andika.amansyah@gmail.com' }}
+                            <a href="{{ $gmailProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-bold text-decoration-none hover-primary text-break" style="color: var(--text-primary);" title="Buka email di Gmail browser (Penerima: {{ $cleanProfEmail }})">
+                                {{ $profile->email ?? 'andikaamansyah427@gmail.com' }}
                             </a>
                         </div>
                     </div>
@@ -584,8 +599,8 @@
                         </div>
                         <div>
                             <span class="small text-muted d-block">WhatsApp / Telepon:</span>
-                            <a href="https://wa.me/6281234567890?text=Halo%20Andika,%20saya%20melihat%20portofolio%20Anda" target="_blank" class="fw-bold text-decoration-none" style="color: var(--text-primary);">
-                                {{ $profile->phone ?? '+62 812-3456-7890' }}
+                            <a href="{{ $waProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-bold text-decoration-none hover-primary" style="color: var(--text-primary);" title="Hubungi via WhatsApp ({{ $cleanProfPhone }})">
+                                {{ $profile->phone ?? '+62 882-2582-5512' }}
                             </a>
                         </div>
                     </div>
@@ -596,7 +611,7 @@
                         </div>
                         <div>
                             <span class="small text-muted d-block">Lokasi Domisili:</span>
-                            <span class="fw-bold" style="color: var(--text-primary);">{{ $profile->location ?? 'Bekasi / Jakarta, Indonesia' }}</span>
+                            <span class="fw-bold" style="color: var(--text-primary);">{{ $profile->location ?? 'Kramat/ Jakarta Utara, Indonesia' }}</span>
                         </div>
                     </div>
 
@@ -605,7 +620,15 @@
                         <h4 class="h6 fw-bold mb-3" style="color: var(--text-primary);">Ikuti Jejaring Profesional Saya:</h4>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($socialLinks as $soc)
-                                <a href="{{ $soc->url }}" target="_blank" class="btn btn-sm btn-outline-custom">
+                                @php
+                                    $linkUrl = $soc->url;
+                                    if (strtolower($soc->platform) === 'whatsapp' && !empty($cleanProfPhone)) {
+                                        $linkUrl = $waProfUrl;
+                                    } elseif (strtolower($soc->platform) === 'email' && !empty($cleanProfEmail)) {
+                                        $linkUrl = $gmailProfUrl;
+                                    }
+                                @endphp
+                                <a href="{{ $linkUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom">
                                     <i class="bi {{ $soc->icon }} me-1"></i> {{ $soc->platform }}
                                 </a>
                             @endforeach
@@ -747,9 +770,9 @@
                                             const nameVal = formData.get('name') || '';
                                             const subjectVal = formData.get('subject') || '';
                                             const msgVal = formData.get('message') || '';
-                                            const phoneVal = '{{ preg_replace("/[^0-9]/", "", $profile->phone ?? "6281234567890") }}';
+                                            const phoneVal = '{{ $cleanProfPhone }}';
                                             const waText = encodeURIComponent(`Halo Mas Andika, saya ${nameVal}.\n\nSubjek: ${subjectVal}\n\nPesan:\n${msgVal}`);
-                                            const waUrl = `https://wa.me/${phoneVal}?text=${waText}`;
+                                            const waUrl = `https://api.whatsapp.com/send?phone=${phoneVal}&text=${waText}`;
 
                                             alertBox.innerHTML = `
                                                 <div class="alert alert-success alert-dismissible fade show p-3 p-md-4 mb-4 border border-success shadow-lg" role="alert" style="background: rgba(16, 185, 129, 0.12); backdrop-filter: blur(8px);">
