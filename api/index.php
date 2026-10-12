@@ -54,6 +54,18 @@ foreach ($directories as $dir) {
     }
 }
 
+// Ensure fresh Blade compilation on new deployment instances in /tmp
+$deployMarker = '/tmp/.deployed_' . md5(__DIR__ . filemtime(__FILE__));
+if (!file_exists($deployMarker)) {
+    if (is_dir('/tmp/storage/framework/views')) {
+        $files = glob('/tmp/storage/framework/views/*');
+        foreach ($files as $file) {
+            if (is_file($file)) @unlink($file);
+        }
+    }
+    @touch($deployMarker);
+}
+
 // 3. Setup Database Connection (Neon PostgreSQL Default)
 $dbConnection = $_ENV['DB_CONNECTION'] ?? $_SERVER['DB_CONNECTION'] ?? getenv('DB_CONNECTION') ?: 'pgsql';
 

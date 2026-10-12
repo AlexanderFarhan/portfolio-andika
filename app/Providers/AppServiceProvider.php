@@ -53,6 +53,10 @@ class AppServiceProvider extends ServiceProvider
 
         \Illuminate\Support\Facades\Vite::createAssetPathsUsing(fn (string $path) => '/' . ltrim($path, '/'));
 
+        if (env('VIEW_COMPILED_PATH')) {
+            config(['view.compiled' => env('VIEW_COMPILED_PATH')]);
+        }
+
         if (config('app.env') === 'production' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
