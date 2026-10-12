@@ -134,7 +134,7 @@
                             <div class="fw-bold {{ !$msg->is_read ? 'text-primary' : '' }}">{{ $msg->name }}</div>
                         </td>
                         <td>
-                            <a href="mailto:{{ $msg->email }}" class="small text-subtle">{{ $msg->email }}</a>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($msg->email) }}&su={{ urlencode('Re: ' . $msg->subject) }}" target="_blank" rel="noopener noreferrer" class="small text-subtle hover-primary" title="Balas via Gmail browser">{{ $msg->email }}</a>
                         </td>
                         <td>
                             <div class="fw-semibold small">{{ $msg->subject }}</div>
