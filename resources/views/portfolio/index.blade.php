@@ -649,21 +649,36 @@
                             </div>
                         </div>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label for="phone" class="form-label small fw-semibold">Nomor Telepon / WhatsApp <span class="text-subtle fw-normal">(Opsional)</span></label>
-                                <input type="tel" name="phone" id="phone" class="form-control form-control-custom @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Contoh: 081234567890">
-                                @error('phone')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                        <!-- Kolom Nomor WA (Opsional) -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="phone" class="form-label small fw-semibold mb-0">
+                                    <i class="bi bi-whatsapp text-success me-1"></i> Nomor WA <span class="fw-normal text-subtle">(WhatsApp)</span>
+                                </label>
+                                <span class="badge bg-secondary bg-opacity-25 text-muted fw-normal" style="font-size: 0.75rem;">
+                                    Opsional (Boleh diisi / boleh tidak)
+                                </span>
                             </div>
-                            <div class="col-md-6">
-                                <label for="subject" class="form-label small fw-semibold">Subjek Pesan *</label>
-                                <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Diskusi Tawaran Proyek Web System" required>
-                                @error('subject')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                            <div class="input-group">
+                                <span class="input-group-text bg-secondary bg-opacity-10 border-subtle text-success">
+                                    <i class="bi bi-whatsapp"></i>
+                                </span>
+                                <input type="tel" name="phone" id="phone" class="form-control form-control-custom @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Contoh: 081234567890 (Boleh dikosongkan jika hanya ingin lewat email)">
                             </div>
+                            <div class="form-text small text-subtle mt-1" style="font-size: 0.75rem;">
+                                <i class="bi bi-info-circle me-1"></i>Boleh diisi atau dikosongkan. Jika diisi, admin dapat langsung menghubungi Anda via WhatsApp.
+                            </div>
+                            @error('phone')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="subject" class="form-label small fw-semibold">Subjek Pesan *</label>
+                            <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Diskusi Tawaran Proyek Web System" required>
+                            @error('subject')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="mb-4">

@@ -55,15 +55,25 @@ foreach ($directories as $dir) {
 }
 
 // Ensure fresh Blade compilation on new deployment instances in /tmp
-$deployMarker = '/tmp/.deployed_' . md5(__DIR__ . filemtime(__FILE__));
+$buildHash = md5(__DIR__ . '_' . @filemtime(__DIR__ . '/../resources/views/portfolio/index.blade.php') . '_' . @filemtime(__FILE__) . '_v5');
+$deployMarker = '/tmp/.deployed_' . $buildHash;
 if (!file_exists($deployMarker)) {
     if (is_dir('/tmp/storage/framework/views')) {
         $files = glob('/tmp/storage/framework/views/*');
-        foreach ($files as $file) {
-            if (is_file($file)) @unlink($file);
+        if ($files) {
+            foreach ($files as $file) {
+                if (is_file($file)) @unlink($file);
+            }
         }
     }
     @touch($deployMarker);
+}
+
+// Prevent browser from caching dynamic HTML responses
+if ($uri === '/' || (!str_starts_with($uri, '/build') && !str_starts_with($uri, '/images') && !str_ends_with($uri, '.ico'))) {
+    header("Cache-Control: no-cache, no-store, must-revalidate");
+    header("Pragma: no-cache");
+    header("Expires: 0");
 }
 
 // 3. Setup Database Connection (Neon PostgreSQL Default)
