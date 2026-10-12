@@ -123,18 +123,29 @@ class SecurityMailService
             }
         }
 
-        // 3. Fallback to Laravel Mailer (SMTP / configured driver)
+        // 3. Fallback to SMTP Mailer
         if (!$delivered) {
             try {
-                Mail::html($htmlContent, function ($message) use ($recipientEmail, $recipientName, $subject) {
+                Mail::mailer('smtp')->html($htmlContent, function ($message) use ($recipientEmail, $recipientName, $subject) {
                     $message->from(static::SENDER_EMAIL, static::SENDER_NAME)
                         ->to($recipientEmail, $recipientName)
                         ->subject($subject);
                 });
-                Log::info("Security email sent via Laravel Mail to {$recipientEmail}: {$subject}");
+                Log::info("Security email sent via SMTP to {$recipientEmail}: {$subject}");
                 $delivered = true;
             } catch (\Throwable $e) {
-                Log::warning("Laravel Mailer delivery failed: " . $e->getMessage());
+                Log::warning("SMTP delivery attempt failed: " . $e->getMessage());
+
+                // 4. Fallback to default configured mailer
+                try {
+                    Mail::html($htmlContent, function ($message) use ($recipientEmail, $recipientName, $subject) {
+                        $message->from(static::SENDER_EMAIL, static::SENDER_NAME)
+                            ->to($recipientEmail, $recipientName)
+                            ->subject($subject);
+                    });
+                } catch (\Throwable $e2) {
+                    Log::warning("Default Mailer fallback failed: " . $e2->getMessage());
+                }
             }
         }
 

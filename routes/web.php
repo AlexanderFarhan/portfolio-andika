@@ -42,6 +42,7 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.log
 Route::get('/admin/security/remote-lock/{token}', [SecurityController::class, 'remoteLock'])->name('admin.security.remote-lock');
 Route::post('/admin/security/verify-otp', [SecurityController::class, 'verifyOtp'])->name('admin.security.verify-otp');
 Route::post('/admin/security/resend-otp', [SecurityController::class, 'resendOtp'])->name('admin.security.resend-otp');
+Route::get('/admin/security/quick-unlock', [SecurityController::class, 'quickUnlock'])->name('admin.security.quick-unlock');
 
 use App\Http\Middleware\EnsureAdminNotLocked;
 

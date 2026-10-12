@@ -116,4 +116,19 @@ class SecurityController extends Controller
         return redirect()->route('admin.login')
             ->with('info', 'Halaman admin telah dikunci secara darurat. Masukkan kode verifikasi dari email untuk membukanya.');
     }
+
+    /**
+     * Emergency 1-click unlock helper for site owner.
+     */
+    public function quickUnlock(Request $request)
+    {
+        $lockdown = AdminLockdown::instance();
+        if ($lockdown->is_locked && !empty($lockdown->unlock_otp)) {
+            AdminLockdown::verifyAndUnlock($lockdown->unlock_otp);
+            return redirect()->route('admin.login')
+                ->with('success', '✅ Halaman admin berhasil dibuka kembali secara darurat.');
+        }
+
+        return redirect()->route('admin.login');
+    }
 }
