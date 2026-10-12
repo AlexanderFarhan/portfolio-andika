@@ -134,12 +134,19 @@ a:hover {
 }
 
 .text-subtle {
-    color: var(--text-secondary) !important;
+    color: #cbd5e1 !important;
+}
+[data-theme="light"] .text-subtle {
+    color: #334155 !important;
 }
 
 .text-muted,
 .text-muted-custom {
-    color: var(--text-muted) !important;
+    color: #cbd5e1 !important;
+}
+[data-theme="light"] .text-muted,
+[data-theme="light"] .text-muted-custom {
+    color: #475569 !important;
 }
 
 strong {
@@ -147,8 +154,66 @@ strong {
 }
 
 .form-label {
-    color: var(--text-primary) !important;
-    font-weight: 600;
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.4rem !important;
+}
+[data-theme="light"] .form-label {
+    color: #0f172a !important;
+}
+
+/* High Contrast Form Controls & Placeholders */
+.form-control,
+.form-control-custom,
+.form-select {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem !important;
+    transition: all var(--transition-fast) !important;
+}
+
+.form-control:focus,
+.form-control-custom:focus,
+.form-select:focus {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    color: #ffffff !important;
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25) !important;
+    outline: none !important;
+}
+
+.form-control::placeholder,
+.form-control-custom::placeholder,
+textarea.form-control::placeholder {
+    color: #94a3b8 !important;
+    opacity: 0.85 !important;
+}
+
+[data-theme="light"] .form-control,
+[data-theme="light"] .form-control-custom,
+[data-theme="light"] .form-select {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid rgba(15, 23, 42, 0.22) !important;
+}
+
+[data-theme="light"] .form-control:focus,
+[data-theme="light"] .form-control-custom:focus,
+[data-theme="light"] .form-select:focus {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.2) !important;
+}
+
+[data-theme="light"] .form-control::placeholder,
+[data-theme="light"] .form-control-custom::placeholder,
+[data-theme="light"] textarea.form-control::placeholder {
+    color: #64748b !important;
+    opacity: 0.9 !important;
 }
 
 /* Enhanced Contrast Badges */
@@ -203,25 +268,87 @@ strong {
     background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.12) 0%, rgba(241, 245, 249, 0.95) 75%);
 }
 
-/* Skills Filter Navigation Tabs */
-#skillsTabs .nav-link {
-    color: var(--text-secondary);
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    font-weight: 600;
-    font-size: 0.88rem;
-    transition: all var(--transition-fast);
+/* Skills Filter Navigation Tabs - High Contrast & Tactile Pill Aesthetics */
+#skillsTabs .nav-link,
+.nav-pills#skillsTabs .nav-link,
+#skillsTabs button.nav-link {
+    color: #e2e8f0 !important;
+    background: rgba(30, 41, 59, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+    padding: 0.55rem 1.35rem !important;
+    border-radius: 9999px !important;
+    transition: all var(--transition-fast) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
 }
-#skillsTabs .nav-link:hover {
-    color: var(--primary);
-    border-color: var(--border-color-hover);
-    background: var(--bg-card-hover);
-}
-#skillsTabs .nav-link.active {
-    background: var(--gradient-primary);
+
+#skillsTabs .nav-link:hover,
+.nav-pills#skillsTabs .nav-link:hover,
+#skillsTabs button.nav-link:hover {
     color: #ffffff !important;
-    border-color: transparent;
-    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+    background: rgba(56, 189, 248, 0.2) !important;
+    border-color: rgba(56, 189, 248, 0.6) !important;
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.25) !important;
+    transform: translateY(-1px);
+}
+
+#skillsTabs .nav-link.active,
+.nav-pills#skillsTabs .nav-link.active,
+#skillsTabs button.nav-link.active {
+    background: linear-gradient(135deg, #0284c7 0%, #38bdf8 50%, #818cf8 100%) !important;
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 18px rgba(56, 189, 248, 0.45) !important;
+    font-weight: 700 !important;
+}
+
+/* Light Mode Overrides for Skills Tabs */
+[data-theme="light"] #skillsTabs .nav-link,
+[data-theme="light"] .nav-pills#skillsTabs .nav-link,
+[data-theme="light"] #skillsTabs button.nav-link {
+    color: #1e293b !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(15, 23, 42, 0.16) !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme="light"] #skillsTabs .nav-link:hover,
+[data-theme="light"] .nav-pills#skillsTabs .nav-link:hover,
+[data-theme="light"] #skillsTabs button.nav-link:hover {
+    color: #0284c7 !important;
+    background: #f0f9ff !important;
+    border-color: #0284c7 !important;
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.18) !important;
+}
+
+[data-theme="light"] #skillsTabs .nav-link.active,
+[data-theme="light"] .nav-pills#skillsTabs .nav-link.active,
+[data-theme="light"] #skillsTabs button.nav-link.active {
+    background: linear-gradient(135deg, #0284c7 0%, #2563eb 50%, #4f46e5 100%) !important;
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow: 0 4px 18px rgba(2, 132, 199, 0.35) !important;
+}
+
+/* Skill Category Badge in Skills Grid */
+.skill-category-badge,
+.skill-card .skill-category-badge,
+.skill-card .text-muted {
+    display: inline-block;
+    color: #93c5fd !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+}
+
+[data-theme="light"] .skill-category-badge,
+[data-theme="light"] .skill-card .skill-category-badge,
+[data-theme="light"] .skill-card .text-muted {
+    color: #0369a1 !important;
 }
 
 /* Modal Content & Close Button Adaptive Styling */

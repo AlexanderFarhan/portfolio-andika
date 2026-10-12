@@ -214,7 +214,7 @@
                                         </div>
                                         <div>
                                             <h3 class="h6 mb-0 fw-bold" style="color: var(--text-primary);">{{ $skill->name }}</h3>
-                                            <span class="text-muted" style="font-size: 0.72rem;">{{ $skill->category }}</span>
+                                            <span class="skill-category-badge">{{ $skill->category }}</span>
                                         </div>
                                     </div>
                                     <span class="fw-bold text-primary font-mono">{{ $skill->proficiency }}%</span>
@@ -242,7 +242,7 @@
                                             </div>
                                             <div>
                                                 <h3 class="h6 mb-0 fw-bold" style="color: var(--text-primary);">{{ $skill->name }}</h3>
-                                                <span class="text-muted" style="font-size: 0.72rem;">{{ $skill->category }}</span>
+                                                <span class="skill-category-badge">{{ $skill->category }}</span>
                                             </div>
                                         </div>
                                         <span class="fw-bold text-primary font-mono">{{ $skill->proficiency }}%</span>
