@@ -63,6 +63,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('projects', ProjectController::class);
     Route::resource('certificates', CertificateController::class);
     Route::resource('social-links', SocialLinkController::class);
+    Route::delete('/messages/destroy-read', [ContactMessageController::class, 'destroyRead'])->name('messages.destroy-read');
+    Route::delete('/messages/destroy-batch', [ContactMessageController::class, 'destroyBatch'])->name('messages.destroy-batch');
     Route::resource('messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
     Route::get('/messages-poll', [ContactMessageController::class, 'poll'])->name('messages.poll');
 

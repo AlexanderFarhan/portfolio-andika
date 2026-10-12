@@ -11,8 +11,10 @@ class ContactMessageController extends Controller
     public function index()
     {
         $messages = ContactMessage::orderBy('id', 'desc')->paginate(15);
+        $readCount = ContactMessage::where('is_read', true)->count();
+        $unreadCount = ContactMessage::where('is_read', false)->count();
         $profile = \App\Models\Profile::first();
-        return view('admin.messages.index', compact('messages', 'profile'));
+        return view('admin.messages.index', compact('messages', 'profile', 'readCount', 'unreadCount'));
     }
 
     public function show(ContactMessage $message)
@@ -33,6 +35,39 @@ class ContactMessageController extends Controller
 
         return redirect()->route('admin.messages.index')
             ->with('success', 'Pesan kontak berhasil dihapus.');
+    }
+
+    /**
+     * Delete all messages that have already been marked as read.
+     */
+    public function destroyRead()
+    {
+        $count = ContactMessage::where('is_read', true)->delete();
+
+        if ($count === 0) {
+            return redirect()->route('admin.messages.index')
+                ->with('error', 'Tidak ada pesan berstatus sudah dibaca yang dapat dihapus.');
+        }
+
+        return redirect()->route('admin.messages.index')
+            ->with('success', "Berhasil menghapus {$count} pesan yang sudah dibaca.");
+    }
+
+    /**
+     * Delete multiple selected messages at once.
+     */
+    public function destroyBatch(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (!is_array($ids) || empty($ids)) {
+            return redirect()->route('admin.messages.index')
+                ->with('error', 'Tidak ada pesan yang dipilih untuk dihapus.');
+        }
+
+        $count = ContactMessage::whereIn('id', $ids)->delete();
+
+        return redirect()->route('admin.messages.index')
+            ->with('success', "Berhasil menghapus {$count} pesan terpilih.");
     }
 
     /**

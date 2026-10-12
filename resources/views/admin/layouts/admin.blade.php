@@ -528,6 +528,11 @@
                                 const tr = document.createElement('tr');
                                 tr.className = 'table-active table-success-highlight';
                                 tr.innerHTML = `
+                                    <td class="text-center">
+                                        <div class="form-check d-flex justify-content-center m-0">
+                                            <input class="form-check-input message-checkbox" type="checkbox" value="${msg.id}" data-sender="${escapeHtml(msg.name)}" id="msgCheck-${msg.id}">
+                                        </div>
+                                    </td>
                                     <td><span class="badge bg-danger rounded-pill pulse">Baru</span></td>
                                     <td><div class="fw-bold text-primary">${escapeHtml(msg.name)}</div></td>
                                     <td><a href="mailto:${escapeHtml(msg.email)}" class="small text-subtle">${escapeHtml(msg.email)}</a></td>
