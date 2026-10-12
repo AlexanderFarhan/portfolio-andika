@@ -14,8 +14,8 @@
         </nav>
 
         <div class="glass-card p-4 p-md-5">
-            <span class="badge bg-primary bg-opacity-20 text-primary mb-2 font-mono">{{ $project->category }}</span>
-            <h1 class="display-6 fw-bold text-white font-heading mb-3">{{ $project->title }}</h1>
+            <span class="badge badge-subtle-primary mb-2 font-mono">{{ $project->category }}</span>
+            <h1 class="display-6 fw-bold font-heading mb-3" style="color: var(--text-primary);">{{ $project->title }}</h1>
             <p class="lead text-subtle mb-4">{{ $project->summary }}</p>
 
             @if($project->image)
@@ -34,7 +34,7 @@
 
             <hr class="border-subtle my-4">
 
-            <h2 class="h5 fw-bold text-white font-heading mb-3">Deskripsi &amp; Arsitektur Sistem</h2>
+            <h2 class="h5 fw-bold font-heading mb-3" style="color: var(--text-primary);">Deskripsi &amp; Arsitektur Sistem</h2>
             <div class="text-subtle mb-5" style="line-height: 1.8; white-space: pre-line;">
                 {{ $project->description }}
             </div>
@@ -50,7 +50,7 @@
                         <i class="bi bi-box-arrow-up-right me-1"></i> Buka Live Demo / Preview
                     </a>
                 @endif
-                <a href="{{ route('portfolio.index') }}#projects" class="btn btn-outline-secondary ms-auto">
+                <a href="{{ route('portfolio.index') }}#projects" class="btn btn-outline-custom ms-auto">
                     <i class="bi bi-arrow-left me-1"></i> Kembali ke Portfolio
                 </a>
             </div>

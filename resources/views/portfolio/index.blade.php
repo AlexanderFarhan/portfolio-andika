@@ -28,7 +28,7 @@
                     </h2>
 
                     <p class="lead mb-4 text-subtle" style="max-width: 620px;">
-                        {{ $profile->tagline ?? 'Mahasiswa Teknologi Informasi — Universitas Bina Sarana Informatika (UBSI)' }}. Berfokus mendalam pada <strong class="text-white">System Analysis, Problem Solving, Web Development, dan Networking</strong>.
+                        {{ $profile->tagline ?? 'Mahasiswa Teknologi Informasi — Universitas Bina Sarana Informatika (UBSI)' }}. Berfokus mendalam pada <strong style="color: var(--text-primary);">System Analysis, Problem Solving, Web Development, dan Networking</strong>.
                     </p>
 
                     <!-- Hero Call to Action Buttons -->
@@ -47,15 +47,15 @@
                     <!-- Micro Metrics Strip -->
                     <div class="d-flex flex-wrap gap-4 pt-3 border-top border-subtle">
                         <div>
-                            <div class="fs-4 fw-bold font-heading text-white">{{ $profile->years_of_experience ?? '2+ Tahun' }}</div>
+                            <div class="fs-4 fw-bold font-heading" style="color: var(--text-primary);">{{ $profile->years_of_experience ?? '2+ Tahun' }}</div>
                             <div class="small text-muted">Pengalaman Proyek</div>
                         </div>
                         <div class="border-start border-subtle ps-4">
-                            <div class="fs-4 fw-bold font-heading text-white">{{ $profile->completed_projects ?? '15+' }} Proyek</div>
+                            <div class="fs-4 fw-bold font-heading" style="color: var(--text-primary);">{{ $profile->completed_projects ?? '15+' }} Proyek</div>
                             <div class="small text-muted">Solusi Selesai</div>
                         </div>
                         <div class="border-start border-subtle ps-4">
-                            <div class="fs-4 fw-bold font-heading text-white">{{ $profile->gpa ?? '3.85 / 4.00' }}</div>
+                            <div class="fs-4 fw-bold font-heading" style="color: var(--text-primary);">{{ $profile->gpa ?? '3.85 / 4.00' }}</div>
                             <div class="small text-muted">IPK Mahasiswa UBSI</div>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
         <div class="row g-4 align-items-center mb-5">
             <div class="col-lg-6">
                 <div class="glass-card p-4 p-md-5 reveal h-100">
-                    <h3 class="h4 fw-bold mb-3 font-heading text-white">
+                    <h3 class="h4 fw-bold mb-3 font-heading" style="color: var(--text-primary);">
                         {{ $profile->headline ?? 'Mahasiswa Teknologi Informasi yang Berorientasi Solusi' }}
                     </h3>
                     <div class="text-subtle" style="line-height: 1.8; white-space: pre-line;">
@@ -127,19 +127,19 @@
                     <div class="row g-3 mt-4 pt-3 border-top border-subtle">
                         <div class="col-sm-6">
                             <div class="small text-muted">Nama Lengkap:</div>
-                            <div class="fw-bold text-white">{{ $profile->name ?? 'Andika Amansyah' }}</div>
+                            <div class="fw-bold" style="color: var(--text-primary);">{{ $profile->name ?? 'Andika Amansyah' }}</div>
                         </div>
                         <div class="col-sm-6">
                             <div class="small text-muted">Kampus:</div>
-                            <div class="fw-bold text-white">Universitas Bina Sarana Informatika</div>
+                            <div class="fw-bold" style="color: var(--text-primary);">Universitas Bina Sarana Informatika</div>
                         </div>
                         <div class="col-sm-6">
                             <div class="small text-muted">Email:</div>
-                            <div class="fw-bold text-white">{{ $profile->email ?? 'andika.amansyah@gmail.com' }}</div>
+                            <div class="fw-bold" style="color: var(--text-primary);">{{ $profile->email ?? 'andika.amansyah@gmail.com' }}</div>
                         </div>
                         <div class="col-sm-6">
                             <div class="small text-muted">Domisili:</div>
-                            <div class="fw-bold text-white">{{ $profile->location ?? 'Bekasi / Jakarta' }}</div>
+                            <div class="fw-bold" style="color: var(--text-primary);">{{ $profile->location ?? 'Bekasi / Jakarta' }}</div>
                         </div>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                                 <div class="skill-icon-box">
                                     <i class="bi {{ $p['icon'] ?? 'bi-star-fill' }}"></i>
                                 </div>
-                                <h4 class="h6 fw-bold mb-2 text-white">{{ $p['title'] ?? '' }}</h4>
+                                <h4 class="h6 fw-bold mb-2" style="color: var(--text-primary);">{{ $p['title'] ?? '' }}</h4>
                                 <p class="small text-subtle mb-0">
                                     {{ $p['description'] ?? '' }}
                                 </p>
@@ -173,7 +173,7 @@
 <!-- ==========================================================================
      SECTION 3: SKILLS
      ========================================================================== -->
-<section id="skills" class="py-5 my-md-4" style="background: rgba(17, 24, 39, 0.4);">
+<section id="skills" class="py-5 my-md-4 section-subtle-bg">
     <div class="container">
         <div class="text-center reveal mb-5">
             <span class="section-tag"><i class="bi bi-tools"></i> Technical Competencies</span>
@@ -213,7 +213,7 @@
                                             <i class="bi {{ $skill->icon ?? 'bi-check2-circle' }} fs-5"></i>
                                         </div>
                                         <div>
-                                            <h3 class="h6 mb-0 fw-bold text-white">{{ $skill->name }}</h3>
+                                            <h3 class="h6 mb-0 fw-bold" style="color: var(--text-primary);">{{ $skill->name }}</h3>
                                             <span class="text-muted" style="font-size: 0.72rem;">{{ $skill->category }}</span>
                                         </div>
                                     </div>
@@ -241,7 +241,7 @@
                                                 <i class="bi {{ $skill->icon ?? 'bi-check2-circle' }} fs-5"></i>
                                             </div>
                                             <div>
-                                                <h3 class="h6 mb-0 fw-bold text-white">{{ $skill->name }}</h3>
+                                                <h3 class="h6 mb-0 fw-bold" style="color: var(--text-primary);">{{ $skill->name }}</h3>
                                                 <span class="text-muted" style="font-size: 0.72rem;">{{ $skill->category }}</span>
                                             </div>
                                         </div>
@@ -281,7 +281,7 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-card">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-                                    <h3 class="h5 fw-bold mb-0 text-white font-heading">{{ $edu->institution }}</h3>
+                                    <h3 class="h5 fw-bold mb-0 font-heading" style="color: var(--text-primary);">{{ $edu->institution }}</h3>
                                     <span class="timeline-badge">
                                         <i class="bi bi-calendar3 me-1"></i> {{ $edu->start_year }} — {{ $edu->end_year ?? 'Sekarang' }}
                                     </span>
@@ -293,7 +293,7 @@
                                         <span class="text-muted">• {{ $edu->field_of_study }}</span>
                                     @endif
                                     @if($edu->gpa)
-                                        <span class="badge bg-success bg-opacity-20 text-success ms-auto">
+                                        <span class="badge badge-subtle-success ms-auto">
                                             <i class="bi bi-star-fill me-1"></i> IPK: {{ $edu->gpa }}
                                         </span>
                                     @endif
@@ -318,7 +318,7 @@
 <!-- ==========================================================================
      SECTION 5: EXPERIENCE
      ========================================================================== -->
-<section id="experience" class="py-5 my-md-4" style="background: rgba(17, 24, 39, 0.4);">
+<section id="experience" class="py-5 my-md-4 section-subtle-bg">
     <div class="container">
         <div class="text-center reveal mb-5">
             <span class="section-tag"><i class="bi bi-briefcase"></i> Career &amp; Milestones</span>
@@ -336,7 +336,7 @@
                             <div class="timeline-dot"></div>
                             <div class="timeline-card">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
-                                    <h3 class="h5 fw-bold mb-0 text-white font-heading">{{ $exp->role }}</h3>
+                                    <h3 class="h5 fw-bold mb-0 font-heading" style="color: var(--text-primary);">{{ $exp->role }}</h3>
                                     <span class="timeline-badge">
                                         <i class="bi bi-clock-history me-1"></i> {{ $exp->start_date }} — {{ $exp->end_date ?? 'Sekarang' }}
                                     </span>
@@ -344,7 +344,7 @@
 
                                 <div class="d-flex align-items-center gap-2 mb-3">
                                     <span class="fw-semibold text-primary">{{ $exp->company }}</span>
-                                    <span class="badge bg-secondary bg-opacity-25 text-info" style="font-size: 0.72rem;">{{ $exp->type }}</span>
+                                    <span class="badge badge-subtle-info" style="font-size: 0.72rem;">{{ $exp->type }}</span>
                                 </div>
 
                                 @if($exp->description)
@@ -395,7 +395,7 @@
                         </div>
 
                         <div class="project-body">
-                            <h3 class="h5 fw-bold mb-2 text-white font-heading">{{ $p->title }}</h3>
+                            <h3 class="h5 fw-bold mb-2 font-heading" style="color: var(--text-primary);">{{ $p->title }}</h3>
                             <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.6;">
                                 {{ $p->summary }}
                             </p>
@@ -435,13 +435,13 @@
                 <!-- Project Detail Modal -->
                 <div class="modal fade" id="projectModal{{ $p->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $p->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content glass-card border-subtle text-light p-2">
+                        <div class="modal-content glass-card border-subtle p-2">
                             <div class="modal-header border-subtle">
                                 <div>
-                                    <span class="badge bg-primary bg-opacity-25 text-primary mb-1">{{ $p->category }}</span>
-                                    <h4 class="modal-title fw-bold font-heading text-white" id="modalLabel{{ $p->id }}">{{ $p->title }}</h4>
+                                    <span class="badge badge-subtle-primary mb-1">{{ $p->category }}</span>
+                                    <h4 class="modal-title fw-bold font-heading" style="color: var(--text-primary);" id="modalLabel{{ $p->id }}">{{ $p->title }}</h4>
                                 </div>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 @if($p->image)
@@ -450,12 +450,12 @@
                                     </div>
                                 @endif
 
-                                <h5 class="h6 fw-bold text-white mb-2">Ikhtisar &amp; Solusi:</h5>
+                                <h5 class="h6 fw-bold mb-2" style="color: var(--text-primary);">Ikhtisar &amp; Solusi:</h5>
                                 <div class="text-subtle mb-4" style="line-height: 1.8; white-space: pre-line;">
                                     {{ $p->description }}
                                 </div>
 
-                                <h5 class="h6 fw-bold text-white mb-2">Teknologi yang Digunakan:</h5>
+                                <h5 class="h6 fw-bold mb-2" style="color: var(--text-primary);">Teknologi yang Digunakan:</h5>
                                 <div class="mb-4">
                                     @if(is_array($p->technologies))
                                         @foreach($p->technologies as $tech)
@@ -492,7 +492,7 @@
 <!-- ==========================================================================
      SECTION 7: CERTIFICATES / ACHIEVEMENTS
      ========================================================================== -->
-<section id="certificates" class="py-5 my-md-4" style="background: rgba(17, 24, 39, 0.4);">
+<section id="certificates" class="py-5 my-md-4 section-subtle-bg">
     <div class="container">
         <div class="text-center reveal mb-5">
             <span class="section-tag"><i class="bi bi-award"></i> Verification &amp; Credentials</span>
@@ -513,13 +513,13 @@
                         @endif
 
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge bg-primary bg-opacity-15 text-primary" style="font-size: 0.75rem;">
+                            <span class="badge badge-subtle-primary" style="font-size: 0.75rem;">
                                 {{ $cert->issuer }}
                             </span>
                             <span class="small text-muted font-mono">{{ $cert->issue_date }}</span>
                         </div>
 
-                        <h3 class="h6 fw-bold text-white mb-2">{{ $cert->title }}</h3>
+                        <h3 class="h6 fw-bold mb-2" style="color: var(--text-primary);">{{ $cert->title }}</h3>
 
                         @if($cert->description)
                             <p class="small text-subtle mb-3" style="line-height: 1.6;">
@@ -572,7 +572,7 @@
                         </div>
                         <div>
                             <span class="small text-muted d-block">Kirim Email Langsung:</span>
-                            <a href="mailto:{{ $profile->email ?? 'andika.amansyah@gmail.com' }}" class="fw-bold text-white text-decoration-none">
+                            <a href="mailto:{{ $profile->email ?? 'andika.amansyah@gmail.com' }}" class="fw-bold text-decoration-none" style="color: var(--text-primary);">
                                 {{ $profile->email ?? 'andika.amansyah@gmail.com' }}
                             </a>
                         </div>
@@ -584,7 +584,7 @@
                         </div>
                         <div>
                             <span class="small text-muted d-block">WhatsApp / Telepon:</span>
-                            <a href="https://wa.me/6281234567890?text=Halo%20Andika,%20saya%20melihat%20portofolio%20Anda" target="_blank" class="fw-bold text-white text-decoration-none">
+                            <a href="https://wa.me/6281234567890?text=Halo%20Andika,%20saya%20melihat%20portofolio%20Anda" target="_blank" class="fw-bold text-decoration-none" style="color: var(--text-primary);">
                                 {{ $profile->phone ?? '+62 812-3456-7890' }}
                             </a>
                         </div>
@@ -596,13 +596,13 @@
                         </div>
                         <div>
                             <span class="small text-muted d-block">Lokasi Kampus &amp; Domisili:</span>
-                            <span class="fw-bold text-white">UBSI — Bekasi / Jakarta, Indonesia</span>
+                            <span class="fw-bold" style="color: var(--text-primary);">UBSI — Bekasi / Jakarta, Indonesia</span>
                         </div>
                     </div>
 
                     <!-- Social Network Strip -->
                     <div class="glass-card p-4 mt-auto">
-                        <h4 class="h6 fw-bold text-white mb-3">Ikuti Jejaring Profesional Saya:</h4>
+                        <h4 class="h6 fw-bold mb-3" style="color: var(--text-primary);">Ikuti Jejaring Profesional Saya:</h4>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($socialLinks as $soc)
                                 <a href="{{ $soc->url }}" target="_blank" class="btn btn-sm btn-outline-custom">
@@ -617,7 +617,7 @@
             <!-- Contact Form Right -->
             <div class="col-lg-7 reveal">
                 <div class="glass-card p-4 p-md-5 h-100">
-                    <h3 class="h4 fw-bold text-white mb-2 font-heading">Kirimkan Pesan</h3>
+                    <h3 class="h4 fw-bold mb-2 font-heading" style="color: var(--text-primary);">Kirimkan Pesan</h3>
                     <p class="small text-subtle mb-4">Saya akan membalas pesan Anda sesegera mungkin.</p>
 
                     <div id="contactAlertContainer">
@@ -732,13 +732,13 @@
                                                     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
                                                         <div class="d-flex align-items-center gap-2">
                                                             <i class="bi bi-check-circle-fill fs-4 text-success"></i>
-                                                            <strong class="text-white fs-6">${result.message || 'Pesan Anda berhasil dikirim secara realtime!'}</strong>
+                                                            <strong class="fs-6" style="color: var(--text-primary);">${result.message || 'Pesan Anda berhasil dikirim secara realtime!'}</strong>
                                                         </div>
-                                                        <span class="badge bg-success bg-opacity-25 text-success border border-success border-opacity-50 py-1 px-2 d-inline-flex align-items-center gap-1">
+                                                        <span class="badge badge-subtle-success py-1 px-2 d-inline-flex align-items-center gap-1">
                                                             <span class="live-pulse-dot" style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
                                                             Terkoneksi Real-Time
                                                         </span>
-                                                        <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
                                                     </div>
                                                     <p class="small text-subtle mb-3">Pesan Anda telah langsung masuk ke inbox admin Andika Amansyah. Anda juga dapat meneruskan salinannya ke WhatsApp untuk komunikasi lebih cepat:</p>
                                                     <a href="${waUrl}" target="_blank" class="btn btn-sm btn-success text-white d-inline-flex align-items-center gap-2 fw-semibold px-3 py-2 shadow-sm">
@@ -783,13 +783,13 @@
 <!-- ==========================================================================
      SECTION 9: DOWNLOAD CV PDF BANNER
      ========================================================================== -->
-<section class="py-5 position-relative overflow-hidden" style="background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.15) 0%, rgba(10, 15, 29, 0.95) 75%);">
+<section class="py-5 position-relative overflow-hidden cv-banner-section">
     <div class="container text-center reveal">
         <div class="glass-card p-4 p-md-5 d-inline-block shadow-lg border-subtle" style="max-width: 800px; width: 100%;">
             <div class="d-inline-flex p-3 rounded-circle bg-primary bg-opacity-10 text-primary mb-3">
                 <i class="bi bi-file-earmark-person-fill fs-2"></i>
             </div>
-            <h2 class="h3 fw-bold text-white font-heading mb-2">Ingin Mengunduh Curriculum Vitae (CV)?</h2>
+            <h2 class="h3 fw-bold font-heading mb-2" style="color: var(--text-primary);">Ingin Mengunduh Curriculum Vitae (CV)?</h2>
             <p class="text-subtle small mb-4" style="max-width: 580px; margin: 0 auto;">
                 Dapatkan salinan ringkas rekam jejak akademis, kemampuan teknis, pengalaman proyek, dan sertifikasi Andika Amansyah yang siap dicetak atau disimpan berformat PDF.
             </p>

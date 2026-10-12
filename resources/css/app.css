@@ -20,8 +20,8 @@
     --border-color-hover: rgba(56, 189, 248, 0.4);
 
     --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
 
     /* Accent & Brand Colors */
     --primary: #38bdf8;
@@ -54,14 +54,14 @@
 [data-theme="light"] {
     --bg-primary: #f8fafc;
     --bg-secondary: #ffffff;
-    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-card: rgba(255, 255, 255, 0.95);
     --bg-card-hover: #ffffff;
-    --bg-glass: rgba(255, 255, 255, 0.85);
-    --border-color: rgba(15, 23, 42, 0.08);
-    --border-color-hover: rgba(2, 132, 199, 0.4);
+    --bg-glass: rgba(255, 255, 255, 0.9);
+    --border-color: rgba(15, 23, 42, 0.12);
+    --border-color-hover: rgba(2, 132, 199, 0.45);
 
     --text-primary: #0f172a;
-    --text-secondary: #475569;
+    --text-secondary: #334155;
     --text-muted: #64748b;
 
     --primary: #0284c7;
@@ -72,7 +72,7 @@
 
     --gradient-primary: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #9333ea 100%);
     --gradient-glow: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.1) 0%, transparent 70%);
-    --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(241, 245, 249, 0.9) 100%);
+    --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.95) 100%);
 
     --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
     --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
@@ -137,8 +137,125 @@ a:hover {
     color: var(--text-secondary) !important;
 }
 
+.text-muted,
 .text-muted-custom {
     color: var(--text-muted) !important;
+}
+
+strong {
+    color: var(--text-primary);
+}
+
+.form-label {
+    color: var(--text-primary) !important;
+    font-weight: 600;
+}
+
+/* Enhanced Contrast Badges */
+.badge-subtle-primary {
+    background: rgba(var(--primary-rgb), 0.15) !important;
+    color: var(--primary) !important;
+    border: 1px solid rgba(var(--primary-rgb), 0.3) !important;
+    font-weight: 600;
+}
+[data-theme="light"] .badge-subtle-primary {
+    background: rgba(var(--primary-rgb), 0.12) !important;
+    color: #0369a1 !important;
+    border-color: rgba(var(--primary-rgb), 0.3) !important;
+}
+
+.badge-subtle-success {
+    background: rgba(16, 185, 129, 0.18) !important;
+    color: #34d399 !important;
+    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    font-weight: 600;
+}
+[data-theme="light"] .badge-subtle-success {
+    background: rgba(16, 185, 129, 0.14) !important;
+    color: #047857 !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+.badge-subtle-info {
+    background: rgba(6, 182, 212, 0.18) !important;
+    color: #22d3ee !important;
+    border: 1px solid rgba(6, 182, 212, 0.35) !important;
+    font-weight: 600;
+}
+[data-theme="light"] .badge-subtle-info {
+    background: rgba(8, 145, 178, 0.12) !important;
+    color: #0e7490 !important;
+    border-color: rgba(8, 145, 178, 0.3) !important;
+}
+
+/* Alternating Section Backgrounds */
+.section-subtle-bg {
+    background: rgba(17, 24, 39, 0.45);
+}
+[data-theme="light"] .section-subtle-bg {
+    background: rgba(241, 245, 249, 0.7);
+}
+
+.cv-banner-section {
+    background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.15) 0%, rgba(10, 15, 29, 0.95) 75%);
+}
+[data-theme="light"] .cv-banner-section {
+    background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.12) 0%, rgba(241, 245, 249, 0.95) 75%);
+}
+
+/* Skills Filter Navigation Tabs */
+#skillsTabs .nav-link {
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: all var(--transition-fast);
+}
+#skillsTabs .nav-link:hover {
+    color: var(--primary);
+    border-color: var(--border-color-hover);
+    background: var(--bg-card-hover);
+}
+#skillsTabs .nav-link.active {
+    background: var(--gradient-primary);
+    color: #ffffff !important;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(var(--primary-rgb), 0.3);
+}
+
+/* Modal Content & Close Button Adaptive Styling */
+.modal-content.glass-card {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+[data-theme="light"] .modal-content.glass-card {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: rgba(15, 23, 42, 0.12);
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+}
+
+[data-theme="dark"] .btn-close {
+    filter: invert(1) grayscale(100%);
+}
+[data-theme="light"] .btn-close {
+    filter: none;
+}
+
+/* Safety Fallback: ensure white text adapts in light mode */
+[data-theme="light"] .text-white:not(.btn):not(.btn-primary-custom):not(.badge-1):not(.badge-2):not(.project-badge-top) {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .hero-floating-badge {
+    background: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="light"] .btn-outline-custom {
+    border-color: rgba(15, 23, 42, 0.22);
 }
 
 .bg-glass {
@@ -679,8 +796,8 @@ a:hover {
     font-family: var(--font-mono);
     padding: 0.25rem 0.6rem;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
     border: 1px solid var(--border-color);
     margin-right: 0.4rem;
     margin-bottom: 0.4rem;
@@ -688,7 +805,10 @@ a:hover {
 }
 
 [data-theme="light"] .tech-tag {
-    background: rgba(15, 23, 42, 0.05);
+    background: #f1f5f9;
+    color: #1e293b;
+    border-color: #cbd5e1;
+    font-weight: 600;
 }
 
 /* ==========================================================================
