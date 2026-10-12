@@ -91,6 +91,7 @@ class ContactMessageController extends Controller
                     'id' => $msg->id,
                     'name' => $msg->name,
                     'email' => $msg->email,
+                    'phone' => $msg->phone,
                     'subject' => $msg->subject,
                     'message' => $msg->message,
                     'created_at_human' => $msg->created_at ? $msg->created_at->diffForHumans() : 'baru saja',

@@ -16,6 +16,7 @@ class ContactMessageRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:150',
+            'phone' => 'nullable|string|max:30',
             'subject' => 'required|string|max:150',
             'message' => 'required|string|min:3|max:3000',
         ];
@@ -27,6 +28,7 @@ class ContactMessageRequest extends FormRequest
             'name.required' => 'Nama wajib diisi.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
+            'phone.max' => 'Nomor telepon maksimal 30 karakter.',
             'subject.required' => 'Subjek pesan wajib diisi.',
             'message.required' => 'Isi pesan tidak boleh kosong.',
             'message.min' => 'Isi pesan minimal 3 karakter.',

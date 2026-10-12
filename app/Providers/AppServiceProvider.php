@@ -60,5 +60,15 @@ class AppServiceProvider extends ServiceProvider
         if (config('app.env') === 'production' || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
+
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('contact_messages') && !\Illuminate\Support\Facades\Schema::hasColumn('contact_messages', 'phone')) {
+                \Illuminate\Support\Facades\Schema::table('contact_messages', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    $table->string('phone')->nullable()->after('email');
+                });
+            }
+        } catch (\Throwable $e) {
+            // Ignore database connection failures in build or offline stages
+        }
     }
 }

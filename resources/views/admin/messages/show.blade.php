@@ -33,20 +33,48 @@
     $gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($message->email) . '&su=' . urlencode($emailSubject) . '&body=' . urlencode($emailBody);
     $outlookUrl = 'https://outlook.live.com/mail/0/deeplink/compose?to=' . urlencode($message->email) . '&subject=' . urlencode($emailSubject) . '&body=' . urlencode($emailBody);
     $mailtoUrl = 'mailto:' . $message->email . '?subject=' . urlencode($emailSubject) . '&body=' . urlencode($emailBody);
+
+    // Format WhatsApp
+    $rawPhone = $message->phone ?? '';
+    $cleanPhone = '';
+    $waUrl = '';
+    if (!empty($rawPhone)) {
+        $digits = preg_replace('/[^0-9]/', '', $rawPhone);
+        if (str_starts_with($digits, '0')) {
+            $cleanPhone = '62' . substr($digits, 1);
+        } elseif (str_starts_with($digits, '8')) {
+            $cleanPhone = '62' . $digits;
+        } else {
+            $cleanPhone = $digits;
+        }
+
+        $waBody = "Halo " . $message->name . ", saya Andika Amansyah. Menanggapi pesan Anda perihal \"" . $message->subject . "\":\n\n\"" . $message->message . "\"";
+        $waUrl = 'https://api.whatsapp.com/send?phone=' . $cleanPhone . '&text=' . urlencode($waBody);
+    }
 @endphp
 
     <!-- Sender Details Card -->
     <div class="p-3 rounded-3 bg-secondary bg-opacity-10 border border-subtle mb-4">
         <div class="row g-3">
-            <div class="col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <small class="text-subtle d-block">Nama Pengirim:</small>
                 <div class="fw-bold">{{ $message->name }}</div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-4 col-sm-6">
                 <small class="text-subtle d-block">Alamat Email:</small>
-                <a href="{{ $gmailUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-primary" title="Buka email di Gmail browser">
+                <a href="{{ $gmailUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-primary text-break" title="Buka email di Gmail browser">
                     <i class="bi bi-envelope-at me-1"></i>{{ $message->email }}
                 </a>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <small class="text-subtle d-block">Nomor WhatsApp / Telepon:</small>
+                @if(!empty($cleanPhone))
+                    <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-success d-inline-flex align-items-center" title="Buka WhatsApp ({{ $cleanPhone }})">
+                        <i class="bi bi-whatsapp me-1"></i>{{ $message->phone }}
+                    </a>
+                @else
+                    <span class="text-subtle fst-italic">Tidak dicantumkan</span>
+                @endif
             </div>
         </div>
     </div>
@@ -101,9 +129,11 @@
             </ul>
         </div>
 
-        <a href="https://wa.me/?text={{ urlencode('Halo ' . $message->name . ', saya Andika Amansyah. Menanggapi pesan Anda perihal ' . $message->subject) }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success d-inline-flex align-items-center gap-1">
-            <i class="bi bi-whatsapp me-1"></i> Hubungi WhatsApp
-        </a>
+        @if(!empty($cleanPhone))
+            <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-success d-inline-flex align-items-center gap-1 shadow-sm" title="Hubungi via WhatsApp Web / WhatsApp App">
+                <i class="bi bi-whatsapp me-1"></i> Hubungi WhatsApp ({{ $message->phone }})
+            </a>
+        @endif
     </div>
 </div>
 @endsection

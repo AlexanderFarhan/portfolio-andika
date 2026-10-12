@@ -649,12 +649,21 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="subject" class="form-label small fw-semibold">Subjek Pesan *</label>
-                            <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Diskusi Tawaran Proyek Web System" required>
-                            @error('subject')
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label small fw-semibold">Nomor Telepon / WhatsApp <span class="text-subtle fw-normal">(Opsional)</span></label>
+                                <input type="tel" name="phone" id="phone" class="form-control form-control-custom @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Contoh: 081234567890">
+                                @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                                @enderror
+                            </div>
+                            <div class="col-md-6">
+                                <label for="subject" class="form-label small fw-semibold">Subjek Pesan *</label>
+                                <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Diskusi Tawaran Proyek Web System" required>
+                                @error('subject')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-4">

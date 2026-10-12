@@ -135,6 +135,19 @@
                         </td>
                         <td>
                             <a href="https://mail.google.com/mail/?view=cm&fs=1&to={{ urlencode($msg->email) }}&su={{ urlencode('Re: ' . $msg->subject) }}" target="_blank" rel="noopener noreferrer" class="small text-subtle hover-primary" title="Balas via Gmail browser">{{ $msg->email }}</a>
+                            @if(!empty($msg->phone))
+                                @php
+                                    $msgDigits = preg_replace('/[^0-9]/', '', $msg->phone);
+                                    if (str_starts_with($msgDigits, '0')) $msgPhoneClean = '62' . substr($msgDigits, 1);
+                                    elseif (str_starts_with($msgDigits, '8')) $msgPhoneClean = '62' . $msgDigits;
+                                    else $msgPhoneClean = $msgDigits;
+                                @endphp
+                                <div class="mt-1">
+                                    <a href="https://api.whatsapp.com/send?phone={{ $msgPhoneClean }}" target="_blank" rel="noopener noreferrer" class="badge bg-success bg-opacity-25 text-success text-decoration-none small" title="Hubungi WhatsApp: {{ $msg->phone }}">
+                                        <i class="bi bi-whatsapp me-1"></i>{{ $msg->phone }}
+                                    </a>
+                                </div>
+                            @endif
                         </td>
                         <td>
                             <div class="fw-semibold small">{{ $msg->subject }}</div>
