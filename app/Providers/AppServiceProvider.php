@@ -67,6 +67,32 @@ class AppServiceProvider extends ServiceProvider
                     $table->string('phone')->nullable()->after('email');
                 });
             }
+
+            // Ensure inbox message is clean: delete any security alert rows previously created
+            if (\Illuminate\Support\Facades\Schema::hasTable('contact_messages')) {
+                \App\Models\ContactMessage::where('email', 'security-alert@andika.dev')
+                    ->orWhere('subject', 'like', '%Percobaan Menerobos Masuk%')
+                    ->orWhere('name', 'like', '%Sistem Keamanan%')
+                    ->delete();
+            }
+
+            // Ensure admin_lockdowns table exists for serverless neon database
+            if (!\Illuminate\Support\Facades\Schema::hasTable('admin_lockdowns')) {
+                \Illuminate\Support\Facades\Schema::create('admin_lockdowns', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    $table->id();
+                    $table->boolean('is_locked')->default(false);
+                    $table->string('lock_token', 100)->nullable();
+                    $table->string('unlock_otp', 20)->nullable();
+                    $table->timestamp('otp_expires_at')->nullable();
+                    $table->timestamp('locked_at')->nullable();
+                    $table->string('locked_reason')->nullable();
+                    $table->string('attempted_email')->nullable();
+                    $table->string('ip_address')->nullable();
+                    $table->text('user_agent')->nullable();
+                    $table->timestamp('last_alert_sent_at')->nullable();
+                    $table->timestamps();
+                });
+            }
         } catch (\Throwable $e) {
             // Ignore database connection failures in build or offline stages
         }

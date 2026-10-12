@@ -7,22 +7,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use App\Models\ContactMessage;
+use App\Models\AdminLockdown;
+use App\Services\SecurityMailService;
 
 class AuthController extends Controller
 {
     /**
-     * Show admin login page.
+     * Show admin login page or emergency lockdown screen if locked.
      */
     public function showLogin()
     {
+        $isLocked = AdminLockdown::isLocked();
+        $lockdown = $isLocked ? AdminLockdown::instance() : null;
+
         if (Auth::check()) {
-            return redirect()->route('admin.dashboard');
+            if ($isLocked) {
+                Auth::logout();
+            } else {
+                return redirect()->route('admin.dashboard');
+            }
         }
 
-        return view('admin.auth.login');
+        return view('admin.auth.login', [
+            'isLocked' => $isLocked,
+            'lockdown' => $lockdown,
+        ]);
     }
 
     /**
@@ -30,6 +40,13 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        // Check if admin portal is under emergency lockdown
+        if (AdminLockdown::isLocked()) {
+            return back()->withErrors([
+                'email' => 'Halaman admin saat ini dalam status TERKUNCI (LOCKDOWN). Masukkan kode verifikasi OTP untuk membuka akses.',
+            ])->onlyInput('email');
+        }
+
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -37,7 +54,7 @@ class AuthController extends Controller
 
         $throttleKey = Str::transliterate(Str::lower($request->input('email')) . '|' . $request->ip());
 
-        // Brute-force protection: rate limit up to 5 attempts
+        // Rate limit: 5 attempts per window
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
             return back()->withErrors([
@@ -62,41 +79,23 @@ class AuthController extends Controller
         $attemptedEmail = (string) $credentials['email'];
         $ip = $request->ip() ?? 'Unknown IP';
         $userAgent = $request->userAgent() ?? 'Unknown Browser';
-        $timeString = now()->timezone('Asia/Jakarta')->format('d M Y, H:i:s') . ' WIB';
 
-        // 1. Log security warning
+        // 1. Log security warning in system logs
         Log::warning("Unauthorized admin login attempt: Email: {$attemptedEmail}, IP: {$ip}, UA: {$userAgent}");
 
-        // 2. Record security alert in contact_messages as high-priority real-time message
-        try {
-            ContactMessage::create([
-                'name' => '⚠️ Sistem Keamanan (Security Alert)',
-                'email' => 'security-alert@andika.dev',
-                'phone' => null,
-                'subject' => "🚨 Percobaan Menerobos Masuk Admin ({$attemptedEmail})",
-                'message' => "Terdeteksi percobaan login tidak sah / gagal masuk ke Admin Portal.\n\nDetail Percobaan:\n- Email Percobaan: {$attemptedEmail}\n- Alamat IP Pengakses: {$ip}\n- Perangkat / Browser: {$userAgent}\n- Waktu Deteksi: {$timeString}\n- Status: Ditolak oleh sistem otentikasi.",
-                'is_read' => false,
-            ]);
-        } catch (\Throwable $e) {
-            Log::error('Failed to log security message: ' . $e->getMessage());
-        }
+        // 2. Prepare remote lock token in AdminLockdown state
+        $lockdown = AdminLockdown::registerFailedAttempt($attemptedEmail, $ip, $userAgent);
+        $remoteLockUrl = route('admin.security.remote-lock', ['token' => $lockdown->lock_token]);
 
-        // 3. Send email alert to andikaamansyah427@gmail.com
+        // 3. Dispatch security alert email to andikaamansyah427@gmail.com with remote lock button
         try {
-            $alertRecipient = 'andikaamansyah427@gmail.com';
-            $alertSubject = "🚨 [PERINGATAN KEAMANAN] Percobaan Masuk Ilegal Terdeteksi di Admin Portfolio";
-            $alertBody = "Halo Andika Amansyah,\n\nSistem keamanan portofolio mendeteksi aktivitas mencurigakan: seseorang mencoba memaksa/menerobos masuk ke halaman Admin Portal dengan kredensial yang tidak sah.\n\nDetail Aktivitas:\n- Email yang digunakan: {$attemptedEmail}\n- Alamat IP: {$ip}\n- Perangkat / User-Agent: {$userAgent}\n- Waktu Kejadian: {$timeString}\n- Status Akses: DITOLAK (Unauthorized)\n\nJika ini bukan Anda, pastikan kredensial admin Anda tetap aman dan tidak dibagikan kepada siapapun.\n\nSalam hangat,\nSistem Keamanan Portfolio Andika";
-
-            Mail::raw($alertBody, function ($mail) use ($alertRecipient, $alertSubject) {
-                $mail->to($alertRecipient)
-                     ->subject($alertSubject);
-            });
+            SecurityMailService::sendSecurityAlert($attemptedEmail, $ip, $userAgent, $remoteLockUrl);
         } catch (\Throwable $e) {
-            Log::error('Failed to send security alert email: ' . $e->getMessage());
+            Log::error('Failed to dispatch security alert email: ' . $e->getMessage());
         }
 
         return back()->withErrors([
-            'email' => 'Kredensial login yang Anda masukkan tidak sesuai.',
+            'email' => 'Kredensial login yang Anda masukkan tidak sesuai. Peringatan keamanan telah dikirimkan ke email pemilik.',
         ])->onlyInput('email');
     }
 

@@ -112,6 +112,37 @@
     </div>
 </div>
 
+<!-- Security Monitoring & Remote Lock Card -->
+<div class="glass-card p-3 p-md-4 mb-4 border-subtle">
+    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-30">
+                    <i class="bi bi-shield-check me-1"></i> Sistem Keamanan Aktif
+                </span>
+                <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-30">
+                    <i class="bi bi-broadcast me-1"></i> Remote Lock Siaga
+                </span>
+            </div>
+            <h2 class="h6 fw-bold mb-1 text-white font-heading">
+                Proteksi Akses Admin &amp; Notifikasi Email Otomatis
+            </h2>
+            <div class="small text-subtle">
+                Pengirim Security: <span class="text-white fw-semibold">andikaamansyah31245@gmail.com</span> &bull; 
+                Penerima Alert &amp; OTP: <span class="text-info fw-semibold">andikaamansyah427@gmail.com</span>
+            </div>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <form action="{{ route('admin.security.trigger-lock') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengunci halaman admin secara darurat? Portal akan langsung dikunci dan kode OTP akan dikirim ke email andikaamansyah427@gmail.com.');">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    <i class="bi bi-lock-fill me-1"></i> Uji Kunci Darurat (Lockdown)
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
     <!-- Recent Messages -->
     <div class="col-lg-6">

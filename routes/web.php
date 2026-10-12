@@ -25,9 +25,12 @@ Route::post('/contact', [PortfolioController::class, 'contact'])->name('portfoli
 Route::get('/cv', [PortfolioController::class, 'downloadCv'])->name('portfolio.cv');
 Route::get('/project/{slug}', [ProjectDetailController::class, 'show'])->name('portfolio.project.detail');
 
+use App\Http\Controllers\Admin\SecurityController;
+use App\Models\AdminLockdown;
+
 /*
 |--------------------------------------------------------------------------
-| Admin Authentication Routes
+| Admin Authentication & Emergency Security Routes
 |--------------------------------------------------------------------------
 */
 Route::redirect('/login', '/admin/login')->name('login');
@@ -35,12 +38,22 @@ Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.lo
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.submit');
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
+// Remote Lock & OTP Verification routes (Publicly accessible for email actions)
+Route::get('/admin/security/remote-lock/{token}', [SecurityController::class, 'remoteLock'])->name('admin.security.remote-lock');
+Route::post('/admin/security/verify-otp', [SecurityController::class, 'verifyOtp'])->name('admin.security.verify-otp');
+Route::post('/admin/security/resend-otp', [SecurityController::class, 'resendOtp'])->name('admin.security.resend-otp');
+
+use App\Http\Middleware\EnsureAdminNotLocked;
+
 /*
 |--------------------------------------------------------------------------
 | Protected Admin Dashboard Routes (/admin - Wajib Login)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', EnsureAdminNotLocked::class])->prefix('admin')->name('admin.')->group(function () {
+    // Manual lockdown trigger for testing or instant security
+    Route::post('/security/trigger-lock', [SecurityController::class, 'triggerLock'])->name('security.trigger-lock');
+
     // /admin redirect to dashboard
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
