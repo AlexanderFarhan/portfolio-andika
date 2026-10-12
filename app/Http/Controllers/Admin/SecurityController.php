@@ -131,4 +131,31 @@ class SecurityController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+    /**
+     * Test sending security email notification from dashboard.
+     */
+    public function testEmail(Request $request)
+    {
+        try {
+            $lockdown = AdminLockdown::instance();
+            $remoteLockUrl = route('admin.security.remote-lock', ['token' => $lockdown->lock_token]);
+            $sent = SecurityMailService::sendSecurityAlert(
+                'uji-coba@security.dev',
+                $request->ip() ?? '127.0.0.1',
+                $request->userAgent() ?? 'Admin Device',
+                $remoteLockUrl,
+                1,
+                false
+            );
+
+            if ($sent) {
+                return back()->with('success', '✅ Email pengujian keamanan berhasil dikirimkan ke andikaamansyah427@gmail.com! Silakan periksa kotak masuk email Anda.');
+            } else {
+                return back()->with('error', 'Gagal mengirim email pengujian. Silakan periksa koneksi atau log sistem.');
+            }
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Terjadi kesalahan saat mengirim email pengujian: ' . $e->getMessage());
+        }
+    }
 }

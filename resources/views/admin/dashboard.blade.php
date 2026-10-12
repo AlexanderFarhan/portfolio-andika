@@ -75,11 +75,13 @@
 
 <!-- Quick Access to All Portfolio Sections -->
 <div class="glass-card p-3 p-md-4 mb-4">
-    <div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 mb-3">
         <h2 class="h6 fw-bold mb-0 text-white font-heading">
             <i class="bi bi-pencil-square text-primary me-2"></i> Kelola Seluruh Section &amp; Kontainer Portofolio
         </h2>
-        <span class="badge bg-primary bg-opacity-15 text-primary small">CRUD Konten Aktif</span>
+        <a href="{{ route('portfolio.index') }}" target="_blank" class="btn btn-sm btn-primary-custom align-self-start align-self-sm-auto">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Website Utama
+        </a>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a href="{{ route('admin.profile.edit') }}" class="btn btn-sm btn-outline-custom">
@@ -116,13 +118,9 @@
 <div class="glass-card p-3 p-md-4 mb-4 border-subtle">
     <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
         <div>
-            <div class="d-flex align-items-center gap-2 mb-1">
-                <span class="badge bg-danger bg-opacity-20 text-danger border border-danger border-opacity-30">
-                    <i class="bi bi-shield-check me-1"></i> Sistem Keamanan Aktif
-                </span>
-                <span class="badge bg-success bg-opacity-20 text-success border border-success border-opacity-30">
-                    <i class="bi bi-broadcast me-1"></i> Remote Lock Siaga
-                </span>
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2 border border-subtle" style="background-color: rgba(15, 23, 42, 0.8);">
+                <span class="rounded-circle bg-success" style="width: 8px; height: 8px; box-shadow: 0 0 8px #22c55e;"></span>
+                <span class="small fw-semibold text-white" style="font-size: 0.8rem;">Sistem Keamanan Aktif &bull; Remote Lock Siaga</span>
             </div>
             <h2 class="h6 fw-bold mb-1 text-white font-heading">
                 Proteksi Akses Admin &amp; Notifikasi Email Otomatis
@@ -132,7 +130,16 @@
                 Penerima Alert &amp; OTP: <span class="text-info fw-semibold">andikaamansyah427@gmail.com</span>
             </div>
         </div>
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <!-- Tombol Uji Kirim Email Keamanan -->
+            <form action="{{ route('admin.security.test-email') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-outline-info">
+                    <i class="bi bi-send-check me-1"></i> Uji Kirim Email
+                </button>
+            </form>
+
+            <!-- Tombol Uji Kunci Darurat (Lockdown) -->
             <form action="{{ route('admin.security.trigger-lock') }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengunci halaman admin secara darurat? Portal akan langsung dikunci dan kode OTP akan dikirim ke email andikaamansyah427@gmail.com.');">
                 @csrf
                 <button type="submit" class="btn btn-sm btn-outline-danger">

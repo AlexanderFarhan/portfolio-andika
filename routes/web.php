@@ -54,6 +54,7 @@ use App\Http\Middleware\EnsureAdminNotLocked;
 Route::middleware(['auth', EnsureAdminNotLocked::class])->prefix('admin')->name('admin.')->group(function () {
     // Manual lockdown trigger for testing or instant security
     Route::post('/security/trigger-lock', [SecurityController::class, 'triggerLock'])->name('security.trigger-lock');
+    Route::post('/security/test-email', [SecurityController::class, 'testEmail'])->name('security.test-email');
 
     // /admin redirect to dashboard
     Route::get('/', function () {

@@ -94,38 +94,21 @@
         </div>
     </div>
 
-    <!-- Right Guidance & Preview Card -->
+    <!-- Right Sidebar: Quick Actions -->
     <div class="col-xl-4">
-        <div class="glass-card p-4 mb-4">
-            <h3 class="h6 fw-bold mb-3 pb-2 border-bottom border-subtle font-heading text-white">
-                <i class="bi bi-info-circle text-primary me-2"></i> Panduan Section About
-            </h3>
-            <ul class="list-unstyled small text-subtle mb-0 d-flex flex-column gap-2">
-                <li class="d-flex align-items-start gap-2">
-                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
-                    <span>Setiap perubahan yang Anda simpan di sini akan langsung terlihat di section <code>#about</code> halaman publik.</span>
-                </li>
-                <li class="d-flex align-items-start gap-2">
-                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
-                    <span>Gunakan nama class resmi Bootstrap Icons (misal: <code>bi-diagram-3-fill</code>, <code>bi-router-fill</code>, <code>bi-code-square</code>, <code>bi-lightbulb-fill</code>).</span>
-                </li>
-                <li class="d-flex align-items-start gap-2">
-                    <i class="bi bi-check-circle-fill text-success mt-1"></i>
-                    <span>Teks narasi profil mendukung format multi-baris sehingga keterbacaan tetap terjaga di desktop maupun mobile.</span>
-                </li>
-            </ul>
-        </div>
-
         <div class="glass-card p-4">
             <h3 class="h6 fw-bold mb-3 pb-2 border-bottom border-subtle font-heading text-white">
-                <i class="bi bi-eye text-primary me-2"></i> Tautan Cepat
+                <i class="bi bi-link-45deg text-primary me-2"></i> Tautan Cepat
             </h3>
             <div class="d-flex flex-column gap-2">
-                <a href="{{ route('admin.profile.edit') }}" class="btn btn-sm btn-outline-custom text-start">
-                    <i class="bi bi-person-badge me-2"></i> Kelola Foto &amp; Kontak Profil
+                <a href="{{ route('portfolio.index') }}" target="_blank" class="btn btn-sm btn-outline-custom text-start">
+                    <i class="bi bi-globe me-2 text-primary"></i> Lihat Tampilan Publik Web
                 </a>
-                <a href="{{ route('portfolio.index') }}#about" target="_blank" class="btn btn-sm btn-outline-custom text-start">
-                    <i class="bi bi-box-arrow-up-right me-2"></i> Lihat Tampilan Publik (#about)
+                <a href="{{ route('admin.profile.edit') }}" class="btn btn-sm btn-outline-custom text-start">
+                    <i class="bi bi-person-badge me-2 text-info"></i> Kelola Foto &amp; Kontak Profil
+                </a>
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-sm btn-outline-custom text-start">
+                    <i class="bi bi-speedometer2 me-2 text-warning"></i> Kembali ke Dashboard
                 </a>
             </div>
         </div>
