@@ -118,7 +118,7 @@
                 <div class="col-6 col-lg-4 text-lg-end">
                     <div class="p-3 rounded-4 glass-card d-inline-block text-start">
                         <div class="small fw-semibold text-primary mb-1"><i class="bi bi-geo-alt-fill me-1"></i> Lokasi Domisili</div>
-                        <div class="small mb-2" style="color: var(--text-primary);">Bekasi / Jakarta, Indonesia</div>
+                        <div class="small mb-2" style="color: var(--text-primary);">{{ $profile->location ?? 'Bekasi / Jakarta, Indonesia' }}</div>
                         <a href="#contact" class="btn btn-sm btn-primary-custom w-100">
                             <i class="bi bi-chat-dots-fill me-1"></i> Hubungi Saya
                         </a>
@@ -139,9 +139,23 @@
         </div>
     </footer>
 
-    <!-- Back to Top Floating Button -->
-    <button type="button" class="back-to-top" id="backToTopBtn" aria-label="Back to Top" title="Kembali ke atas">
-        <i class="bi bi-chevron-up fs-5"></i>
-    </button>
+    <!-- Clean URL & Smooth Scroll Handler for Contact Links -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#contact') {
+                history.replaceState(null, null, window.location.pathname);
+            }
+            document.querySelectorAll('a[href="#contact"]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var target = document.getElementById('contact');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                        history.replaceState(null, null, window.location.pathname);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
