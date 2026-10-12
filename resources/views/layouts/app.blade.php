@@ -128,13 +128,8 @@
 
             <hr class="border-subtle my-4 opacity-25">
 
-            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between small text-muted">
-                <div>&copy; {{ date('Y') }} <strong>Andika Amansyah</strong>. All rights reserved.</div>
-                <div class="mt-2 mt-sm-0">
-                    <a href="{{ route('admin.login') }}" class="text-muted text-decoration-none" title="Admin Access">
-                        <i class="bi bi-shield-lock me-1"></i> Admin Portal
-                    </a>
-                </div>
+            <div class="text-center small text-muted">
+                &copy; {{ date('Y') }} <strong>Andika Amansyah</strong>. All rights reserved.
             </div>
         </div>
     </footer>
