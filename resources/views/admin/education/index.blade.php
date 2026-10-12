@@ -47,7 +47,7 @@
                                 <a href="{{ route('admin.educations.edit', $edu->id) }}" class="btn btn-outline-info" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.educations.destroy', $edu->id) }}" method="POST" onsubmit="return confirm('Hapus riwayat pendidikan ini?')" class="d-inline">
+                                <form action="{{ route('admin.educations.destroy', $edu->id) }}" method="POST" class="d-inline delete-form" data-item-name="{{ $edu->degree }} di {{ $edu->institution }}" data-confirm-message="Apakah Anda yakin ingin menghapus data riwayat pendidikan ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">

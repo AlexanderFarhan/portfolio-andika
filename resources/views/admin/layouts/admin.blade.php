@@ -187,8 +187,114 @@
         </div>
     </div>
 
+    <!-- Universal Elegant Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalTitle" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered custom-delete-modal-dialog">
+            <div class="modal-content custom-delete-modal-content border-0">
+                <div class="modal-body p-4 p-md-5 text-center">
+                    <!-- Warning Icon Badge with subtle pulse -->
+                    <div class="delete-modal-icon-badge">
+                        <i class="bi bi-trash3-fill"></i>
+                    </div>
+
+                    <h3 class="delete-modal-title" id="deleteConfirmModalTitle">Konfirmasi Penghapusan</h3>
+                    <p class="delete-modal-desc" id="deleteConfirmModalMessage">
+                        Apakah Anda yakin ingin menghapus data ini secara permanen?
+                    </p>
+
+                    <!-- Target Item Name Box -->
+                    <div class="delete-modal-target-box" id="deleteModalTargetBox" style="display: none;">
+                        <i class="bi bi-exclamation-circle-fill flex-shrink-0"></i>
+                        <span id="deleteModalTargetName">Item</span>
+                    </div>
+
+                    <!-- Subtle Informative Warning -->
+                    <div class="delete-modal-warning-box">
+                        <i class="bi bi-shield-exclamation fs-5 text-warning flex-shrink-0"></i>
+                        <span>Tindakan ini tidak dapat dibatalkan. Seluruh data terkait akan dihapus secara permanen dari basis data.</span>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button type="button" class="btn delete-modal-btn-cancel px-4" data-bs-dismiss="modal" id="cancelDeleteModalBtn">
+                            Batal
+                        </button>
+                        <button type="button" class="btn delete-modal-btn-confirm px-4" id="executeDeleteModalBtn">
+                            <i class="bi bi-trash3-fill"></i>
+                            <span id="executeDeleteBtnText">Ya, Hapus Data</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Universal Delete Confirmation Modal Handler
+            let formToSubmit = null;
+            const deleteModalEl = document.getElementById('deleteConfirmModal');
+            const deleteTargetBox = document.getElementById('deleteModalTargetBox');
+            const deleteTargetName = document.getElementById('deleteModalTargetName');
+            const deleteModalMessage = document.getElementById('deleteConfirmModalMessage');
+            const executeBtn = document.getElementById('executeDeleteModalBtn');
+            const cancelBtn = document.getElementById('cancelDeleteModalBtn');
+
+            if (deleteModalEl && window.bootstrap && window.bootstrap.Modal) {
+                const deleteModal = new window.bootstrap.Modal(deleteModalEl);
+
+                // Global event interception for any delete form
+                document.addEventListener('submit', (e) => {
+                    const form = e.target;
+                    const isDeleteForm = form.classList.contains('delete-form') || 
+                                         form.querySelector('input[name="_method"][value="DELETE"]') !== null;
+
+                    if (isDeleteForm && !form.dataset.confirmed) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        formToSubmit = form;
+
+                        // Dynamic text extraction
+                        const customMsg = form.dataset.confirmMessage || 'Apakah Anda yakin ingin menghapus data ini secara permanen?';
+                        const itemName = form.dataset.itemName || '';
+
+                        deleteModalMessage.textContent = customMsg;
+
+                        if (itemName && itemName.trim() !== '') {
+                            deleteTargetName.textContent = itemName.trim();
+                            deleteTargetBox.style.display = 'flex';
+                        } else {
+                            deleteTargetBox.style.display = 'none';
+                        }
+
+                        // Reset button state
+                        executeBtn.disabled = false;
+                        cancelBtn.disabled = false;
+                        executeBtn.innerHTML = '<i class="bi bi-trash3-fill"></i> <span>Ya, Hapus Data</span>';
+
+                        deleteModal.show();
+                    }
+                }, true);
+
+                executeBtn.addEventListener('click', () => {
+                    if (formToSubmit) {
+                        executeBtn.disabled = true;
+                        cancelBtn.disabled = true;
+                        executeBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Menghapus...';
+
+                        formToSubmit.dataset.confirmed = 'true';
+                        formToSubmit.submit();
+                    }
+                });
+
+                deleteModalEl.addEventListener('hidden.bs.modal', () => {
+                    formToSubmit = null;
+                    executeBtn.disabled = false;
+                    cancelBtn.disabled = false;
+                    executeBtn.innerHTML = '<i class="bi bi-trash3-fill"></i> <span>Ya, Hapus Data</span>';
+                });
+            }
+
             const sidebar = document.getElementById('adminSidebar');
             const toggleBtn = document.getElementById('toggleSidebarBtn');
             const closeBtn = document.getElementById('closeSidebarBtn');

@@ -16,7 +16,7 @@
             <a href="{{ route('admin.messages.index') }}" class="btn btn-sm btn-outline-custom">
                 <i class="bi bi-arrow-left me-1"></i> Kembali ke Inbox
             </a>
-            <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" onsubmit="return confirm('Hapus pesan ini?')">
+            <form action="{{ route('admin.messages.destroy', $message->id) }}" method="POST" class="d-inline delete-form" data-item-name="Pesan dari {{ $message->name }} ({{ $message->subject }})" data-confirm-message="Apakah Anda yakin ingin menghapus pesan ini secara permanen?">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-outline-danger">

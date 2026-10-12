@@ -59,7 +59,7 @@
                                 <a href="{{ route('admin.skills.edit', $s->id) }}" class="btn btn-outline-info" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.skills.destroy', $s->id) }}" method="POST" onsubmit="return confirm('Hapus skill ini?')" class="d-inline">
+                                <form action="{{ route('admin.skills.destroy', $s->id) }}" method="POST" class="d-inline delete-form" data-item-name="Keahlian: {{ $s->name }} ({{ $s->category }})" data-confirm-message="Apakah Anda yakin ingin menghapus keahlian teknis ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">

@@ -51,7 +51,7 @@
                                 <a href="{{ route('admin.certificates.edit', $c->id) }}" class="btn btn-outline-info" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.certificates.destroy', $c->id) }}" method="POST" onsubmit="return confirm('Hapus sertifikat ini?')" class="d-inline">
+                                <form action="{{ route('admin.certificates.destroy', $c->id) }}" method="POST" class="d-inline delete-form" data-item-name="Sertifikat: {{ $c->title }} ({{ $c->issuer }})" data-confirm-message="Apakah Anda yakin ingin menghapus data sertifikat ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">

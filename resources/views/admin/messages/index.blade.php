@@ -101,7 +101,7 @@
                                 <a href="{{ route('admin.messages.show', $msg->id) }}" class="btn btn-outline-primary" title="Buka Pesan">
                                     <i class="bi bi-eye"></i>
                                 </a>
-                                <form action="{{ route('admin.messages.destroy', $msg->id) }}" method="POST" onsubmit="return confirm('Hapus pesan ini?')" class="d-inline">
+                                <form action="{{ route('admin.messages.destroy', $msg->id) }}" method="POST" class="d-inline delete-form" data-item-name="Pesan dari {{ $msg->name }} ({{ $msg->subject }})" data-confirm-message="Apakah Anda yakin ingin menghapus pesan kontak ini dari kotak masuk?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">

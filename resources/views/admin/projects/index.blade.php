@@ -68,7 +68,7 @@
                                 <a href="{{ route('admin.projects.edit', $p->id) }}" class="btn btn-outline-info" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.projects.destroy', $p->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus project ini?')" class="d-inline">
+                                <form action="{{ route('admin.projects.destroy', $p->id) }}" method="POST" class="d-inline delete-form" data-item-name="Project: {{ $p->title }}" data-confirm-message="Apakah Anda yakin ingin menghapus project ini dari daftar portofolio?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">

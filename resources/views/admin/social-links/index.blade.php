@@ -48,7 +48,7 @@
                                 <a href="{{ route('admin.social-links.edit', $s->id) }}" class="btn btn-outline-info" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.social-links.destroy', $s->id) }}" method="POST" onsubmit="return confirm('Hapus tautan ini?')" class="d-inline">
+                                <form action="{{ route('admin.social-links.destroy', $s->id) }}" method="POST" class="d-inline delete-form" data-item-name="Tautan {{ $s->platform }} ({{ $s->username }})" data-confirm-message="Apakah Anda yakin ingin menghapus tautan media sosial ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">

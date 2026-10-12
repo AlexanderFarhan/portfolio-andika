@@ -43,7 +43,7 @@
                                 <a href="{{ route('admin.experiences.edit', $exp->id) }}" class="btn btn-outline-info" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form action="{{ route('admin.experiences.destroy', $exp->id) }}" method="POST" onsubmit="return confirm('Hapus pengalaman ini?')" class="d-inline">
+                                <form action="{{ route('admin.experiences.destroy', $exp->id) }}" method="POST" class="d-inline delete-form" data-item-name="{{ $exp->role }} di {{ $exp->company }}" data-confirm-message="Apakah Anda yakin ingin menghapus data pengalaman kerja ini?">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger" title="Hapus">
