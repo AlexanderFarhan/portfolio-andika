@@ -595,8 +595,8 @@
                             <i class="bi bi-geo-alt-fill"></i>
                         </div>
                         <div>
-                            <span class="small text-muted d-block">Lokasi Kampus &amp; Domisili:</span>
-                            <span class="fw-bold" style="color: var(--text-primary);">UBSI — Bekasi / Jakarta, Indonesia</span>
+                            <span class="small text-muted d-block">Lokasi Domisili:</span>
+                            <span class="fw-bold" style="color: var(--text-primary);">{{ $profile->location ?? 'Bekasi / Jakarta, Indonesia' }}</span>
                         </div>
                     </div>
 

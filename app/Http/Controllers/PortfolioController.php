@@ -59,7 +59,7 @@ class PortfolioController extends Controller
             ]);
         }
 
-        return redirect('/#contact')
+        return redirect('/')
             ->with('success', 'Pesan Anda berhasil dikirim! Terima kasih telah menghubungi saya.');
     }
 
