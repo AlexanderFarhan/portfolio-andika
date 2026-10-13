@@ -12,7 +12,9 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Andika Amansyah | Web Resume & Portfolio')</title>
+    <title>@yield('title', 'MyProto.A | Portofolio & Web Resume')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
 
     <!-- Google Fonts & Stylesheets compiled via Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -23,8 +25,8 @@
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('portfolio.index') }}">
-                    <span class="p-1 px-2 rounded-3 bg-primary text-white font-mono fs-6 fw-bold">&lt;AA/&gt;</span>
-                    <span class="fw-bold tracking-tight">Andika<span class="text-gradient">.dev</span></span>
+                    <img src="{{ asset('images/logo.png') }}" alt="MyProto.A" class="brand-logo" width="36" height="36">
+                    <span class="fw-bold tracking-tight">MyProto<span class="text-gradient">.A</span></span>
                 </a>
 
                 <div class="d-flex align-items-center gap-2 order-lg-last">
@@ -87,8 +89,8 @@
             <div class="row g-4 align-items-center">
                 <div class="col-lg-5">
                     <a class="d-inline-flex align-items-center gap-2 mb-3 text-decoration-none" href="#">
-                        <span class="p-1 px-2 rounded-3 bg-primary text-white font-mono fs-6 fw-bold">&lt;AA/&gt;</span>
-                        <span class="fw-bold fs-5 font-heading" style="color: var(--text-primary);">Andika Amansyah</span>
+                        <img src="{{ asset('images/logo.png') }}" alt="MyProto.A" class="brand-logo" width="36" height="36">
+                        <span class="fw-bold fs-5 font-heading" style="color: var(--text-primary);">MyProto<span class="text-gradient">.A</span></span>
                     </a>
                     <p class="text-subtle small mb-3" style="max-width: 400px;">
                         Mahasiswa Teknologi Informasi Universitas Bina Sarana Informatika (UBSI). Berkomitmen menciptakan solusi digital handal melalui integrasi rekayasa perangkat lunak dan infrastruktur jaringan.

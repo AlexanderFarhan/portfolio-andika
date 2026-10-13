@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard') | Andika Amansyah Portfolio</title>
+    <title>@yield('title', 'Admin Dashboard') | MyProto.A Admin</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-dark text-light admin-body">
@@ -13,10 +15,8 @@
         <aside class="admin-sidebar d-flex flex-column p-3" id="adminSidebar">
             <div class="d-flex align-items-center justify-content-between mb-4 px-2">
                 <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <span class="p-2 rounded-3 bg-primary text-white d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;">
-                        <i class="bi bi-code-slash fs-5"></i>
-                    </span>
-                    <span class="fs-5 fw-bold text-white font-heading">Andika Admin</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="MyProto.A" class="brand-logo" width="36" height="36">
+                    <span class="fs-5 fw-bold text-white font-heading">MyProto<span class="text-gradient">.A</span></span>
                 </a>
                 <button class="btn btn-sm btn-outline-secondary d-lg-none" id="closeSidebarBtn">
                     <i class="bi bi-x-lg"></i>

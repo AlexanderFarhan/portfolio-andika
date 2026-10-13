@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Andika Amansyah | Web Resume & Portfolio — Mahasiswa TI UBSI')
+@section('title', 'MyProto.A | Andika Amansyah — Web Resume & Portfolio')
 
 @section('content')
 
