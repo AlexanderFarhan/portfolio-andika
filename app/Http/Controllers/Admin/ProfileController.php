@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Support\Facades\Storage;
+use App\Services\MediaStorageService;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -33,28 +34,32 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request)
     {
-        $profile = Profile::first();
-        $data = $request->validated();
+        try {
+            $profile = Profile::firstOrCreate(['id' => 1]);
+            $data = $request->validated();
 
-        if ($request->hasFile('avatar_file')) {
-            if ($profile->avatar && !str_starts_with($profile->avatar, '/images/')) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $profile->avatar));
+            if ($request->hasFile('avatar_file')) {
+                MediaStorageService::delete($profile->avatar);
+                $data['avatar'] = MediaStorageService::store($request->file('avatar_file'), 'profile');
             }
-            $path = $request->file('avatar_file')->store('profile', 'public');
-            $data['avatar'] = '/storage/' . $path;
-        }
 
-        if ($request->hasFile('resume_file')) {
-            if ($profile->resume_pdf && !str_starts_with($profile->resume_pdf, '/cv/')) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $profile->resume_pdf));
+            if ($request->hasFile('resume_file')) {
+                MediaStorageService::delete($profile->resume_pdf);
+                $data['resume_pdf'] = MediaStorageService::store($request->file('resume_file'), 'resumes');
             }
-            $path = $request->file('resume_file')->store('resumes', 'public');
-            $data['resume_pdf'] = '/storage/' . $path;
+
+            $profile->update($data);
+
+            return redirect()->route('admin.profile.edit')
+                ->with('success', 'Data profil Andika Amansyah berhasil diperbarui!');
+        } catch (\Throwable $e) {
+            Log::error('ProfileController@update error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->route('admin.profile.edit')
+                ->withInput()
+                ->with('error', 'Gagal memperbarui profil: ' . $e->getMessage());
         }
-
-        $profile->update($data);
-
-        return redirect()->route('admin.profile.edit')
-            ->with('success', 'Data profil Andika Amansyah berhasil diperbarui!');
     }
 }

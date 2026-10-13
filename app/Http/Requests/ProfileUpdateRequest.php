@@ -26,7 +26,19 @@ class ProfileUpdateRequest extends FormRequest
             'completed_projects' => 'nullable|integer|min:0',
             'gpa' => 'nullable|string|max:50',
             'avatar_file' => 'nullable|image|mimes:jpeg,png,jpg,webp,svg|max:2048',
-            'resume_file' => 'nullable|file|mimes:pdf|max:5120',
+            'resume_file' => 'nullable|file|mimes:pdf|max:4096',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'avatar_file.image' => 'File foto profil harus berupa gambar yang valid.',
+            'avatar_file.mimes' => 'Format foto profil harus JPG, PNG, WEBP, atau SVG.',
+            'avatar_file.max' => 'Ukuran foto profil maksimal 2MB.',
+            'resume_file.file' => 'Berkas CV harus berupa file yang valid.',
+            'resume_file.mimes' => 'Berkas CV harus berformat PDF.',
+            'resume_file.max' => 'Ukuran berkas CV maksimal 4MB.',
         ];
     }
 }

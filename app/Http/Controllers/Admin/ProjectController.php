@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\ProjectRequest;
+use App\Services\MediaStorageService;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -34,8 +34,7 @@ class ProjectController extends Controller
         $data['order'] = $data['order'] ?? (Project::max('order') + 1);
 
         if ($request->hasFile('image_file')) {
-            $path = $request->file('image_file')->store('projects', 'public');
-            $data['image'] = '/storage/' . $path;
+            $data['image'] = MediaStorageService::store($request->file('image_file'), 'projects');
         }
 
         Project::create($data);
@@ -60,11 +59,8 @@ class ProjectController extends Controller
         $data['is_featured'] = $request->has('is_featured');
 
         if ($request->hasFile('image_file')) {
-            if ($project->image && !str_starts_with($project->image, '/images/')) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $project->image));
-            }
-            $path = $request->file('image_file')->store('projects', 'public');
-            $data['image'] = '/storage/' . $path;
+            MediaStorageService::delete($project->image);
+            $data['image'] = MediaStorageService::store($request->file('image_file'), 'projects');
         }
 
         $project->update($data);
@@ -75,10 +71,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
-        if ($project->image && !str_starts_with($project->image, '/images/')) {
-            Storage::disk('public')->delete(str_replace('/storage/', '', $project->image));
-        }
-
+        MediaStorageService::delete($project->image);
         $project->delete();
 
         return redirect()->route('admin.projects.index')

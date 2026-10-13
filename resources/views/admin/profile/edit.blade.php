@@ -75,13 +75,26 @@
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <label class="form-label small fw-semibold">Ganti Foto Profil / Avatar</label>
-                        <input type="file" name="avatar_file" class="form-control form-control-custom" accept="image/*">
-                        <small class="text-muted" style="font-size: 0.75rem;">Mendukung JPG, PNG, WEBP, SVG (Max 2MB)</small>
+                        <input type="file" name="avatar_file" class="form-control form-control-custom @error('avatar_file') is-invalid @enderror" accept="image/*">
+                        <small class="text-muted d-block" style="font-size: 0.75rem;">Mendukung JPG, PNG, WEBP, SVG (Max 2MB)</small>
+                        @error('avatar_file')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="col-md-6">
                         <label class="form-label small fw-semibold">Upload Berkas CV PDF</label>
-                        <input type="file" name="resume_file" class="form-control form-control-custom" accept="application/pdf">
-                        <small class="text-muted" style="font-size: 0.75rem;">Mendukung PDF (Max 5MB)</small>
+                        <input type="file" name="resume_file" class="form-control form-control-custom @error('resume_file') is-invalid @enderror" accept="application/pdf">
+                        <small class="text-muted d-block" style="font-size: 0.75rem;">Mendukung PDF (Max 4MB)</small>
+                        @error('resume_file')
+                            <div class="text-danger small mt-1">{{ $message }}</div>
+                        @enderror
+                        @if(!empty($profile->resume_pdf))
+                            <div class="mt-2 small text-success d-flex align-items-center gap-1">
+                                <i class="bi bi-file-earmark-check-fill"></i>
+                                <span>CV Aktif:</span>
+                                <a href="{{ route('portfolio.cv') }}" target="_blank" class="text-primary text-decoration-underline fw-semibold">Buka / Unduh Berkas CV</a>
+                            </div>
+                        @endif
                     </div>
                 </div>
 

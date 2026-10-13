@@ -69,6 +69,40 @@ class PortfolioController extends Controller
     public function downloadCv()
     {
         $profile = Profile::first();
+
+        // If custom PDF CV exists, stream/download it
+        if ($profile && !empty($profile->resume_pdf)) {
+            $resumeDiskPath = ltrim(str_replace('/storage/', '', $profile->resume_pdf), '/');
+
+            // 1. Check local storage disk
+            try {
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($resumeDiskPath)) {
+                    return \Illuminate\Support\Facades\Storage::disk('public')->response($resumeDiskPath, 'CV_Andika_Amansyah.pdf', [
+                        'Content-Type' => 'application/pdf',
+                        'Content-Disposition' => 'inline; filename="CV_Andika_Amansyah.pdf"',
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                // Fall through to database
+            }
+
+            // 2. Check persistent MediaFile in database
+            try {
+                $media = \App\Models\MediaFile::where('disk_path', $resumeDiskPath)->first();
+                if ($media && !empty($media->payload)) {
+                    $binary = base64_decode($media->payload);
+                    return response($binary, 200, [
+                        'Content-Type' => 'application/pdf',
+                        'Content-Length' => strlen($binary),
+                        'Content-Disposition' => 'inline; filename="' . ($media->filename ?: 'CV_Andika_Amansyah.pdf') . '"',
+                        'Cache-Control' => 'public, max-age=86400, stale-while-revalidate=604800',
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                // Fall through to HTML template
+            }
+        }
+
         $educations = Education::orderBy('order', 'asc')->get();
         $experiences = Experience::orderBy('order', 'asc')->get();
         $skills = Skill::orderBy('order', 'asc')->get();

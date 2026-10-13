@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Certificate;
 use App\Http\Requests\CertificateRequest;
-use Illuminate\Support\Facades\Storage;
+use App\Services\MediaStorageService;
 
 class CertificateController extends Controller
 {
@@ -26,8 +26,7 @@ class CertificateController extends Controller
         $data['order'] = $data['order'] ?? (Certificate::max('order') + 1);
 
         if ($request->hasFile('image_file')) {
-            $path = $request->file('image_file')->store('certificates', 'public');
-            $data['image'] = '/storage/' . $path;
+            $data['image'] = MediaStorageService::store($request->file('image_file'), 'certificates');
         }
 
         Certificate::create($data);
@@ -46,11 +45,8 @@ class CertificateController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image_file')) {
-            if ($certificate->image && !str_starts_with($certificate->image, '/images/')) {
-                Storage::disk('public')->delete(str_replace('/storage/', '', $certificate->image));
-            }
-            $path = $request->file('image_file')->store('certificates', 'public');
-            $data['image'] = '/storage/' . $path;
+            MediaStorageService::delete($certificate->image);
+            $data['image'] = MediaStorageService::store($request->file('image_file'), 'certificates');
         }
 
         $certificate->update($data);
@@ -61,10 +57,7 @@ class CertificateController extends Controller
 
     public function destroy(Certificate $certificate)
     {
-        if ($certificate->image && !str_starts_with($certificate->image, '/images/')) {
-            Storage::disk('public')->delete(str_replace('/storage/', '', $certificate->image));
-        }
-
+        MediaStorageService::delete($certificate->image);
         $certificate->delete();
 
         return redirect()->route('admin.certificates.index')

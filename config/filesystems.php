@@ -33,14 +33,20 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            'serve' => false,
             'throw' => false,
             'report' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => (function () {
+                $defaultPath = storage_path('app/public');
+                if (isset($_SERVER['VERCEL']) || isset($_ENV['VERCEL']) || (is_dir('/tmp') && !is_writable(storage_path()))) {
+                    return '/tmp/storage/app/public';
+                }
+                return $defaultPath;
+            })(),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,

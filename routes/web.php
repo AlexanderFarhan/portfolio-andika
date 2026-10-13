@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\SocialLinkController;
 use App\Http\Controllers\Admin\ContactMessageController;
 
+use App\Http\Controllers\MediaController;
+
 /*
 |--------------------------------------------------------------------------
 | Public Portfolio Routes (Bisa diakses siapa saja tanpa login)
@@ -24,6 +26,7 @@ Route::get('/', [PortfolioController::class, 'index'])->name('portfolio.index');
 Route::post('/contact', [PortfolioController::class, 'contact'])->name('portfolio.contact');
 Route::get('/cv', [PortfolioController::class, 'downloadCv'])->name('portfolio.cv');
 Route::get('/project/{slug}', [ProjectDetailController::class, 'show'])->name('portfolio.project.detail');
+Route::get('/storage/{path}', [MediaController::class, 'serve'])->where('path', '.*')->name('media.serve');
 
 use App\Http\Controllers\Admin\SecurityController;
 use App\Models\AdminLockdown;

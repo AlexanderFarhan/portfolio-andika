@@ -106,6 +106,19 @@ class AppServiceProvider extends ServiceProvider
                     });
                 }
             }
+
+            // Ensure media_files table exists for persistent serverless file storage
+            if (!\Illuminate\Support\Facades\Schema::hasTable('media_files')) {
+                \Illuminate\Support\Facades\Schema::create('media_files', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    $table->id();
+                    $table->string('disk_path')->unique();
+                    $table->string('filename');
+                    $table->string('mime_type');
+                    $table->unsignedBigInteger('size');
+                    $table->longText('payload');
+                    $table->timestamps();
+                });
+            }
         } catch (\Throwable $e) {
             // Ignore database connection failures in build or offline stages
         }

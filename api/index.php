@@ -39,12 +39,38 @@ if ($uri !== '/' && file_exists($publicFile) && !is_dir($publicFile)) {
     exit;
 }
 
+// 1b. Direct Static Handler for uploaded media cached in /tmp
+if (str_starts_with($uri, '/storage/')) {
+    $storageSubPath = preg_replace('#^/storage#', '', $uri);
+    $tmpStorageFile = '/tmp/storage/app/public' . $storageSubPath;
+    if (file_exists($tmpStorageFile) && !is_dir($tmpStorageFile)) {
+        $ext = strtolower(pathinfo($tmpStorageFile, PATHINFO_EXTENSION));
+        $mType = match ($ext) {
+            'png' => 'image/png',
+            'jpg', 'jpeg' => 'image/jpeg',
+            'webp' => 'image/webp',
+            'svg' => 'image/svg+xml',
+            'pdf' => 'application/pdf',
+            default => mime_content_type($tmpStorageFile) ?: 'application/octet-stream',
+        };
+        header("Content-Type: $mType");
+        header("Cache-Control: public, max-age=86400");
+        header("Content-Length: " . filesize($tmpStorageFile));
+        readfile($tmpStorageFile);
+        exit;
+    }
+}
+
 // 2. Prepare required directories in /tmp (writable environment in Vercel Serverless)
 $directories = [
     '/tmp/storage/framework/views',
     '/tmp/storage/framework/cache/data',
     '/tmp/storage/framework/sessions',
     '/tmp/storage/logs',
+    '/tmp/storage/app/public/profile',
+    '/tmp/storage/app/public/resumes',
+    '/tmp/storage/app/public/projects',
+    '/tmp/storage/app/public/certificates',
     '/tmp/bootstrap/cache',
 ];
 

@@ -112,4 +112,60 @@ class PortfolioTest extends TestCase
         $publicResponse->assertSee('Ini adalah teks deskripsi profil baru hasil update admin.');
         $publicResponse->assertSee('Pilar Kustom Baru');
     }
+
+    public function test_admin_can_upload_avatar_and_resume_pdf_without_server_error(): void
+    {
+        $user = User::factory()->create();
+
+        // 1x1 transparent PNG bytes
+        $pngBytes = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+        $avatarFile = \Illuminate\Http\UploadedFile::fake()->createWithContent('avatar-custom.png', $pngBytes);
+        $resumeFile = \Illuminate\Http\UploadedFile::fake()->create('cv-custom.pdf', 150, 'application/pdf');
+
+        $response = $this->actingAs($user)->put('/admin/profile', [
+            'name' => 'Andika Amansyah Updated',
+            'tagline' => 'Tagline Baru Mahasiswa UBSI',
+            'headline' => 'System Analyst Expert',
+            'bio_focus' => 'Full-Stack Web & Networking',
+            'about_me' => 'Deskripsi profil yang baru diunggah...',
+            'email' => 'andika.updated@example.com',
+            'phone' => '+62 812-9999-8888',
+            'location' => 'Jakarta, Indonesia',
+            'years_of_experience' => '3+ Tahun',
+            'completed_projects' => 20,
+            'gpa' => '3.90 / 4.00',
+            'avatar_file' => $avatarFile,
+            'resume_file' => $resumeFile,
+        ]);
+
+        $response->assertRedirect(route('admin.profile.edit'));
+        $response->assertSessionHas('success');
+
+        $profile = Profile::first();
+        $this->assertNotNull($profile->avatar);
+        $this->assertNotNull($profile->resume_pdf);
+        $this->assertStringStartsWith('/storage/profile/', $profile->avatar);
+        $this->assertStringStartsWith('/storage/resumes/', $profile->resume_pdf);
+
+        // Verify media files were saved to MediaFile database table
+        $avatarDiskPath = str_replace('/storage/', '', $profile->avatar);
+        $resumeDiskPath = str_replace('/storage/', '', $profile->resume_pdf);
+
+        $this->assertDatabaseHas('media_files', ['disk_path' => $avatarDiskPath]);
+        $this->assertDatabaseHas('media_files', ['disk_path' => $resumeDiskPath]);
+
+        // Verify dynamic media route serves the uploaded avatar
+        $avatarResponse = $this->get($profile->avatar);
+        $avatarResponse->assertStatus(200);
+
+        // Verify dynamic media route serves the uploaded resume PDF
+        $resumeResponse = $this->get($profile->resume_pdf);
+        $resumeResponse->assertStatus(200);
+        $this->assertEquals('application/pdf', $resumeResponse->headers->get('Content-Type'));
+
+        // Verify public /cv route serves the uploaded PDF directly
+        $cvRouteResponse = $this->get('/cv');
+        $cvRouteResponse->assertStatus(200);
+        $this->assertEquals('application/pdf', $cvRouteResponse->headers->get('Content-Type'));
+    }
 }
