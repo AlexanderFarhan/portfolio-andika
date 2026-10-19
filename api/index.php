@@ -95,7 +95,15 @@ if (!file_exists($deployMarker)) {
     @touch($deployMarker);
 }
 
-// Prevent browser from caching dynamic HTML responses
+// Security Headers and Cache Control for dynamic responses
+if (function_exists('header_remove')) {
+    header_remove('X-Powered-By');
+}
+header("X-Frame-Options: SAMEORIGIN");
+header("X-Content-Type-Options: nosniff");
+header("Referrer-Policy: strict-origin-when-cross-origin");
+header("Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()");
+
 if ($uri === '/' || (!str_starts_with($uri, '/build') && !str_starts_with($uri, '/images') && !str_ends_with($uri, '.ico'))) {
     header("Cache-Control: no-cache, no-store, must-revalidate");
     header("Pragma: no-cache");
