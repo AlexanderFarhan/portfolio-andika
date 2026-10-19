@@ -16,7 +16,7 @@
             <div class="d-flex align-items-center justify-content-between mb-4 px-2">
                 <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
                     <img src="{{ asset('images/logo.png') }}" alt="MyProto.A" class="brand-logo" width="36" height="36">
-                    <span class="fs-5 fw-bold text-white font-heading">MyProto<span class="text-gradient">.A</span></span>
+                    <span class="fs-5 fw-bold text-white font-heading">MyProto<span class="text-white-50">.A</span></span>
                 </a>
                 <button class="btn btn-sm btn-outline-secondary d-lg-none" id="closeSidebarBtn">
                     <i class="bi bi-x-lg"></i>
