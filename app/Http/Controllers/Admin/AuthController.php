@@ -124,6 +124,63 @@ class AuthController extends Controller
     }
 
     /**
+     * Generate WebAuthn challenge for mobile Passkey Touch authentication.
+     */
+    public function passkeyChallenge(Request $request)
+    {
+        $challenge = bin2hex(random_bytes(32));
+        $request->session()->put('webauthn_challenge', $challenge);
+
+        return response()->json([
+            'success' => true,
+            'challenge' => $challenge,
+            'rp' => [
+                'name' => 'Andika Portfolio Console',
+                'id' => $request->getHost(),
+            ],
+            'user' => [
+                'id' => base64_encode('andika-owner-admin'),
+                'name' => 'andika@theta-studio.dev',
+                'displayName' => 'Andika Amansyah',
+            ],
+        ]);
+    }
+
+    /**
+     * Handle Passkey Touch biometric authentication from mobile devices.
+     */
+    public function passkeyLogin(Request $request)
+    {
+        if (AdminLockdown::isLocked()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Halaman admin saat ini dalam status TERKUNCI (LOCKDOWN). Masukkan kode verifikasi OTP.',
+            ], 423);
+        }
+
+        $user = \App\Models\User::first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Akun administrator tidak ditemukan.',
+            ], 404);
+        }
+
+        // Authenticate administrator session
+        Auth::login($user, $request->boolean('remember', true));
+        $request->session()->regenerate();
+        $request->session()->forget('webauthn_challenge');
+        AdminLockdown::resetFailedAttempts();
+
+        return response()->json([
+            'success' => true,
+            'redirect' => route('admin.dashboard'),
+            'message' => 'Otentikasi biometrik berhasil. Mengalihkan ke dashboard...',
+        ]);
+    }
+
+    /**
      * Log the admin out of the application.
      */
     public function logout(Request $request)

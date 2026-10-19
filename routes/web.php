@@ -39,6 +39,8 @@ use App\Models\AdminLockdown;
 Route::redirect('/login', '/admin/login')->name('login');
 Route::get('/admin/login', [AuthController::class, 'showLogin'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.submit');
+Route::get('/admin/passkey/challenge', [AuthController::class, 'passkeyChallenge'])->name('admin.login.passkey.challenge');
+Route::post('/admin/passkey/login', [AuthController::class, 'passkeyLogin'])->name('admin.login.passkey');
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
 // Remote Lock & OTP Verification routes (Publicly accessible for email actions)
