@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard') | MyProto.A Admin</title>
+    <title>@yield('title', 'Admin Dashboard') | Andika Amansyah Console</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -15,8 +15,11 @@
         <aside class="admin-sidebar d-flex flex-column p-3" id="adminSidebar">
             <div class="d-flex align-items-center justify-content-between mb-4 px-2">
                 <a href="{{ route('admin.dashboard') }}" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <img src="{{ asset('images/logo.png') }}" alt="MyProto.A" class="brand-logo" width="36" height="36">
-                    <span class="fs-5 fw-bold text-white font-heading">MyProto<span class="text-white-50">.A</span></span>
+                    <div class="brand-monogram-admin">AA</div>
+                    <div>
+                        <div class="fs-6 fw-bold text-white font-heading lh-sm">Andika Amansyah</div>
+                        <div class="text-secondary" style="font-size: 0.7rem; font-family: var(--font-mono);">Admin Console</div>
+                    </div>
                 </a>
                 <button class="btn btn-sm btn-outline-secondary d-lg-none" id="closeSidebarBtn">
                     <i class="bi bi-x-lg"></i>
@@ -58,7 +61,7 @@
                     @php
                         $unreadCount = \App\Models\ContactMessage::where('is_read', false)->count();
                     @endphp
-                    <span class="badge bg-danger rounded-pill" id="sidebarUnreadBadge" style="{{ $unreadCount > 0 ? '' : 'display: none;' }}">{{ $unreadCount }}</span>
+                    <span class="chip-linear chip-linear-blue font-mono ms-auto" id="sidebarUnreadBadge" style="{{ $unreadCount > 0 ? '' : 'display: none;' }}font-size: 0.68rem; padding: 1px 5px;">{{ $unreadCount }}</span>
                 </a>
                 <a href="{{ route('admin.social-links.index') }}" class="admin-nav-item {{ request()->routeIs('admin.social-links.*') ? 'active' : '' }}">
                     <i class="bi bi-share"></i> Social Links
@@ -99,34 +102,37 @@
                     <button class="btn btn-outline-secondary d-lg-none" id="toggleSidebarBtn">
                         <i class="bi bi-list fs-5"></i>
                     </button>
-                    <h1 class="h4 mb-0 fw-bold">@yield('page-title', 'Dashboard')</h1>
+                    <div>
+                        <div class="text-muted font-mono d-none d-sm-block" style="font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;">Console / Workspace</div>
+                        <h1 class="h5 mb-0 fw-bold font-heading text-white">@yield('page-title', 'Dashboard')</h1>
+                    </div>
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
                     <!-- Realtime Live Sync Status Indicator -->
-                    <div class="d-none d-md-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-dark bg-opacity-50 border border-secondary border-opacity-25" id="realtimeStatusIndicator" title="Live Sync: Memeriksa pesan masuk secara otomatis">
+                    <div class="d-none d-md-flex align-items-center gap-2 px-2 py-1 rounded bg-dark border border-secondary border-opacity-25" id="realtimeStatusIndicator" title="Live Sync: Memeriksa pesan masuk secara otomatis">
                         <span class="live-pulse-dot"></span>
-                        <span class="small text-subtle" style="font-size: 0.75rem;">Live Sync: <span id="syncStatusText" class="text-success fw-medium">Aktif</span></span>
+                        <span class="font-mono text-muted" style="font-size: 0.7rem;">SYNC: <span id="syncStatusText" class="text-success fw-medium">ACTIVE</span></span>
                     </div>
 
                     <!-- Quick Messages Bell with live badge -->
                     <a href="{{ route('admin.messages.index') }}" class="btn btn-sm btn-outline-custom position-relative p-2" title="Kotak Masuk Pesan">
-                        <i class="bi bi-bell-fill"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="headerUnreadBadge" style="{{ $unreadCount > 0 ? '' : 'display: none;' }}">
+                        <i class="bi bi-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded bg-danger font-mono" id="headerUnreadBadge" style="{{ $unreadCount > 0 ? '' : 'display: none;' }}font-size: 0.65rem;">
                             {{ $unreadCount }}
                         </span>
                     </a>
 
                     <!-- Test Chime Button -->
                     <button type="button" class="btn btn-sm btn-outline-custom p-2" id="testChimeBtn" title="Tes Bunyi Notifikasi Pesan Masuk">
-                        <i class="bi bi-volume-up-fill text-info"></i>
+                        <i class="bi bi-volume-up text-secondary"></i>
                     </button>
 
                     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" title="Ganti Tema">
-                        <i class="bi bi-sun-fill text-warning"></i>
+                        <i class="bi bi-sun text-warning"></i>
                     </button>
                     <a href="{{ route('portfolio.index') }}" target="_blank" class="btn btn-sm btn-outline-custom">
-                        <i class="bi bi-eye"></i> <span class="d-none d-sm-inline">Preview Website</span>
+                        <i class="bi bi-box-arrow-up-right me-1"></i> <span class="d-none d-sm-inline">Live Preview</span>
                     </a>
                 </div>
             </header>
@@ -559,15 +565,22 @@
 
                             data.new_messages.forEach(msg => {
                                 const item = document.createElement('div');
-                                item.className = 'list-group-item bg-transparent px-0 py-3 border-subtle table-success-highlight';
+                                item.className = 'list-group-item bg-transparent px-0 py-3 border-bottom border-white border-opacity-5 table-success-highlight';
                                 item.innerHTML = `
-                                    <div class="d-flex justify-content-between align-items-start mb-1">
-                                        <h6 class="mb-0 fw-bold text-primary">${escapeHtml(msg.name)} <span class="badge bg-primary ms-1" style="font-size: 0.65rem;">BARU</span></h6>
-                                        <small class="text-success fw-bold" style="font-size: 0.75rem;">${msg.created_at_human}</small>
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="live-pulse-dot" style="width: 7px; height: 7px; background-color: #38bdf8;" title="Pesan Belum Dibaca"></span>
+                                            <span class="fw-semibold small text-white">${escapeHtml(msg.name)}</span>
+                                            <span class="chip-linear chip-linear-blue font-mono" style="font-size: 0.62rem; padding: 1px 4px;">BARU</span>
+                                        </div>
+                                        <span class="text-success font-mono" style="font-size: 0.72rem;">${msg.created_at_human}</span>
                                     </div>
-                                    <div class="fw-medium small mb-1">${escapeHtml(msg.subject)}</div>
-                                    <p class="small text-subtle text-truncate mb-2">${escapeHtml(msg.message)}</p>
-                                    <a href="${msg.show_url}" class="btn btn-sm btn-outline-custom py-1 px-2" style="font-size: 0.78rem;">Baca Selengkapnya</a>
+                                    <div class="small fw-medium text-white mb-1 text-truncate" style="max-width: 92%;">${escapeHtml(msg.subject)}</div>
+                                    <p class="small text-muted text-truncate mb-2" style="font-size: 0.78rem; line-height: 1.5;">${escapeHtml(msg.message)}</p>
+                                    <div class="d-flex align-items-center justify-content-between pt-1">
+                                        <span class="text-secondary font-mono" style="font-size: 0.7rem;"><i class="bi bi-envelope me-1"></i> ${escapeHtml(msg.email)}</span>
+                                        <a href="${msg.show_url}" class="btn-linear-secondary py-1 px-2" style="font-size: 0.72rem;"><span>Detail</span> <i class="bi bi-chevron-right ms-1"></i></a>
+                                    </div>
                                 `;
                                 recentList.prepend(item);
                             });

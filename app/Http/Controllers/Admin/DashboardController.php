@@ -20,6 +20,7 @@ class DashboardController extends Controller
     {
         $stats = [
             'projects_count' => Project::count(),
+            'featured_projects_count' => Project::where('is_featured', true)->count(),
             'skills_count' => Skill::count(),
             'education_count' => Education::count(),
             'experience_count' => Experience::count(),
