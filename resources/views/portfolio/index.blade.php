@@ -1,52 +1,57 @@
 @extends('layouts.app')
 
-@section('title', 'Andika Amansyah | Web Developer & System Analyst')
+@section('title', ($profile->name ?? 'Andika Amansyah') . ' | Software Engineer & System Analyst')
 
 @section('content')
 
 <!-- ==========================================================================
-     SECTION 1: HERO / INTRO
+     SECTION 1: HERO / INTRO (Linear/Vercel Engineering Standard)
      ========================================================================== -->
 <section id="hero" class="hero-section">
     <div class="container position-relative">
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center g-4 g-lg-5">
             <div class="col-lg-7">
                 <div class="reveal">
-                    <!-- Status Pill -->
-                    <div class="hero-availability-pill mb-3" role="status">
-                        <span class="status-indicator" aria-hidden="true"></span>
-                        <span>Terbuka untuk peluang kerja (Full-Time &amp; Magang)</span>
+                    <!-- Linear Eyebrow with Live Status Pulse -->
+                    <div class="d-inline-flex align-items-center gap-2 px-2 py-1 mb-3 linear-card font-mono" style="font-size: 0.72rem;">
+                        <span class="live-pulse-dot" style="width: 6px; height: 6px; background-color: #10b981;"></span>
+                        <span class="text-white fw-medium">READY TO WORK</span>
+                        <span class="text-muted">•</span>
+                        <span class="text-muted">FULL-TIME &amp; INTERNSHIP</span>
                     </div>
 
-                    <h1 class="display-4 fw-extrabold mb-2 font-heading tracking-tight" style="color: var(--text-primary);">
-                        Andika Amansyah
+                    <h1 class="display-4 fw-bold mb-2 font-heading tracking-tight" style="color: var(--text-primary); letter-spacing: -0.035em; line-height: 1.1;">
+                        {{ $profile->name ?? 'Andika Amansyah' }}
                     </h1>
 
-                    <h2 class="h5 text-primary fw-semibold mb-3 font-heading">
-                        Mahasiswa Teknologi Informasi (UBSI) • Web Developer &amp; System Analyst
-                    </h2>
+                    <div class="h6 text-primary font-mono mb-3 fw-semibold" style="letter-spacing: 0.04em;">
+                        SOFTWARE ENGINEER &bull; SYSTEM ANALYST &bull; NETWORKING
+                    </div>
 
-                    <p class="lead mb-4 text-subtle" style="max-width: 600px; font-size: 1.05rem; line-height: 1.75;">
-                        Saya fokus mengembangkan aplikasi web backend dengan <strong style="color: var(--text-primary);">Laravel &amp; MySQL</strong>, memodelkan kebutuhan sistem (<strong style="color: var(--text-primary);">SRS, UML, ERD</strong>), serta mengonfigurasi jaringan <strong style="color: var(--text-primary);">MikroTik RouterOS</strong> dan administrasi server Linux.
+                    <p class="text-subtle mb-4" style="max-width: 620px; font-size: 1.05rem; line-height: 1.75;">
+                        Mahasiswa S1 Teknologi Informasi di Universitas Bina Sarana Informatika (UBSI, IPK <span class="fw-semibold text-white font-mono">3.85 / 4.00</span>). Berfokus pada perancangan arsitektur backend dengan <strong style="color: var(--text-primary);">Laravel 12 &amp; MySQL</strong>, pemodelan sistem bisnis (<strong style="color: var(--text-primary);">SRS, UML Use Case/Activity, ERD 3NF</strong>), konfigurasi routing <strong style="color: var(--text-primary);">MikroTik RouterOS</strong>, dan pemrograman mikrokontroler IoT.
                     </p>
 
-                    <!-- Hero Call to Action Buttons -->
+                    <!-- Linear High-Contrast Action Toolbar -->
                     <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
                         <a href="#projects" class="btn-linear-primary" id="heroProjectsBtn">
-                            <i class="bi bi-kanban"></i> Lihat Proyek
+                            <i class="bi bi-kanban"></i>
+                            <span>Lihat Proyek</span>
                             <kbd class="kbd-shortcut ms-1 d-none d-sm-inline">P</kbd>
                         </a>
                         <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn-linear-secondary" id="heroCvBtn">
-                            <i class="bi bi-file-earmark-pdf text-danger"></i> Unduh CV (PDF)
+                            <i class="bi bi-file-earmark-pdf text-danger"></i>
+                            <span>Unduh CV (PDF)</span>
                         </a>
                         <a href="#contact" class="btn-linear-secondary" id="heroContactBtn">
-                            <i class="bi bi-envelope"></i> Hubungi Saya
+                            <i class="bi bi-envelope"></i>
+                            <span>Hubungi Saya</span>
                         </a>
                     </div>
 
-                    <!-- Direct Social / Professional Channels -->
+                    <!-- Direct Channels Strip -->
                     <div class="d-flex align-items-center gap-2 mb-4 pt-1">
-                        <span class="small text-muted me-2 font-mono">Tautan:</span>
+                        <span class="small text-muted me-2 font-mono" style="font-size: 0.72rem; letter-spacing: 0.05em;">LINK:</span>
                         @if(isset($socialLinks))
                             @foreach($socialLinks as $soc)
                                 @php
@@ -68,81 +73,99 @@
                         @endif
                     </div>
 
-                    <!-- Quick Facts Grid -->
+                    <!-- Telemetry & Engineering Metrics Ribbon -->
                     <div class="row g-2 pt-3 border-top border-subtle">
                         <div class="col-6 col-sm-3">
                             <div class="metric-card p-2 text-start">
-                                <div class="fs-5 fw-bold font-heading text-primary">{{ $profile->gpa ?? '3.85 / 4.00' }}</div>
-                                <div class="small text-muted" style="font-size: 0.76rem;">IPK S1 UBSI</div>
+                                <div class="kpi-title" style="font-size: 0.65rem;">IPK S1 UBSI</div>
+                                <div class="fs-5 fw-bold font-mono text-primary">{{ $profile->gpa ?? '3.85 / 4.00' }}</div>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="metric-card p-2 text-start">
-                                <div class="fs-5 fw-bold font-heading text-primary">{{ $profile->years_of_experience ?? '2+ Tahun' }}</div>
-                                <div class="small text-muted" style="font-size: 0.76rem;">Eksplorasi Proyek</div>
+                                <div class="kpi-title" style="font-size: 0.65rem;">RIWAYAT TEKNIS</div>
+                                <div class="fs-5 fw-bold font-mono text-primary">{{ $profile->years_of_experience ?? '2+ Tahun' }}</div>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="metric-card p-2 text-start">
-                                <div class="fs-5 fw-bold font-heading text-primary">5 Proyek</div>
-                                <div class="small text-muted" style="font-size: 0.76rem;">Web, IoT &amp; Jaringan</div>
+                                <div class="kpi-title" style="font-size: 0.65rem;">PROYEK TERUJI</div>
+                                <div class="fs-5 fw-bold font-mono text-primary">{{ $projects->count() }} Sistem</div>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
                             <div class="metric-card p-2 text-start">
-                                <div class="fs-5 fw-bold font-heading text-primary">BNSP &amp; MikroTik</div>
-                                <div class="small text-muted" style="font-size: 0.76rem;">Sertifikasi Resmi</div>
+                                <div class="kpi-title" style="font-size: 0.65rem;">KREDENSIAL</div>
+                                <div class="fs-5 fw-bold font-mono text-primary">BNSP &bull; MTCNA</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Hero Profile Card (Authentic Human Presentation) -->
+            <!-- Developer Specification Box (Linear/Stripe Inspector Standard) -->
             <div class="col-lg-5">
                 <div class="reveal">
-                    <div class="developer-card p-4 mx-auto" style="max-width: 380px;">
-                        <!-- Portrait Image -->
-                        <div class="profile-portrait-frame mx-auto mb-3">
-                            <img src="{{ $profile->avatar ?? '/images/avatar-andika.svg' }}" alt="{{ $profile->name ?? 'Andika Amansyah' }}" class="img-fluid" width="130" height="130">
+                    <div class="linear-card p-3 p-md-4 mx-auto" style="max-width: 420px;">
+                        <!-- Top Metadata Bar -->
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-white border-opacity-5">
+                            <span class="chip-linear chip-linear-neutral font-mono" style="font-size: 0.68rem;">SPEC: CANDIDATE_PROFILE</span>
+                            <span class="text-success font-mono" style="font-size: 0.72rem;"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> VERIFIED</span>
                         </div>
 
-                        <div class="text-center mb-3">
-                            <h3 class="h6 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $profile->name ?? 'Andika Amansyah' }}</h3>
-                            <p class="small text-subtle mb-2">Universitas Bina Sarana Informatika (UBSI)</p>
-                            <div class="d-flex justify-content-center gap-2">
-                                <span class="badge border border-subtle text-subtle" style="font-size: 0.72rem; font-weight: 500;">
-                                    <i class="bi bi-geo-alt me-1 text-primary"></i> Jakarta / Bekasi
-                                </span>
-                                <span class="badge border border-subtle text-subtle" style="font-size: 0.72rem; font-weight: 500;">
-                                    <i class="bi bi-briefcase me-1 text-success"></i> Siap Kerja
-                                </span>
+                        <!-- Portrait & Bio Header -->
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="profile-portrait-frame flex-shrink-0" style="width: 76px; height: 76px;">
+                                <img src="{{ $profile->avatar ?? '/images/avatar-andika.svg' }}" alt="{{ $profile->name ?? 'Andika Amansyah' }}" class="img-fluid" width="76" height="76">
+                            </div>
+                            <div>
+                                <h3 class="h6 fw-bold mb-1 font-heading text-white">{{ $profile->name ?? 'Andika Amansyah' }}</h3>
+                                <div class="text-muted font-mono" style="font-size: 0.72rem;">S1 Teknologi Informasi (UBSI)</div>
+                                <div class="d-flex align-items-center gap-1 mt-1">
+                                    <span class="chip-linear chip-linear-green font-mono" style="font-size: 0.65rem;">Siap Kerja Segera</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Spec Table -->
+                        <div class="p-2 rounded-2 mb-3 border border-subtle" style="background: rgba(255, 255, 255, 0.02); font-size: 0.78rem;">
+                            <div class="d-flex justify-content-between py-1 border-bottom border-subtle">
+                                <span class="text-muted font-mono">DOMISILI</span>
+                                <span class="text-white">{{ $profile->location ?? 'Jakarta Utara / Bekasi' }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-1 border-bottom border-subtle">
+                                <span class="text-muted font-mono">KONSENTRASI</span>
+                                <span class="text-white">Software Eng. &amp; Networking</span>
+                            </div>
+                            <div class="d-flex justify-content-between py-1">
+                                <span class="text-muted font-mono">STATUS KULIAH</span>
+                                <span class="text-white">Semester Akhir (Skripsi)</span>
                             </div>
                         </div>
 
                         <!-- Focus Activity Note -->
-                        <div class="p-3 rounded-3 mb-3 border border-subtle" style="background: var(--bg-primary); font-size: 0.82rem; line-height: 1.6;">
-                            <div class="text-muted small fw-semibold mb-1">
-                                <i class="bi bi-activity text-primary me-1"></i> Aktivitas Saat Ini:
+                        <div class="p-2 rounded-2 mb-3 border border-subtle" style="background: rgba(2, 132, 199, 0.05); font-size: 0.75rem; line-height: 1.55;">
+                            <div class="text-info font-mono fw-semibold mb-1" style="font-size: 0.7rem;">
+                                <i class="bi bi-terminal me-1"></i> AKTIVITAS RISET SAAT INI:
                             </div>
                             <div class="text-subtle">
-                                Menyelesaikan kuliah S1 semester akhir, mengerjakan proyek aplikasi web Laravel, dan menguji integrasi mikrokontroler ESP32 dengan REST API.
+                                Implementasi integrasi REST API backend Laravel dengan mikrokontroler IoT ESP32 dan routing manajemen bandwidth MikroTik RouterOS.
                             </div>
                         </div>
 
-                        <!-- Core Stack Badges -->
+                        <!-- Core Stack Monospace Badges -->
                         <div class="d-flex flex-wrap gap-1 mb-3">
-                            <span class="tech-tag">Laravel 12</span>
-                            <span class="tech-tag">PHP 8</span>
-                            <span class="tech-tag">MySQL</span>
-                            <span class="tech-tag">REST API</span>
-                            <span class="tech-tag">MikroTik</span>
-                            <span class="tech-tag">Ubuntu Server</span>
-                            <span class="tech-tag">ESP32</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">Laravel 12</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">PHP 8.2</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">MySQL 3NF</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">REST API</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">MikroTik MTCNA</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">Linux CLI</span>
+                            <span class="chip-linear chip-linear-neutral font-mono">ESP32 IoT</span>
                         </div>
 
-                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn-linear-secondary w-100 justify-content-center">
-                            <i class="bi bi-file-earmark-text me-1"></i> Buka CV Lengkap
+                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn-linear-secondary w-100 justify-content-center" style="font-size: 0.78rem;">
+                            <i class="bi bi-file-earmark-text me-1"></i> Buka Curriculum Vitae (PDF)
                         </a>
                     </div>
                 </div>
@@ -152,12 +175,12 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 2: ABOUT & APPROACH
+     SECTION 2: ABOUT & APPROACH (Linear Architecture Style)
      ========================================================================== -->
 <section id="about" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-person me-1"></i> TENTANG SAYA</span>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-person me-1"></i> TENTANG SAYA // FILOSOFI REKAYASA</span>
             <h2 class="section-title">Latar Belakang &amp; Cara Kerja</h2>
             <p class="section-desc">
                 Bagaimana saya memandang rekayasa perangkat lunak dan arsitektur sistem dari sudut pandang pemecahan masalah nyata.
@@ -170,14 +193,14 @@
                 <div class="linear-card p-4 p-md-5 reveal h-100 d-flex flex-column">
                     <div class="d-flex align-items-center gap-2 mb-3">
                         <span class="chip-linear chip-linear-neutral font-mono">REKAYASA SISTEM</span>
-                        <span class="text-muted font-mono" style="font-size: 0.72rem;">// METODOLOGI</span>
+                        <span class="text-muted font-mono" style="font-size: 0.72rem;">// METODOLOGI KERJA</span>
                     </div>
-                    <h3 class="h5 fw-bold mb-3 font-heading" style="color: var(--text-primary);">
+                    <h3 class="h5 fw-bold mb-3 font-heading text-white">
                         Menghubungkan Logika Bisnis dengan Arsitektur Teknis
                     </h3>
                     <div class="text-subtle mb-4 flex-grow-1" style="line-height: 1.8; font-size: 0.95rem;">
                         <p class="mb-3">
-                            Saya adalah mahasiswa jurusan Teknologi Informasi di Universitas Bina Sarana Informatika (UBSI) dengan riwayat pendidikan kejuruan di bidang Teknik Komputer &amp; Jaringan (TKJ). Latar belakang ini membentuk cara berpikir saya: sebuah aplikasi tidak hanya harus memiliki tampilan yang bersih, tetapi juga arsitektur database yang kokoh dan dapat di-deploy dengan aman di infrastruktur server.
+                            Saya adalah mahasiswa program studi S1 Teknologi Informasi di Universitas Bina Sarana Informatika (UBSI) dengan fondasi pendidikan kejuruan di bidang Teknik Komputer &amp; Jaringan (TKJ). Latar belakang ini membentuk cara berpikir saya: sebuah aplikasi tidak hanya harus memiliki tampilan yang bersih, tetapi juga skema database yang ternormalisasi dan dapat di-deploy dengan aman di infrastruktur server.
                         </p>
                         <p class="mb-3">
                             Dalam setiap proyek, saya terbiasa memulai dengan analisis kebutuhan (Software Requirement Specification), menyusun alur Use Case dan Activity Diagram, serta menormalisasi tabel database (3NF). Pendekatan ini membuat proses penulisan kode di Laravel menjadi lebih terstruktur, minim bug logika, dan mudah dikembangkan lebih lanjut.
@@ -188,22 +211,22 @@
                     </div>
 
                     <!-- Quick Candidate Facts -->
-                    <div class="p-3 rounded-2 border border-subtle" style="background: var(--bg-primary);">
+                    <div class="p-3 rounded-2 border border-subtle" style="background: rgba(255, 255, 255, 0.02);">
                         <div class="row g-2 small font-mono">
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.7rem;">STATUS AKADEMIS:</span>
-                                <strong style="color: var(--text-primary);">S1 Teknologi Informasi (UBSI)</strong>
+                                <span class="text-muted d-block" style="font-size: 0.68rem;">STATUS AKADEMIS:</span>
+                                <strong class="text-white">S1 Teknologi Informasi (UBSI)</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.7rem;">INDEKS PRESTASI KUMULATIF:</span>
+                                <span class="text-muted d-block" style="font-size: 0.68rem;">INDEKS PRESTASI KUMULATIF:</span>
                                 <strong class="text-primary">3.85 / 4.00</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.7rem;">LOKASI DOMISILI:</span>
-                                <strong style="color: var(--text-primary);">Tanjung Priok, Jakarta Utara</strong>
+                                <span class="text-muted d-block" style="font-size: 0.68rem;">LOKASI DOMISILI:</span>
+                                <strong class="text-white">Tanjung Priok, Jakarta Utara</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.7rem;">KETERSEDIAAN:</span>
+                                <span class="text-muted d-block" style="font-size: 0.68rem;">KETERSEDIAAN:</span>
                                 <strong class="text-success">Siap Mulai Segera</strong>
                             </div>
                         </div>
@@ -220,7 +243,7 @@
                                 <i class="bi bi-diagram-3"></i>
                             </div>
                             <div>
-                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">1. Analisis Kebutuhan &amp; Desain Sistem</h4>
+                                <h4 class="h6 fw-bold mb-1 text-white font-heading">1. Analisis Kebutuhan &amp; Desain Sistem</h4>
                                 <p class="small text-subtle mb-0" style="line-height: 1.6;">
                                     Menyusun dokumen Software Requirement Specification (SRS), memodelkan Use Case &amp; Activity Diagram, serta merancang skema Entity Relationship Diagram (ERD) yang teruji secara relasional.
                                 </p>
@@ -234,7 +257,7 @@
                                 <i class="bi bi-code-slash"></i>
                             </div>
                             <div>
-                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">2. Backend Web &amp; RESTful API (Laravel)</h4>
+                                <h4 class="h6 fw-bold mb-1 text-white font-heading">2. Backend Web &amp; RESTful API (Laravel)</h4>
                                 <p class="small text-subtle mb-0" style="line-height: 1.6;">
                                     Membangun arsitektur MVC bersih dengan Laravel 12 &amp; PHP 8, validasi request berlapis, Eloquent ORM, migrasi database, autentikasi aman, serta pembuatan laporan slip PDF.
                                 </p>
@@ -248,7 +271,7 @@
                                 <i class="bi bi-router"></i>
                             </div>
                             <div>
-                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">3. Jaringan MikroTik &amp; Server Linux</h4>
+                                <h4 class="h6 fw-bold mb-1 text-white font-heading">3. Jaringan MikroTik &amp; Server Linux</h4>
                                 <p class="small text-subtle mb-0" style="line-height: 1.6;">
                                     Mengonfigurasi router MikroTik RouterOS (routing, VLAN trunking, Simple Queue bandwidth QoS, firewall NAT) dan administrasi server Ubuntu Server 22.04 LTS berbasis CLI.
                                 </p>
@@ -262,7 +285,7 @@
                                 <i class="bi bi-cpu"></i>
                             </div>
                             <div>
-                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">4. Integrasi Mikrokontroler &amp; IoT</h4>
+                                <h4 class="h6 fw-bold mb-1 text-white font-heading">4. Integrasi Mikrokontroler &amp; IoT</h4>
                                 <p class="small text-subtle mb-0" style="line-height: 1.6;">
                                     Memprogram mikrokontroler ESP32 dengan C++ untuk membaca modul RFID RC522 dan sensor, kemudian mengirim data secara nirkabel ke endpoint REST API cloud server secara real-time.
                                 </p>
@@ -276,13 +299,13 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 3: SKILLS
+     SECTION 3: TECHNICAL SKILLS MATRIX
      ========================================================================== -->
 <section id="skills" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-stack"></i> Keahlian Teknis</span>
-            <h2 class="section-title">Teknologi &amp; Alat Kerja</h2>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-stack me-1"></i> INVENTARIS TEKNOLOGI</span>
+            <h2 class="section-title">Keahlian &amp; Alat Kerja</h2>
             <p class="section-desc">
                 Daftar bahasa pemrograman, framework, dan peralatan yang aktif saya gunakan dalam pengerjaan proyek.
             </p>
@@ -291,13 +314,13 @@
         <!-- Skills Filter Tabs -->
         <ul class="nav nav-pills justify-content-center gap-2 mb-4 reveal flex-wrap" id="skillsTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active px-3 py-2" id="all-skills-tab" data-bs-toggle="pill" data-bs-target="#all-skills" type="button" role="tab">
+                <button class="btn-linear-secondary active px-3 py-2 font-mono" id="all-skills-tab" data-bs-toggle="pill" data-bs-target="#all-skills" type="button" role="tab" style="font-size: 0.75rem;">
                     Semua ({{ $skills->count() }})
                 </button>
             </li>
             @foreach($skillsByCategory as $category => $items)
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link px-3 py-2" id="cat-{{ Str::slug($category) }}-tab" data-bs-toggle="pill" data-bs-target="#cat-{{ Str::slug($category) }}" type="button" role="tab">
+                    <button class="btn-linear-secondary px-3 py-2 font-mono" id="cat-{{ Str::slug($category) }}-tab" data-bs-toggle="pill" data-bs-target="#cat-{{ Str::slug($category) }}" type="button" role="tab" style="font-size: 0.75rem;">
                         {{ $category }} ({{ count($items) }})
                     </button>
                 </li>
@@ -311,13 +334,13 @@
                 <div class="row g-3">
                     @foreach($skills as $skill)
                         <div class="col-md-6 col-lg-4 reveal">
-                            <div class="skill-card d-flex align-items-center gap-3">
-                                <div class="p-2 rounded-2 bg-primary bg-opacity-10 text-primary flex-shrink-0">
-                                    <i class="bi {{ $skill->icon ?? 'bi-check2' }} fs-5"></i>
+                            <div class="linear-card p-3 d-flex align-items-center gap-3">
+                                <div class="kpi-icon flex-shrink-0" style="width: 34px; height: 34px; font-size: 1rem;">
+                                    <i class="bi {{ $skill->icon ?? 'bi-check2' }}"></i>
                                 </div>
                                 <div class="flex-grow-1 min-w-0">
-                                    <h3 class="h6 mb-0 fw-bold text-truncate" style="color: var(--text-primary);">{{ $skill->name }}</h3>
-                                    <span class="small text-muted" style="font-size: 0.76rem;">{{ $skill->category }}</span>
+                                    <h3 class="h6 mb-0 fw-semibold text-white text-truncate">{{ $skill->name }}</h3>
+                                    <span class="small text-muted font-mono" style="font-size: 0.72rem;">{{ $skill->category }}</span>
                                 </div>
                             </div>
                         </div>
@@ -331,13 +354,13 @@
                     <div class="row g-3">
                         @foreach($items as $skill)
                             <div class="col-md-6 col-lg-4 reveal">
-                                <div class="skill-card d-flex align-items-center gap-3">
-                                    <div class="p-2 rounded-2 bg-primary bg-opacity-10 text-primary flex-shrink-0">
-                                        <i class="bi {{ $skill->icon ?? 'bi-check2' }} fs-5"></i>
+                                <div class="linear-card p-3 d-flex align-items-center gap-3">
+                                    <div class="kpi-icon flex-shrink-0" style="width: 34px; height: 34px; font-size: 1rem;">
+                                        <i class="bi {{ $skill->icon ?? 'bi-check2' }}"></i>
                                     </div>
                                     <div class="flex-grow-1 min-w-0">
-                                        <h3 class="h6 mb-0 fw-bold text-truncate" style="color: var(--text-primary);">{{ $skill->name }}</h3>
-                                        <span class="small text-muted" style="font-size: 0.76rem;">{{ $skill->category }}</span>
+                                        <h3 class="h6 mb-0 fw-semibold text-white text-truncate">{{ $skill->name }}</h3>
+                                        <span class="small text-muted font-mono" style="font-size: 0.72rem;">{{ $skill->category }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -350,13 +373,13 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 4: FEATURED PROJECTS
+     SECTION 4: FEATURED PROJECTS (Linear Project Grid Standard)
      ========================================================================== -->
 <section id="projects" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-kanban"></i> Karya Terpilih</span>
-            <h2 class="section-title">Portofolio Proyek</h2>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-kanban me-1"></i> STUDI KASUS PROYEK</span>
+            <h2 class="section-title">Portofolio Proyek Rekayasa</h2>
             <p class="section-desc">
                 Proyek yang telah saya rancang dan kembangkan, mencakup sistem web bisnis, aplikasi IoT mikrokontroler, dan perancangan jaringan komputer.
             </p>
@@ -371,38 +394,47 @@
                             <img src="{{ $p->image ?? '/images/project-payroll.svg' }}" alt="{{ $p->title }}" loading="lazy">
                         </div>
 
-                        <div class="project-body d-flex flex-column flex-grow-1 p-4">
-                            <h3 class="h5 fw-bold mb-2 font-heading" style="color: var(--text-primary);">{{ $p->title }}</h3>
-                            <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.65;">
+                        <div class="project-body d-flex flex-column flex-grow-1 p-3 p-md-4">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-muted font-mono" style="font-size: 0.68rem;">/{{ $p->slug }}</span>
+                                @if($p->is_featured)
+                                    <span class="chip-linear chip-linear-blue font-mono" style="font-size: 0.65rem;">
+                                        <i class="bi bi-star-fill text-warning me-1"></i> PILIHAN
+                                    </span>
+                                @endif
+                            </div>
+
+                            <h3 class="h6 fw-bold mb-2 font-heading text-white">{{ $p->title }}</h3>
+                            <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.65; font-size: 0.85rem;">
                                 {{ $p->summary }}
                             </p>
 
                             <!-- Tech Stack Pills -->
-                            <div class="mb-3">
+                            <div class="mb-3 d-flex flex-wrap gap-1">
                                 @if(is_array($p->technologies))
                                     @foreach(array_slice($p->technologies, 0, 4) as $tech)
-                                        <span class="tech-tag">{{ $tech }}</span>
+                                        <span class="chip-linear chip-linear-neutral font-mono">{{ $tech }}</span>
                                     @endforeach
                                     @if(count($p->technologies) > 4)
-                                        <span class="tech-tag text-primary">+{{ count($p->technologies) - 4 }}</span>
+                                        <span class="chip-linear chip-linear-neutral font-mono text-primary">+{{ count($p->technologies) - 4 }}</span>
                                     @endif
                                 @endif
                             </div>
 
                             <!-- Project Card Actions -->
                             <div class="d-flex align-items-center justify-content-between pt-3 border-top border-subtle mt-auto">
-                                <button type="button" class="btn btn-sm btn-outline-custom" data-bs-toggle="modal" data-bs-target="#projectModal{{ $p->id }}">
+                                <button type="button" class="btn-linear-secondary py-1 px-2" data-bs-toggle="modal" data-bs-target="#projectModal{{ $p->id }}" style="font-size: 0.75rem;">
                                     <i class="bi bi-info-circle me-1"></i> Detail Fitur
                                 </button>
 
-                                <div class="d-flex gap-2">
+                                <div class="d-flex gap-1">
                                     @if($p->github_url)
-                                        <a href="{{ $p->github_url }}" target="_blank" rel="noopener noreferrer" class="btn-icon-round" title="Lihat Repositori GitHub" style="width: 36px; height: 36px;">
+                                        <a href="{{ $p->github_url }}" target="_blank" rel="noopener noreferrer" class="btn-linear-secondary py-1 px-2" title="Lihat Repositori GitHub" style="font-size: 0.75rem;">
                                             <i class="bi bi-github"></i>
                                         </a>
                                     @endif
                                     @if($p->demo_url)
-                                        <a href="{{ $p->demo_url }}" target="_blank" rel="noopener noreferrer" class="btn-icon-round" title="Kunjungi Live Demo" style="width: 36px; height: 36px;">
+                                        <a href="{{ $p->demo_url }}" target="_blank" rel="noopener noreferrer" class="btn-linear-secondary py-1 px-2" title="Kunjungi Live Demo" style="font-size: 0.75rem;">
                                             <i class="bi bi-box-arrow-up-right"></i>
                                         </a>
                                     @endif
@@ -415,49 +447,53 @@
                 <!-- Project Detail Modal -->
                 <div class="modal fade" id="projectModal{{ $p->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $p->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content linear-card border-subtle p-3">
-                            <div class="modal-header border-subtle pb-3">
+                        <div class="modal-content linear-card border-subtle p-3 p-md-4">
+                            <div class="modal-header border-bottom border-subtle pb-3">
                                 <div>
-                                    <span class="badge border border-subtle text-primary mb-1 font-mono" style="font-size: 0.75rem;">{{ $p->category }}</span>
-                                    <h4 class="modal-title fw-bold font-heading" style="color: var(--text-primary);" id="modalLabel{{ $p->id }}">{{ $p->title }}</h4>
+                                    <span class="chip-linear chip-linear-neutral font-mono mb-1" style="font-size: 0.7rem;">{{ $p->category }}</span>
+                                    <h4 class="modal-title fw-bold font-heading text-white" id="modalLabel{{ $p->id }}">{{ $p->title }}</h4>
                                 </div>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                             </div>
                             <div class="modal-body py-4">
                                 @if($p->image)
-                                    <div class="rounded-3 overflow-hidden mb-4 border border-subtle">
+                                    <div class="rounded-2 overflow-hidden mb-4 border border-subtle">
                                         <img src="{{ $p->image }}" alt="{{ $p->title }}" class="img-fluid w-100" style="max-height: 320px; object-fit: cover;">
                                     </div>
                                 @endif
 
                                 <div class="mb-4">
-                                    <h5 class="h6 fw-bold text-primary mb-2 font-heading"><i class="bi bi-card-text me-1"></i> Penjelasan Proyek &amp; Solusi:</h5>
+                                    <div class="text-muted font-mono small mb-2" style="font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                                        <i class="bi bi-card-text me-1"></i> Penjelasan Solusi &amp; Arsitektur:
+                                    </div>
                                     <div class="text-subtle" style="line-height: 1.8; white-space: pre-line; font-size: 0.95rem;">
                                         {{ $p->description }}
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <h5 class="h6 fw-bold text-primary mb-2 font-heading"><i class="bi bi-tools me-1"></i> Teknologi yang Digunakan:</h5>
+                                    <div class="text-muted font-mono small mb-2" style="font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                                        <i class="bi bi-tools me-1"></i> Teknologi &amp; Komponen:
+                                    </div>
                                     <div class="d-flex flex-wrap gap-1">
                                         @if(is_array($p->technologies))
                                             @foreach($p->technologies as $tech)
-                                                <span class="tech-tag py-1 px-2">{{ $tech }}</span>
+                                                <span class="chip-linear chip-linear-neutral font-mono">{{ $tech }}</span>
                                             @endforeach
                                         @endif
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer border-subtle justify-content-between pt-3">
-                                <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Tutup</button>
+                            <div class="modal-footer border-top border-subtle justify-content-between pt-3">
+                                <button type="button" class="btn-linear-secondary" data-bs-dismiss="modal">Tutup</button>
                                 <div class="d-flex gap-2">
                                     @if($p->github_url)
-                                        <a href="{{ $p->github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-custom">
+                                        <a href="{{ $p->github_url }}" target="_blank" rel="noopener noreferrer" class="btn-linear-secondary">
                                             <i class="bi bi-github me-1"></i> Repositori GitHub
                                         </a>
                                     @endif
                                     @if($p->demo_url)
-                                        <a href="{{ $p->demo_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary-custom">
+                                        <a href="{{ $p->demo_url }}" target="_blank" rel="noopener noreferrer" class="btn-linear-primary">
                                             <i class="bi bi-box-arrow-up-right me-1"></i> Buka Demo
                                         </a>
                                     @endif
@@ -467,19 +503,19 @@
                     </div>
                 </div>
             @empty
-                <div class="col-12 text-center py-5 text-subtle">Belum ada portofolio project yang ditampilkan.</div>
+                <div class="col-12 text-center py-5 text-subtle font-mono">Belum ada portofolio project yang ditampilkan.</div>
             @endforelse
         </div>
     </div>
 </section>
 
 <!-- ==========================================================================
-     SECTION 5: EXPERIENCE
+     SECTION 5: EXPERIENCE (Linear Milestones Tree Standard)
      ========================================================================== -->
 <section id="experience" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-briefcase"></i> Pengalaman</span>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-briefcase me-1"></i> REKAM JEJAK</span>
             <h2 class="section-title">Riwayat Proyek &amp; Kegiatan</h2>
             <p class="section-desc">
                 Pengalaman nyata dalam pengembangan perangkat lunak, administrasi laboratorium jaringan komputer, dan riset mikrokontroler.
@@ -495,35 +531,33 @@
                             <div class="timeline-card">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
                                     <div>
-                                        <h3 class="h6 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $exp->role }}</h3>
+                                        <h3 class="h6 fw-bold mb-1 font-heading text-white">{{ $exp->role }}</h3>
                                         <div class="d-flex align-items-center gap-2">
-                                            <span class="fw-semibold text-primary small">{{ $exp->company }}</span>
-                                            <span class="badge border border-subtle text-muted" style="font-size: 0.72rem;">{{ $exp->type }}</span>
+                                            <span class="text-primary small fw-semibold font-mono">{{ $exp->company }}</span>
+                                            <span class="chip-linear chip-linear-neutral font-mono" style="font-size: 0.68rem;">{{ $exp->type }}</span>
                                         </div>
                                     </div>
-                                    <span class="timeline-badge">
-                                        <i class="bi bi-calendar-event me-1"></i> {{ $exp->start_date }} — {{ $exp->end_date ?? 'Sekarang' }}
+                                    <span class="chip-linear chip-linear-neutral font-mono" style="font-size: 0.72rem;">
+                                        <i class="bi bi-calendar3 me-1"></i> {{ $exp->start_date }} — {{ $exp->end_date ?? 'Sekarang' }}
                                     </span>
                                 </div>
 
-                                @if($exp->description)
-                                    <p class="small text-subtle mb-3 mt-2" style="line-height: 1.7; white-space: pre-line;">
-                                        {{ $exp->description }}
-                                    </p>
-                                @endif
+                                <p class="small text-subtle mb-3" style="line-height: 1.7; font-size: 0.88rem;">
+                                    {{ $exp->description }}
+                                </p>
 
                                 @if($exp->skills_used)
-                                    <div class="pt-2 border-top border-subtle">
-                                        <small class="text-muted d-block mb-2 font-mono" style="font-size: 0.72rem;">TEKNOLOGI &amp; ALAT:</small>
-                                        @foreach(explode(',', $exp->skills_used) as $item)
-                                            <span class="tech-tag">{{ trim($item) }}</span>
+                                    <div class="d-flex flex-wrap align-items-center gap-1 pt-2 border-top border-subtle">
+                                        <span class="text-muted font-mono" style="font-size: 0.7rem;">STACK:</span>
+                                        @foreach(explode(',', $exp->skills_used) as $su)
+                                            <span class="chip-linear chip-linear-neutral font-mono" style="font-size: 0.68rem;">{{ trim($su) }}</span>
                                         @endforeach
                                     </div>
                                 @endif
                             </div>
                         </div>
                     @empty
-                        <div class="text-center py-4 text-subtle">Data pengalaman belum tersedia.</div>
+                        <div class="text-center py-5 text-subtle font-mono">Belum ada riwayat pengalaman kerja yang ditambahkan.</div>
                     @endforelse
                 </div>
             </div>
@@ -532,15 +566,15 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 6: EDUCATION
+     SECTION 6: EDUCATION (Academic Milestones Standard)
      ========================================================================== -->
 <section id="education" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-mortarboard"></i> Pendidikan</span>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-mortarboard me-1"></i> PENDIDIKAN FORMAL</span>
             <h2 class="section-title">Riwayat Akademis</h2>
             <p class="section-desc">
-                Pendidikan formal di bidang Teknologi Informasi dan Teknik Komputer &amp; Jaringan yang membentuk fondasi teknis saya.
+                Pendidikan formal yang membentuk fondasi teknis di bidang teknologi informasi dan rekayasa komputer.
             </p>
         </div>
 
@@ -553,35 +587,28 @@
                             <div class="timeline-card">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
                                     <div>
-                                        <h3 class="h6 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $edu->institution }}</h3>
-                                        <div class="d-flex flex-wrap align-items-center gap-2">
-                                            <span class="fw-semibold text-primary small">{{ $edu->degree }}</span>
-                                            @if($edu->field_of_study)
-                                                <span class="text-muted small">• {{ $edu->field_of_study }}</span>
+                                        <h3 class="h6 fw-bold mb-1 font-heading text-white">{{ $edu->institution }}</h3>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="text-primary small fw-semibold font-mono">{{ $edu->degree }} {{ $edu->field_of_study ? '— ' . $edu->field_of_study : '' }}</span>
+                                            @if($edu->gpa)
+                                                <span class="chip-linear chip-linear-green font-mono" style="font-size: 0.68rem;">IPK: {{ $edu->gpa }}</span>
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="d-flex align-items-center gap-2">
-                                        @if($edu->gpa)
-                                            <span class="badge border border-subtle text-success font-mono" style="font-size: 0.75rem;">
-                                                IPK: {{ $edu->gpa }}
-                                            </span>
-                                        @endif
-                                        <span class="timeline-badge">
-                                            <i class="bi bi-calendar3 me-1"></i> {{ $edu->start_year }} — {{ $edu->end_year ?? 'Sekarang' }}
-                                        </span>
-                                    </div>
+                                    <span class="chip-linear chip-linear-neutral font-mono" style="font-size: 0.72rem;">
+                                        <i class="bi bi-calendar3 me-1"></i> {{ $edu->start_year }} — {{ $edu->end_year ?? 'Sekarang' }}
+                                    </span>
                                 </div>
 
                                 @if($edu->description)
-                                    <p class="small text-subtle mb-0 mt-2" style="line-height: 1.7;">
+                                    <p class="small text-subtle mb-0" style="line-height: 1.7; font-size: 0.88rem;">
                                         {{ $edu->description }}
                                     </p>
                                 @endif
                             </div>
                         </div>
                     @empty
-                        <div class="text-center py-4 text-subtle">Data pendidikan belum tersedia.</div>
+                        <div class="text-center py-5 text-subtle font-mono">Belum ada data riwayat pendidikan.</div>
                     @endforelse
                 </div>
             </div>
@@ -590,7 +617,7 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 7: CERTIFICATES
+     SECTION 7: CERTIFICATES & LICENSES
      ========================================================================== -->
 <section id="certificates" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
@@ -607,35 +634,35 @@
                 <div class="col-md-6 col-lg-4 reveal">
                     <div class="linear-card p-4 d-flex flex-column h-100">
                         @if($cert->image)
-                            <div class="rounded-3 overflow-hidden mb-3 border border-subtle">
+                            <div class="rounded-2 overflow-hidden mb-3 border border-subtle">
                                 <img src="{{ $cert->image }}" alt="{{ $cert->title }}" class="img-fluid w-100" style="height: 150px; object-fit: cover;">
                             </div>
                         @endif
 
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge border border-subtle text-primary" style="font-size: 0.72rem;">
+                            <span class="chip-linear chip-linear-neutral font-mono" style="font-size: 0.7rem;">
                                 {{ $cert->issuer }}
                             </span>
-                            <span class="small text-muted font-mono" style="font-size: 0.75rem;">{{ $cert->issue_date }}</span>
+                            <span class="text-muted font-mono" style="font-size: 0.72rem;">{{ $cert->issue_date }}</span>
                         </div>
 
-                        <h3 class="h6 fw-bold mb-2 font-heading" style="color: var(--text-primary);">{{ $cert->title }}</h3>
+                        <h3 class="h6 fw-bold mb-2 font-heading text-white">{{ $cert->title }}</h3>
 
                         @if($cert->description)
-                            <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.6;">
+                            <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.6; font-size: 0.85rem;">
                                 {{ $cert->description }}
                             </p>
                         @endif
 
                         <div class="d-flex align-items-center justify-content-between pt-2 border-top border-subtle mt-auto">
                             @if($cert->credential_id)
-                                <small class="text-muted font-mono" style="font-size: 0.72rem;">No: {{ $cert->credential_id }}</small>
+                                <small class="text-muted font-mono" style="font-size: 0.7rem;">ID: {{ $cert->credential_id }}</small>
                             @else
-                                <span class="small text-success" style="font-size: 0.75rem;"><i class="bi bi-check-circle me-1"></i> Terverifikasi</span>
+                                <span class="small text-success font-mono" style="font-size: 0.72rem;"><i class="bi bi-check-circle me-1"></i> Terverifikasi</span>
                             @endif
 
                             @if($cert->credential_url)
-                                <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener noreferrer" class="small text-primary fw-semibold text-decoration-none">
+                                <a href="{{ $cert->credential_url }}" target="_blank" rel="noopener noreferrer" class="small text-primary fw-semibold text-decoration-none font-mono">
                                     Verifikasi <i class="bi bi-box-arrow-up-right ms-1"></i>
                                 </a>
                             @endif
@@ -643,19 +670,19 @@
                     </div>
                 </div>
             @empty
-                <div class="col-12 text-center py-5 text-subtle">Data sertifikat belum tersedia.</div>
+                <div class="col-12 text-center py-5 text-subtle font-mono">Data sertifikat belum tersedia.</div>
             @endforelse
         </div>
     </div>
 </section>
 
 <!-- ==========================================================================
-     SECTION 8: CONTACT
+     SECTION 8: CONTACT & DIRECT COMMUNICATION
      ========================================================================== -->
 <section id="contact" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-envelope"></i> Kontak</span>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-envelope me-1"></i> SALURAN KOMUNIKASI</span>
             <h2 class="section-title">Hubungi Saya</h2>
             <p class="section-desc">
                 Tertarik mendiskusikan peluang kerja, magang, proyek freelance, atau ingin bertanya seputar proyek yang saya buat? Silakan hubungi saya melalui jalur berikut.
@@ -682,45 +709,47 @@
             <div class="col-lg-5 reveal">
                 <div class="d-flex flex-column gap-3 h-100">
                     <!-- Email Card -->
-                    <div class="p-3 rounded-3 border border-subtle d-flex align-items-center gap-3" style="background: var(--bg-card);">
-                        <div class="p-2 rounded-2 bg-primary bg-opacity-10 text-primary fs-4 flex-shrink-0">
+                    <div class="linear-card p-3 d-flex align-items-center gap-3">
+                        <div class="kpi-icon flex-shrink-0" style="width: 38px; height: 38px; font-size: 1.1rem;">
                             <i class="bi bi-envelope-at"></i>
                         </div>
                         <div class="min-w-0">
-                            <span class="small text-muted d-block" style="font-size: 0.75rem;">Email:</span>
-                            <a href="{{ $gmailProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none hover-primary text-break" style="color: var(--text-primary); font-size: 0.95rem;">
+                            <span class="text-muted font-mono d-block" style="font-size: 0.68rem;">EMAIL LANGSUNG:</span>
+                            <a href="{{ $gmailProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-white text-decoration-none hover-primary text-break" style="font-size: 0.92rem;">
                                 {{ $cleanProfEmail }}
                             </a>
                         </div>
                     </div>
 
                     <!-- WhatsApp Card -->
-                    <div class="p-3 rounded-3 border border-subtle d-flex align-items-center gap-3" style="background: var(--bg-card);">
-                        <div class="p-2 rounded-2 bg-success bg-opacity-10 text-success fs-4 flex-shrink-0">
+                    <div class="linear-card p-3 d-flex align-items-center gap-3">
+                        <div class="kpi-icon flex-shrink-0" style="width: 38px; height: 38px; font-size: 1.1rem; color: #34d399;">
                             <i class="bi bi-whatsapp"></i>
                         </div>
                         <div class="min-w-0">
-                            <span class="small text-muted d-block" style="font-size: 0.75rem;">WhatsApp / Telepon:</span>
-                            <a href="{{ $waProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none hover-primary" style="color: var(--text-primary); font-size: 0.95rem;">
+                            <span class="text-muted font-mono d-block" style="font-size: 0.68rem;">WHATSAPP / TELEPON:</span>
+                            <a href="{{ $waProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-white text-decoration-none hover-primary" style="font-size: 0.92rem;">
                                 {{ $profile->phone ?? '+62 882-2582-5512' }}
                             </a>
                         </div>
                     </div>
 
                     <!-- Location Card -->
-                    <div class="p-3 rounded-3 border border-subtle d-flex align-items-center gap-3" style="background: var(--bg-card);">
-                        <div class="p-2 rounded-2 bg-info bg-opacity-10 text-info fs-4 flex-shrink-0">
+                    <div class="linear-card p-3 d-flex align-items-center gap-3">
+                        <div class="kpi-icon flex-shrink-0" style="width: 38px; height: 38px; font-size: 1.1rem; color: #38bdf8;">
                             <i class="bi bi-geo-alt"></i>
                         </div>
                         <div class="min-w-0">
-                            <span class="small text-muted d-block" style="font-size: 0.75rem;">Lokasi Domisili:</span>
-                            <span class="fw-semibold" style="color: var(--text-primary); font-size: 0.95rem;">{{ $profile->location ?? 'Jakarta Utara / Bekasi, Indonesia' }}</span>
+                            <span class="text-muted font-mono d-block" style="font-size: 0.68rem;">LOKASI DOMISILI:</span>
+                            <span class="fw-semibold text-white" style="font-size: 0.92rem;">{{ $profile->location ?? 'Jakarta Utara / Bekasi, Indonesia' }}</span>
                         </div>
                     </div>
 
-                    <!-- Social / Professional Channels -->
-                    <div class="p-4 rounded-3 border border-subtle mt-auto" style="background: var(--bg-card);">
-                        <h4 class="h6 fw-bold mb-3 font-heading" style="color: var(--text-primary);">Tautan Profil:</h4>
+                    <!-- Social Channels Strip -->
+                    <div class="linear-card p-3 p-md-4 mt-auto">
+                        <div class="text-muted font-mono small mb-2" style="font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase;">
+                            Koneksi &amp; Dokumen:
+                        </div>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($socialLinks as $soc)
                                 @php
@@ -731,11 +760,11 @@
                                         $linkUrl = $gmailProfUrl;
                                     }
                                 @endphp
-                                <a href="{{ $linkUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-custom">
+                                <a href="{{ $linkUrl }}" target="_blank" rel="noopener noreferrer" class="btn-linear-secondary" style="font-size: 0.78rem;">
                                     <i class="bi {{ $soc->icon }} me-1"></i> {{ $soc->platform }}
                                 </a>
                             @endforeach
-                            <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-sm btn-primary-custom ms-auto">
+                            <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn-linear-primary ms-auto" style="font-size: 0.78rem;">
                                 <i class="bi bi-file-earmark-pdf me-1"></i> CV (PDF)
                             </a>
                         </div>
@@ -746,8 +775,13 @@
             <!-- Right: Interactive Contact Form -->
             <div class="col-lg-7 reveal">
                 <div class="linear-card p-4 p-md-5 h-100">
-                    <h3 class="h5 fw-bold mb-1 font-heading" style="color: var(--text-primary);">Kirimkan Pesan</h3>
-                    <p class="small text-subtle mb-4">Pesan akan langsung terkirim ke sistem dan segera saya respons.</p>
+                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom border-white border-opacity-5">
+                        <div>
+                            <h3 class="h6 fw-bold mb-0 text-white font-heading">Kirim Pesan Langsung</h3>
+                            <span class="text-muted font-mono" style="font-size: 0.72rem;">Terkoneksi langsung ke inbox database admin</span>
+                        </div>
+                        <span class="chip-linear chip-linear-green font-mono" style="font-size: 0.68rem;">SIAP DITERIMA</span>
+                    </div>
 
                     <div id="contactAlertContainer">
                         @if(session('success'))
@@ -763,134 +797,60 @@
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="name" class="form-label small fw-semibold">Nama Lengkap *</label>
-                                <input type="text" name="name" id="name" class="form-control form-control-custom @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Contoh: Budi Santoso" required>
+                                <label for="name" class="form-label small fw-semibold text-white">Nama Lengkap *</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required placeholder="Contoh: Budi Santoso" style="border-radius: 6px; font-size: 0.88rem;">
                                 @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="text-danger small mt-1 font-mono" style="font-size: 0.75rem;">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-md-6">
-                                <label for="email" class="form-label small fw-semibold">Alamat Email *</label>
-                                <input type="email" name="email" id="email" class="form-control form-control-custom @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="budi@example.com" required>
+                                <label for="email" class="form-label small fw-semibold text-white">Alamat Email *</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required placeholder="nama@perusahaan.com" style="border-radius: 6px; font-size: 0.88rem;">
                                 @error('email')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="text-danger small mt-1 font-mono" style="font-size: 0.75rem;">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
-                        <!-- Kolom Nomor WA (Opsional) -->
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <label for="phone" class="form-label small fw-semibold mb-0">
-                                    <i class="bi bi-whatsapp text-success me-1"></i> Nomor WhatsApp <span class="fw-normal text-subtle">(Opsional)</span>
-                                </label>
-                                <span class="badge border border-subtle text-muted fw-normal" style="font-size: 0.72rem;">
-                                    Boleh dikosongkan
-                                </span>
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label small fw-semibold text-white">Nomor WhatsApp / HP</label>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" placeholder="0812-xxxx-xxxx" style="border-radius: 6px; font-size: 0.88rem;">
+                                @error('phone')
+                                    <div class="text-danger small mt-1 font-mono" style="font-size: 0.75rem;">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-text border-subtle text-success" style="background: var(--bg-secondary);">
-                                    <i class="bi bi-whatsapp"></i>
-                                </span>
-                                <input type="tel" name="phone" id="phone" class="form-control form-control-custom @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="08xxxxxxxxxx">
-                            </div>
-                            @error('phone')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="subject" class="form-label small fw-semibold">Subjek Pesan *</label>
-                            <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Peluang Kerja / Diskusi Proyek Web" required>
-                            @error('subject')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="col-md-6">
+                                <label for="subject" class="form-label small fw-semibold text-white">Subjek Pesan *</label>
+                                <input type="text" class="form-control" id="subject" name="subject" value="{{ old('subject') }}" required placeholder="Tawaran Kerja / Proyek / Diskusi" style="border-radius: 6px; font-size: 0.88rem;">
+                                @error('subject')
+                                    <div class="text-danger small mt-1 font-mono" style="font-size: 0.75rem;">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-4">
-                            <label for="message" class="form-label small fw-semibold">Isi Pesan *</label>
-                            <textarea name="message" id="message" rows="5" class="form-control form-control-custom @error('message') is-invalid @enderror" placeholder="Tuliskan pesan atau kebutuhan yang ingin didiskusikan..." required>{{ old('message') }}</textarea>
+                            <label for="message" class="form-label small fw-semibold text-white">Isi Pesan *</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" required placeholder="Tuliskan pesan, rincian tawaran, atau pertanyaan Anda di sini..." style="border-radius: 6px; font-size: 0.88rem;">{{ old('message') }}</textarea>
                             @error('message')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="text-danger small mt-1 font-mono" style="font-size: 0.75rem;">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary-custom w-100 py-3" id="contactSubmitBtn">
-                            <i class="bi bi-send me-1"></i> Kirim Pesan
-                        </button>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <button type="submit" class="btn-linear-primary" id="contactSubmitBtn">
+                                <i class="bi bi-send"></i>
+                                <span id="contactSubmitText">Kirimkan Pesan</span>
+                            </button>
+                            <span class="text-muted font-mono small d-none d-sm-inline" style="font-size: 0.72rem;">* Wajib diisi</span>
+                        </div>
                     </form>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const form = document.getElementById('contactForm');
-                            const submitBtn = document.getElementById('contactSubmitBtn');
-                            const alertBox = document.getElementById('contactAlertContainer');
-
-                            if (form && submitBtn && alertBox) {
-                                form.addEventListener('submit', async function(e) {
-                                    e.preventDefault();
-                                    const originalBtnText = submitBtn.innerHTML;
-                                    submitBtn.disabled = true;
-                                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim...';
-                                    alertBox.innerHTML = '';
-
-                                    try {
-                                        const formData = new FormData(form);
-                                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-                                        const actionUrl = form.getAttribute('action') || '/contact';
-                                        const response = await fetch(actionUrl, {
-                                            method: 'POST',
-                                            headers: {
-                                                'Accept': 'application/json',
-                                                'X-Requested-With': 'XMLHttpRequest',
-                                                'X-CSRF-TOKEN': csrfToken
-                                            },
-                                            body: formData
-                                        });
-
-                                        const result = await response.json().catch(() => null);
-
-                                        if (response.ok && result && result.success) {
-                                            alertBox.innerHTML = `
-                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                    <i class="bi bi-check-circle-fill me-2"></i> ${result.message || 'Pesan Anda berhasil dikirim! Saya akan segera menghubungi Anda.'}
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                                                </div>
-                                            `;
-                                            form.reset();
-                                        } else {
-                                            const errorMsg = (result && result.message) ? result.message : 'Terjadi kendala saat mengirim pesan. Silakan coba lagi atau hubungi via WhatsApp/Email.';
-                                            alertBox.innerHTML = `
-                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                    <i class="bi bi-exclamation-triangle-fill me-2"></i> ${errorMsg}
-                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                                                </div>
-                                            `;
-                                        }
-                                    } catch (err) {
-                                        alertBox.innerHTML = `
-                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                <i class="bi bi-exclamation-triangle-fill me-2"></i> Gagal terhubung ke server. Silakan hubungi langsung melalui WhatsApp atau Email.
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
-                                            </div>
-                                        `;
-                                    } finally {
-                                        submitBtn.disabled = false;
-                                        submitBtn.innerHTML = originalBtnText;
-                                    }
-                                });
-                            }
-                        });
-                    </script>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Back to Top Button -->
-<button type="button" class="back-to-top" id="backToTopBtn" aria-label="Kembali ke atas">
-    <i class="bi bi-arrow-up"></i>
-</button>
 
 @endsection
