@@ -41,7 +41,7 @@
                     </button>
 
                     <!-- CV Download Button in Nav -->
-                    <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-sm btn-primary-custom d-none d-sm-inline-flex" id="navCvBtn" title="Unduh Curriculum Vitae (PDF)">
+                    <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-sm btn-linear-primary d-none d-sm-inline-flex" id="navCvBtn" title="Unduh Curriculum Vitae (PDF)">
                         <i class="bi bi-file-earmark-arrow-down-fill me-1"></i> Download CV
                     </a>
 

@@ -32,14 +32,15 @@
 
                     <!-- Hero Call to Action Buttons -->
                     <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
-                        <a href="#projects" class="btn btn-primary-custom" id="heroProjectsBtn">
-                            <i class="bi bi-arrow-down-circle me-1"></i> Lihat Proyek
+                        <a href="#projects" class="btn-linear-primary" id="heroProjectsBtn">
+                            <i class="bi bi-kanban"></i> Lihat Proyek
+                            <kbd class="kbd-shortcut ms-1 d-none d-sm-inline">P</kbd>
                         </a>
-                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-outline-custom" id="heroCvBtn">
-                            <i class="bi bi-file-earmark-pdf me-1 text-danger"></i> Unduh CV (PDF)
+                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn-linear-secondary" id="heroCvBtn">
+                            <i class="bi bi-file-earmark-pdf text-danger"></i> Unduh CV (PDF)
                         </a>
-                        <a href="#contact" class="btn btn-outline-custom" id="heroContactBtn">
-                            <i class="bi bi-chat-text me-1"></i> Hubungi Saya
+                        <a href="#contact" class="btn-linear-secondary" id="heroContactBtn">
+                            <i class="bi bi-envelope"></i> Hubungi Saya
                         </a>
                     </div>
 
@@ -140,7 +141,7 @@
                             <span class="tech-tag">ESP32</span>
                         </div>
 
-                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-sm btn-outline-custom w-100 justify-content-center">
+                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn-linear-secondary w-100 justify-content-center">
                             <i class="bi bi-file-earmark-text me-1"></i> Buka CV Lengkap
                         </a>
                     </div>
@@ -156,7 +157,7 @@
 <section id="about" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-person"></i> Tentang Saya</span>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-person me-1"></i> TENTANG SAYA</span>
             <h2 class="section-title">Latar Belakang &amp; Cara Kerja</h2>
             <p class="section-desc">
                 Bagaimana saya memandang rekayasa perangkat lunak dan arsitektur sistem dari sudut pandang pemecahan masalah nyata.
@@ -166,7 +167,11 @@
         <div class="row g-4 align-items-stretch mb-4">
             <!-- Left: Personal Story & Coding Philosophy -->
             <div class="col-lg-6">
-                <div class="glass-card p-4 p-md-5 reveal h-100 d-flex flex-column">
+                <div class="linear-card p-4 p-md-5 reveal h-100 d-flex flex-column">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="chip-linear chip-linear-neutral font-mono">REKAYASA SISTEM</span>
+                        <span class="text-muted font-mono" style="font-size: 0.72rem;">// METODOLOGI</span>
+                    </div>
                     <h3 class="h5 fw-bold mb-3 font-heading" style="color: var(--text-primary);">
                         Menghubungkan Logika Bisnis dengan Arsitektur Teknis
                     </h3>
@@ -183,22 +188,22 @@
                     </div>
 
                     <!-- Quick Candidate Facts -->
-                    <div class="p-3 rounded-3 border border-subtle" style="background: var(--bg-primary);">
-                        <div class="row g-2 small">
+                    <div class="p-3 rounded-2 border border-subtle" style="background: var(--bg-primary);">
+                        <div class="row g-2 small font-mono">
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.75rem;">Status Akademis:</span>
+                                <span class="text-muted d-block" style="font-size: 0.7rem;">STATUS AKADEMIS:</span>
                                 <strong style="color: var(--text-primary);">S1 Teknologi Informasi (UBSI)</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.75rem;">Indeks Prestasi Kumulatif:</span>
-                                <strong class="text-primary font-mono">3.85 / 4.00</strong>
+                                <span class="text-muted d-block" style="font-size: 0.7rem;">INDEKS PRESTASI KUMULATIF:</span>
+                                <strong class="text-primary">3.85 / 4.00</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.75rem;">Lokasi Domisili:</span>
+                                <span class="text-muted d-block" style="font-size: 0.7rem;">LOKASI DOMISILI:</span>
                                 <strong style="color: var(--text-primary);">Tanjung Priok, Jakarta Utara</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.75rem;">Ketersediaan:</span>
+                                <span class="text-muted d-block" style="font-size: 0.7rem;">KETERSEDIAAN:</span>
                                 <strong class="text-success">Siap Mulai Segera</strong>
                             </div>
                         </div>
@@ -209,9 +214,9 @@
             <!-- Right: 4 Practical Focus Areas -->
             <div class="col-lg-6">
                 <div class="d-flex flex-column gap-3 h-100">
-                    <div class="glass-card p-4 reveal flex-grow-1">
+                    <div class="linear-card p-3 p-md-4 reveal flex-grow-1">
                         <div class="d-flex align-items-start gap-3">
-                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                            <div class="kpi-icon flex-shrink-0" style="width: 36px; height: 36px; font-size: 1.1rem;">
                                 <i class="bi bi-diagram-3"></i>
                             </div>
                             <div>
@@ -223,9 +228,9 @@
                         </div>
                     </div>
 
-                    <div class="glass-card p-4 reveal flex-grow-1">
+                    <div class="linear-card p-3 p-md-4 reveal flex-grow-1">
                         <div class="d-flex align-items-start gap-3">
-                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                            <div class="kpi-icon flex-shrink-0" style="width: 36px; height: 36px; font-size: 1.1rem;">
                                 <i class="bi bi-code-slash"></i>
                             </div>
                             <div>
@@ -237,9 +242,9 @@
                         </div>
                     </div>
 
-                    <div class="glass-card p-4 reveal flex-grow-1">
+                    <div class="linear-card p-3 p-md-4 reveal flex-grow-1">
                         <div class="d-flex align-items-start gap-3">
-                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                            <div class="kpi-icon flex-shrink-0" style="width: 36px; height: 36px; font-size: 1.1rem;">
                                 <i class="bi bi-router"></i>
                             </div>
                             <div>
@@ -251,9 +256,9 @@
                         </div>
                     </div>
 
-                    <div class="glass-card p-4 reveal flex-grow-1">
+                    <div class="linear-card p-3 p-md-4 reveal flex-grow-1">
                         <div class="d-flex align-items-start gap-3">
-                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                            <div class="kpi-icon flex-shrink-0" style="width: 36px; height: 36px; font-size: 1.1rem;">
                                 <i class="bi bi-cpu"></i>
                             </div>
                             <div>
@@ -410,7 +415,7 @@
                 <!-- Project Detail Modal -->
                 <div class="modal fade" id="projectModal{{ $p->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $p->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content glass-card border-subtle p-3">
+                        <div class="modal-content linear-card border-subtle p-3">
                             <div class="modal-header border-subtle pb-3">
                                 <div>
                                     <span class="badge border border-subtle text-primary mb-1 font-mono" style="font-size: 0.75rem;">{{ $p->category }}</span>
@@ -590,8 +595,8 @@
 <section id="certificates" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-patch-check"></i> Kredensial</span>
-            <h2 class="section-title">Sertifikasi Resmi</h2>
+            <span class="chip-linear chip-linear-blue font-mono mb-2"><i class="bi bi-patch-check me-1"></i> KREDENSIAL RESMI</span>
+            <h2 class="section-title">Sertifikasi &amp; Lisensi</h2>
             <p class="section-desc">
                 Sertifikasi kompetensi resmi dari Badan Nasional Sertifikasi Profesi (BNSP) dan MikroTik Academy.
             </p>
@@ -600,7 +605,7 @@
         <div class="row g-4">
             @forelse($certificates as $cert)
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="glass-card p-4 d-flex flex-column h-100">
+                    <div class="linear-card p-4 d-flex flex-column h-100">
                         @if($cert->image)
                             <div class="rounded-3 overflow-hidden mb-3 border border-subtle">
                                 <img src="{{ $cert->image }}" alt="{{ $cert->title }}" class="img-fluid w-100" style="height: 150px; object-fit: cover;">
@@ -740,7 +745,7 @@
 
             <!-- Right: Interactive Contact Form -->
             <div class="col-lg-7 reveal">
-                <div class="glass-card p-4 p-md-5 h-100">
+                <div class="linear-card p-4 p-md-5 h-100">
                     <h3 class="h5 fw-bold mb-1 font-heading" style="color: var(--text-primary);">Kirimkan Pesan</h3>
                     <p class="small text-subtle mb-4">Pesan akan langsung terkirim ke sistem dan segera saya respons.</p>
 

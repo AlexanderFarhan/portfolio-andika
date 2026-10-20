@@ -47,7 +47,7 @@
     --transition-fast: 0.15s ease;
     --transition-base: 0.25s ease;
     --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    --border-radius-card: 12px;
+    --border-radius-card: 8px;
     --navbar-height: 70px;
 }
 
@@ -589,15 +589,19 @@ textarea.form-control::placeholder {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-card);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-base);
+    box-shadow: none;
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .glass-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--border-color-hover);
-    box-shadow: var(--shadow-md);
-    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.16);
+    background: var(--bg-card);
+}
+
+[data-theme="light"] .glass-card:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.05);
 }
 
 /* Section Header Styling */
@@ -878,14 +882,16 @@ a:hover .brand-logo {
 .hero-availability-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
-    padding: 0.35rem 0.95rem;
-    border-radius: 9999px;
+    gap: 0.5rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
     background: rgba(16, 185, 129, 0.1);
     border: 1px solid rgba(16, 185, 129, 0.25);
-    color: #10b981;
-    font-size: 0.82rem;
+    color: #34d399;
+    font-size: 0.75rem;
     font-weight: 500;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
 }
 
 [data-theme="light"] .hero-availability-pill {
@@ -906,14 +912,14 @@ a:hover .brand-logo {
 .metric-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 0.85rem 1rem !important;
+    border-radius: 6px;
+    padding: 0.75rem 0.95rem !important;
     transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .metric-card:hover {
-    border-color: var(--border-color-hover);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
 }
 
 [data-theme="light"] .metric-card {
@@ -923,17 +929,22 @@ a:hover .brand-logo {
 
 /* Authentic Human Developer Bio Card in Hero */
 .developer-card {
-    border-radius: 14px;
+    border-radius: 8px;
     position: relative;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
+    transition: border-color var(--transition-fast);
+}
+
+.developer-card:hover {
+    border-color: rgba(255, 255, 255, 0.18);
 }
 
 .profile-portrait-frame {
-    width: 130px;
-    height: 130px;
-    border-radius: 14px;
+    width: 120px;
+    height: 120px;
+    border-radius: 6px;
     overflow: hidden;
     border: 1px solid var(--border-color);
     background-color: var(--bg-secondary);
@@ -1086,18 +1097,17 @@ select:focus-visible {
 .project-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
-    transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .project-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-color-hover);
-    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .project-thumb {
@@ -1105,6 +1115,7 @@ select:focus-visible {
     overflow: hidden;
     height: 200px;
     background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .project-thumb img {
@@ -1115,23 +1126,24 @@ select:focus-visible {
 }
 
 .project-card:hover .project-thumb img {
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 .project-badge-top {
     position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--bg-primary);
+    top: 10px;
+    left: 10px;
+    background: rgba(11, 15, 25, 0.9);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    font-size: 0.72rem;
-    padding: 0.25rem 0.65rem;
-    border-radius: 6px;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
     font-weight: 600;
     font-family: var(--font-mono);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     z-index: 2;
+    backdrop-filter: blur(8px);
 }
 
 .project-body {
