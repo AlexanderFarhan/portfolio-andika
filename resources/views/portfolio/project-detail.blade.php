@@ -15,8 +15,10 @@
 
         <div class="glass-card p-4 p-md-5">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-                <span class="badge badge-subtle-primary font-mono" style="font-size: 0.8rem;">{{ $project->category }}</span>
-                <span class="small text-muted font-mono"><i class="bi bi-check2-circle text-success me-1"></i> Production Ready</span>
+                <span class="badge bg-secondary-subtle text-secondary-emphasis font-mono" style="font-size: 0.8rem;">{{ $project->category }}</span>
+                @if($project->is_featured)
+                    <span class="small text-muted font-mono"><i class="bi bi-star-fill text-warning me-1"></i> Proyek Pilihan</span>
+                @endif
             </div>
 
             <h1 class="display-6 fw-bold font-heading mb-3" style="color: var(--text-primary);">{{ $project->title }}</h1>

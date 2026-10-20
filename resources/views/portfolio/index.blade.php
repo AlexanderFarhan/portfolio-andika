@@ -1,53 +1,51 @@
 @extends('layouts.app')
 
-@section('title', 'Andika Amansyah | Software Engineer & System Analyst — Portfolio & Resume')
+@section('title', 'Andika Amansyah | Web Developer & System Analyst')
 
 @section('content')
 
 <!-- ==========================================================================
-     SECTION 1: HERO / RECRUITER SPOTLIGHT
+     SECTION 1: HERO / INTRO
      ========================================================================== -->
 <section id="hero" class="hero-section">
-    <div class="hero-glow-bg" aria-hidden="true"></div>
-
-    <div class="container position-relative" style="z-index: 1;">
+    <div class="container position-relative">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
                 <div class="reveal">
-                    <!-- Recruiter Availability Pill -->
+                    <!-- Status Pill -->
                     <div class="hero-availability-pill mb-3" role="status">
-                        <span class="status-indicator"></span>
-                        <span><strong>Terbuka untuk Peluang Kerja</strong> • Full-Time / Magang / Junior Developer &amp; Analyst</span>
+                        <span class="status-indicator" aria-hidden="true"></span>
+                        <span>Terbuka untuk peluang kerja (Full-Time &amp; Magang)</span>
                     </div>
 
-                    <h1 class="display-4 fw-extrabold mb-2 font-heading tracking-tight">
-                        Halo, Saya <span class="text-gradient">{{ $profile->name ?? 'Andika Amansyah' }}</span>
+                    <h1 class="display-4 fw-extrabold mb-2 font-heading tracking-tight" style="color: var(--text-primary);">
+                        Andika Amansyah
                     </h1>
 
-                    <h2 class="h4 fw-bold text-primary mb-3 font-heading">
-                        Junior Software Engineer &amp; System Analyst
+                    <h2 class="h5 text-primary fw-semibold mb-3 font-heading">
+                        Mahasiswa Teknologi Informasi (UBSI) • Web Developer &amp; System Analyst
                     </h2>
 
-                    <p class="lead mb-4 text-subtle" style="max-width: 640px; line-height: 1.75;">
-                        Mahasiswa S1 Teknologi Informasi UBSI (<strong style="color: var(--text-primary);">IPK 3.85 / 4.00</strong>). Mengintegrasikan kemampuan rekayasa web modern (<strong style="color: var(--text-primary);">Laravel 12, REST API, MySQL</strong>) dengan analisis kebutuhan sistem bisnis terstruktur (<strong style="color: var(--text-primary);">SRS, UML, ERD</strong>), serta administrasi server Linux &amp; infrastruktur jaringan <strong style="color: var(--text-primary);">MikroTik RouterOS</strong>.
+                    <p class="lead mb-4 text-subtle" style="max-width: 600px; font-size: 1.05rem; line-height: 1.75;">
+                        Saya fokus mengembangkan aplikasi web backend dengan <strong style="color: var(--text-primary);">Laravel &amp; MySQL</strong>, memodelkan kebutuhan sistem (<strong style="color: var(--text-primary);">SRS, UML, ERD</strong>), serta mengonfigurasi jaringan <strong style="color: var(--text-primary);">MikroTik RouterOS</strong> dan administrasi server Linux.
                     </p>
 
-                    <!-- Hero Call to Action Buttons (Recruiter-First) -->
-                    <div class="d-flex flex-wrap gap-3 align-items-center mb-4">
+                    <!-- Hero Call to Action Buttons -->
+                    <div class="d-flex flex-wrap gap-2 align-items-center mb-4">
                         <a href="#projects" class="btn btn-primary-custom" id="heroProjectsBtn">
-                            <i class="bi bi-kanban-fill me-1"></i> Lihat Proyek Unggulan
+                            <i class="bi bi-arrow-down-circle me-1"></i> Lihat Proyek
                         </a>
-                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-outline-custom" id="heroCvBtn" title="Unduh Curriculum Vitae Resmi">
-                            <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i> Unduh CV Resmi (PDF)
+                        <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-outline-custom" id="heroCvBtn">
+                            <i class="bi bi-file-earmark-pdf me-1 text-danger"></i> Unduh CV (PDF)
                         </a>
                         <a href="#contact" class="btn btn-outline-custom" id="heroContactBtn">
-                            <i class="bi bi-chat-quote-fill me-1"></i> Hubungi / Rekrut
+                            <i class="bi bi-chat-text me-1"></i> Hubungi Saya
                         </a>
                     </div>
 
-                    <!-- Social / Professional Channels Strip -->
+                    <!-- Direct Social / Professional Channels -->
                     <div class="d-flex align-items-center gap-2 mb-4 pt-1">
-                        <span class="small text-muted me-2 font-mono">Jejaring:</span>
+                        <span class="small text-muted me-2 font-mono">Tautan:</span>
                         @if(isset($socialLinks))
                             @foreach($socialLinks as $soc)
                                 @php
@@ -59,92 +57,91 @@
                                     if (strtolower($soc->platform) === 'whatsapp' && !empty($profPhone)) {
                                         $socUrl = 'https://api.whatsapp.com/send?phone=' . $profPhone . '&text=' . urlencode('Halo Andika, saya melihat portofolio Anda dan ingin mendiskusikan peluang kerja/proyek.');
                                     } elseif (strtolower($soc->platform) === 'email' && !empty($profile->email)) {
-                                        $socUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($profile->email) . '&su=' . urlencode('Peluang Karir / Diskusi Tawaran Proyek');
+                                        $socUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($profile->email) . '&su=' . urlencode('Diskusi Tawaran Proyek / Peluang Kerja');
                                     }
                                 @endphp
-                                <a href="{{ $socUrl }}" target="_blank" rel="noopener noreferrer" class="btn-icon-round" aria-label="{{ $soc->platform }}" title="{{ $soc->platform }}" style="width: 38px; height: 38px;">
+                                <a href="{{ $socUrl }}" target="_blank" rel="noopener noreferrer" class="btn-icon-round" aria-label="{{ $soc->platform }}" title="{{ $soc->platform }}">
                                     <i class="bi {{ $soc->icon }}"></i>
                                 </a>
                             @endforeach
                         @endif
                     </div>
 
-                    <!-- Recruiter Metric Stat Boxes -->
-                    <div class="row g-3 pt-3 border-top border-subtle">
+                    <!-- Quick Facts Grid -->
+                    <div class="row g-2 pt-3 border-top border-subtle">
                         <div class="col-6 col-sm-3">
-                            <div class="metric-card p-2 rounded-3 text-start">
-                                <div class="fs-4 fw-bold font-heading text-primary">{{ $profile->gpa ?? '3.85 / 4.00' }}</div>
-                                <div class="small text-muted" style="font-size: 0.78rem;">IPK S1 UBSI (Cum Laude)</div>
+                            <div class="metric-card p-2 text-start">
+                                <div class="fs-5 fw-bold font-heading text-primary">{{ $profile->gpa ?? '3.85 / 4.00' }}</div>
+                                <div class="small text-muted" style="font-size: 0.76rem;">IPK S1 UBSI</div>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
-                            <div class="metric-card p-2 rounded-3 text-start">
-                                <div class="fs-4 fw-bold font-heading text-primary">{{ $profile->years_of_experience ?? '2+ Tahun' }}</div>
-                                <div class="small text-muted" style="font-size: 0.78rem;">Pengalaman Proyek &amp; Lab</div>
+                            <div class="metric-card p-2 text-start">
+                                <div class="fs-5 fw-bold font-heading text-primary">{{ $profile->years_of_experience ?? '2+ Tahun' }}</div>
+                                <div class="small text-muted" style="font-size: 0.76rem;">Eksplorasi Proyek</div>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
-                            <div class="metric-card p-2 rounded-3 text-start">
-                                <div class="fs-4 fw-bold font-heading text-primary">5+ Solusi</div>
-                                <div class="small text-muted" style="font-size: 0.78rem;">Proyek Teruji &amp; Siap Pakai</div>
+                            <div class="metric-card p-2 text-start">
+                                <div class="fs-5 fw-bold font-heading text-primary">5 Proyek</div>
+                                <div class="small text-muted" style="font-size: 0.76rem;">Web, IoT &amp; Jaringan</div>
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
-                            <div class="metric-card p-2 rounded-3 text-start">
-                                <div class="fs-4 fw-bold font-heading text-primary">2 Lisensi</div>
-                                <div class="small text-muted" style="font-size: 0.78rem;">BNSP JWD &amp; MikroTik MTCNA</div>
+                            <div class="metric-card p-2 text-start">
+                                <div class="fs-5 fw-bold font-heading text-primary">BNSP &amp; MikroTik</div>
+                                <div class="small text-muted" style="font-size: 0.76rem;">Sertifikasi Resmi</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Hero Profile Card / Recruiter Glance -->
+            <!-- Hero Profile Card (Authentic Human Presentation) -->
             <div class="col-lg-5">
                 <div class="reveal">
-                    <div class="developer-card glass-card p-4 mx-auto" style="max-width: 420px;">
-                        <!-- Terminal-like Header Bar -->
-                        <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-subtle">
-                            <div class="d-flex align-items-center gap-1">
-                                <span class="window-dot dot-red"></span>
-                                <span class="window-dot dot-yellow"></span>
-                                <span class="window-dot dot-green"></span>
-                            </div>
-                            <span class="small font-mono text-muted" style="font-size: 0.75rem;">candidate-summary.json</span>
-                            <span class="badge badge-subtle-success font-mono" style="font-size: 0.7rem;">READY_TO_HIRE</span>
+                    <div class="developer-card p-4 mx-auto" style="max-width: 380px;">
+                        <!-- Portrait Image -->
+                        <div class="profile-portrait-frame mx-auto mb-3">
+                            <img src="{{ $profile->avatar ?? '/images/avatar-andika.svg' }}" alt="{{ $profile->name ?? 'Andika Amansyah' }}" class="img-fluid" width="130" height="130">
                         </div>
 
-                        <!-- Portrait & Core Identity -->
                         <div class="text-center mb-3">
-                            <div class="profile-portrait-frame mx-auto mb-3">
-                                <img src="{{ $profile->avatar ?? '/images/avatar-andika.svg' }}" alt="{{ $profile->name ?? 'Andika Amansyah' }}" class="img-fluid" width="160" height="160">
-                            </div>
-                            <h3 class="h5 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $profile->name ?? 'Andika Amansyah' }}</h3>
-                            <p class="small text-subtle mb-2">Mahasiswa S1 Teknologi Informasi • UBSI</p>
+                            <h3 class="h6 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $profile->name ?? 'Andika Amansyah' }}</h3>
+                            <p class="small text-subtle mb-2">Universitas Bina Sarana Informatika (UBSI)</p>
                             <div class="d-flex justify-content-center gap-2">
-                                <span class="badge badge-subtle-primary font-mono" style="font-size: 0.72rem;"><i class="bi bi-geo-alt-fill me-1"></i> Jakarta / Bekasi</span>
-                                <span class="badge badge-subtle-info font-mono" style="font-size: 0.72rem;"><i class="bi bi-laptop me-1"></i> On-site / Remote</span>
+                                <span class="badge border border-subtle text-subtle" style="font-size: 0.72rem; font-weight: 500;">
+                                    <i class="bi bi-geo-alt me-1 text-primary"></i> Jakarta / Bekasi
+                                </span>
+                                <span class="badge border border-subtle text-subtle" style="font-size: 0.72rem; font-weight: 500;">
+                                    <i class="bi bi-briefcase me-1 text-success"></i> Siap Kerja
+                                </span>
                             </div>
                         </div>
 
-                        <!-- Core Technology Stack Badges -->
-                        <div class="p-3 rounded-3 bg-secondary bg-opacity-25 border border-subtle mb-3">
-                            <div class="small text-muted font-mono mb-2" style="font-size: 0.72rem;">CORE_TECHNICAL_STACK:</div>
-                            <div class="d-flex flex-wrap gap-1">
-                                <span class="tech-tag">Laravel 12</span>
-                                <span class="tech-tag">PHP 8.2+</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">RESTful API</span>
-                                <span class="tech-tag">MikroTik RouterOS</span>
-                                <span class="tech-tag">Ubuntu Linux CLI</span>
-                                <span class="tech-tag">System Analysis (SRS/UML)</span>
-                                <span class="tech-tag">ESP32 IoT</span>
+                        <!-- Focus Activity Note -->
+                        <div class="p-3 rounded-3 mb-3 border border-subtle" style="background: var(--bg-primary); font-size: 0.82rem; line-height: 1.6;">
+                            <div class="text-muted small fw-semibold mb-1">
+                                <i class="bi bi-activity text-primary me-1"></i> Aktivitas Saat Ini:
+                            </div>
+                            <div class="text-subtle">
+                                Menyelesaikan kuliah S1 semester akhir, mengerjakan proyek aplikasi web Laravel, dan menguji integrasi mikrokontroler ESP32 dengan REST API.
                             </div>
                         </div>
 
-                        <!-- Quick Recruiter Action inside Card -->
+                        <!-- Core Stack Badges -->
+                        <div class="d-flex flex-wrap gap-1 mb-3">
+                            <span class="tech-tag">Laravel 12</span>
+                            <span class="tech-tag">PHP 8</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">REST API</span>
+                            <span class="tech-tag">MikroTik</span>
+                            <span class="tech-tag">Ubuntu Server</span>
+                            <span class="tech-tag">ESP32</span>
+                        </div>
+
                         <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-sm btn-outline-custom w-100 justify-content-center">
-                            <i class="bi bi-eye-fill me-1"></i> Buka CV Lengkap di Tab Baru
+                            <i class="bi bi-file-earmark-text me-1"></i> Buka CV Lengkap
                         </a>
                     </div>
                 </div>
@@ -154,109 +151,119 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 2: ABOUT ME & ENGINEERING VALUE
+     SECTION 2: ABOUT & APPROACH
      ========================================================================== -->
 <section id="about" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-person-workspace"></i> Profil &amp; Filosofi Rekayasa</span>
-            <h2 class="section-title">
-                Tentang <span class="text-gradient">{{ $profile->name ?? 'Andika Amansyah' }}</span>
-            </h2>
+            <span class="section-tag"><i class="bi bi-person"></i> Tentang Saya</span>
+            <h2 class="section-title">Latar Belakang &amp; Cara Kerja</h2>
             <p class="section-desc">
-                Kombinasi analisis kebutuhan bisnis terstruktur (SRS &amp; UML), implementasi kode bersih (Clean Architecture), serta keahlian mendalam dalam infrastruktur jaringan komputer dan administrasi server.
+                Bagaimana saya memandang rekayasa perangkat lunak dan arsitektur sistem dari sudut pandang pemecahan masalah nyata.
             </p>
         </div>
 
-        <div class="row g-4 align-items-stretch mb-5">
-            <!-- Left: Personal Statement & Candidate Snapshot -->
+        <div class="row g-4 align-items-stretch mb-4">
+            <!-- Left: Personal Story & Coding Philosophy -->
             <div class="col-lg-6">
                 <div class="glass-card p-4 p-md-5 reveal h-100 d-flex flex-column">
-                    <h3 class="h4 fw-bold mb-3 font-heading" style="color: var(--text-primary);">
-                        {{ $profile->headline ?? 'Software Engineer & System Analyst Berorientasi Solusi' }}
+                    <h3 class="h5 fw-bold mb-3 font-heading" style="color: var(--text-primary);">
+                        Menghubungkan Logika Bisnis dengan Arsitektur Teknis
                     </h3>
-                    <div class="text-subtle mb-4 flex-grow-1" style="line-height: 1.8; white-space: pre-line;">
-                        {{ $profile->about_me ?? "Halo! Saya Andika Amansyah, mahasiswa aktif jurusan Teknologi Informasi di Universitas Bina Sarana Informatika (UBSI) dengan IPK 3.85/4.00. Saya memiliki minat mendalam pada sinergi antara rekayasa perangkat lunak (Software Engineering) dan infrastruktur jaringan (Computer Networking).\n\nSaya percaya bahwa aplikasi bisnis yang berhasil dibangun di atas fondasi analisis kebutuhan yang tajam, arsitektur database relasional yang dinormalisasi dengan baik, kode yang terstruktur (MVC), serta deployment server yang aman dan terpantau." }}
+                    <div class="text-subtle mb-4 flex-grow-1" style="line-height: 1.8; font-size: 0.95rem;">
+                        <p class="mb-3">
+                            Saya adalah mahasiswa jurusan Teknologi Informasi di Universitas Bina Sarana Informatika (UBSI) dengan riwayat pendidikan kejuruan di bidang Teknik Komputer &amp; Jaringan (TKJ). Latar belakang ini membentuk cara berpikir saya: sebuah aplikasi tidak hanya harus memiliki tampilan yang bersih, tetapi juga arsitektur database yang kokoh dan dapat di-deploy dengan aman di infrastruktur server.
+                        </p>
+                        <p class="mb-3">
+                            Dalam setiap proyek, saya terbiasa memulai dengan analisis kebutuhan (Software Requirement Specification), menyusun alur Use Case dan Activity Diagram, serta menormalisasi tabel database (3NF). Pendekatan ini membuat proses penulisan kode di Laravel menjadi lebih terstruktur, minim bug logika, dan mudah dikembangkan lebih lanjut.
+                        </p>
+                        <p class="mb-0">
+                            Di luar pengembangan web, saya menyukai eksperimen jaringan di MikroTik RouterOS (seperti segmentasi VLAN dan manajemen bandwidth) serta mengintegrasikan mikrokontroler ESP32 dengan endpoint REST API backend.
+                        </p>
                     </div>
 
-                    <!-- Candidate Quick Facts for HR / Recruiters -->
-                    <div class="p-3 rounded-3 bg-secondary bg-opacity-10 border border-subtle">
-                        <h4 class="small fw-bold text-uppercase text-primary mb-3 font-mono" style="letter-spacing: 0.05em;">
-                            <i class="bi bi-card-checklist me-1"></i> Ringkasan Kualifikasi Kandidat:
-                        </h4>
+                    <!-- Quick Candidate Facts -->
+                    <div class="p-3 rounded-3 border border-subtle" style="background: var(--bg-primary);">
                         <div class="row g-2 small">
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.78rem;">Pendidikan:</span>
+                                <span class="text-muted d-block" style="font-size: 0.75rem;">Status Akademis:</span>
                                 <strong style="color: var(--text-primary);">S1 Teknologi Informasi (UBSI)</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.78rem;">Indeks Prestasi Kumulatif:</span>
-                                <strong class="text-primary font-mono">3.85 / 4.00 (Cum Laude Candidate)</strong>
+                                <span class="text-muted d-block" style="font-size: 0.75rem;">Indeks Prestasi Kumulatif:</span>
+                                <strong class="text-primary font-mono">3.85 / 4.00</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.78rem;">Ketersediaan Mulai:</span>
-                                <strong class="text-success">Segera / Immediate Availability</strong>
+                                <span class="text-muted d-block" style="font-size: 0.75rem;">Lokasi Domisili:</span>
+                                <strong style="color: var(--text-primary);">Tanjung Priok, Jakarta Utara</strong>
                             </div>
                             <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.78rem;">Target Peran:</span>
-                                <strong style="color: var(--text-primary);">Junior Web Developer / System Analyst / IT Support</strong>
-                            </div>
-                            <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.78rem;">Preferensi Kerja:</span>
-                                <strong style="color: var(--text-primary);">On-site (Jabodetabek) / Hybrid / Remote</strong>
-                            </div>
-                            <div class="col-sm-6">
-                                <span class="text-muted d-block" style="font-size: 0.78rem;">Sertifikasi Utama:</span>
-                                <strong style="color: var(--text-primary);">BNSP JWD &amp; MikroTik MTCNA</strong>
+                                <span class="text-muted d-block" style="font-size: 0.75rem;">Ketersediaan:</span>
+                                <strong class="text-success">Siap Mulai Segera</strong>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right: 4 Engineering Pillars (Why Hire Me) -->
+            <!-- Right: 4 Practical Focus Areas -->
             <div class="col-lg-6">
-                <div class="row g-3 h-100">
-                    @php
-                        $pillars = $profile ? $profile->getActivePillars() : [];
-                        if (empty($pillars)) {
-                            $pillars = [
-                                [
-                                    'title' => 'Analisis Sistem & Rekayasa Kebutuhan',
-                                    'description' => 'Mampu membedah alur proses bisnis klien, menyusun Software Requirement Specification (SRS), merancang diagram UML (Use Case, Activity, Sequence), serta normalisasi database (ERD 3NF).',
-                                    'icon' => 'bi-diagram-3-fill'
-                                ],
-                                [
-                                    'title' => 'Pengembangan Web Full-Stack Modern',
-                                    'description' => 'Membangun aplikasi web handal menggunakan framework Laravel 12 & PHP 8.2+, RESTful API terstandar, MySQL relasional, antarmuka responsif Bootstrap 5, dan proteksi OWASP (CSRF/XSS).',
-                                    'icon' => 'bi-boxes'
-                                ],
-                                [
-                                    'title' => 'Infrastruktur Jaringan & Server Linux',
-                                    'description' => 'Berpengalaman mengonfigurasi router MikroTik RouterOS (VLAN, bandwidth management QoS, firewall NAT) dan administrasi server Linux Ubuntu CLI (LEMP stack & otomatisasi script).',
-                                    'icon' => 'bi-hdd-network-fill'
-                                ],
-                                [
-                                    'title' => 'Hardware & IoT Real-Time Telemetry',
-                                    'description' => 'Mendesain prototipe Internet of Things berbasis ESP32 dan RFID RC522 dengan verifikasi latensi di bawah 300ms yang terintegrasi langsung ke cloud database via REST API.',
-                                    'icon' => 'bi-cpu-fill'
-                                ],
-                            ];
-                        }
-                    @endphp
-                    @foreach($pillars as $p)
-                        <div class="col-sm-6 reveal">
-                            <div class="glass-card p-4 h-100 d-flex flex-column">
-                                <div class="skill-icon-box">
-                                    <i class="bi {{ $p['icon'] ?? 'bi-check-circle-fill' }}"></i>
-                                </div>
-                                <h4 class="h6 fw-bold mb-2 font-heading" style="color: var(--text-primary);">{{ $p['title'] ?? '' }}</h4>
-                                <p class="small text-subtle mb-0 flex-grow-1" style="line-height: 1.65;">
-                                    {{ $p['description'] ?? '' }}
+                <div class="d-flex flex-column gap-3 h-100">
+                    <div class="glass-card p-4 reveal flex-grow-1">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                                <i class="bi bi-diagram-3"></i>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">1. Analisis Kebutuhan &amp; Desain Sistem</h4>
+                                <p class="small text-subtle mb-0" style="line-height: 1.6;">
+                                    Menyusun dokumen Software Requirement Specification (SRS), memodelkan Use Case &amp; Activity Diagram, serta merancang skema Entity Relationship Diagram (ERD) yang teruji secara relasional.
                                 </p>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+
+                    <div class="glass-card p-4 reveal flex-grow-1">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                                <i class="bi bi-code-slash"></i>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">2. Backend Web &amp; RESTful API (Laravel)</h4>
+                                <p class="small text-subtle mb-0" style="line-height: 1.6;">
+                                    Membangun arsitektur MVC bersih dengan Laravel 12 &amp; PHP 8, validasi request berlapis, Eloquent ORM, migrasi database, autentikasi aman, serta pembuatan laporan slip PDF.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 reveal flex-grow-1">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                                <i class="bi bi-router"></i>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">3. Jaringan MikroTik &amp; Server Linux</h4>
+                                <p class="small text-subtle mb-0" style="line-height: 1.6;">
+                                    Mengonfigurasi router MikroTik RouterOS (routing, VLAN trunking, Simple Queue bandwidth QoS, firewall NAT) dan administrasi server Ubuntu Server 22.04 LTS berbasis CLI.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 reveal flex-grow-1">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="skill-icon-box flex-shrink-0 mb-0">
+                                <i class="bi bi-cpu"></i>
+                            </div>
+                            <div>
+                                <h4 class="h6 fw-bold mb-1" style="color: var(--text-primary);">4. Integrasi Mikrokontroler &amp; IoT</h4>
+                                <p class="small text-subtle mb-0" style="line-height: 1.6;">
+                                    Memprogram mikrokontroler ESP32 dengan C++ untuk membaca modul RFID RC522 dan sensor, kemudian mengirim data secara nirkabel ke endpoint REST API cloud server secara real-time.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -264,28 +271,28 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 3: TECHNICAL COMPETENCIES (SKILLS MATRIX)
+     SECTION 3: SKILLS
      ========================================================================== -->
-<section id="skills" class="py-5 my-md-4 section-subtle-bg">
+<section id="skills" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-stack"></i> Matriks Kompetensi Teknis</span>
-            <h2 class="section-title">Keahlian &amp; <span class="text-gradient">Stack Teknologi</span></h2>
+            <span class="section-tag"><i class="bi bi-stack"></i> Keahlian Teknis</span>
+            <h2 class="section-title">Teknologi &amp; Alat Kerja</h2>
             <p class="section-desc">
-                Keahlian praktis yang siap diaplikasikan langsung pada proyek tim, dikelompokkan berdasarkan domain teknis dan level kompetensi.
+                Daftar bahasa pemrograman, framework, dan peralatan yang aktif saya gunakan dalam pengerjaan proyek.
             </p>
         </div>
 
         <!-- Skills Filter Tabs -->
         <ul class="nav nav-pills justify-content-center gap-2 mb-4 reveal flex-wrap" id="skillsTabs" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active px-4 rounded-pill" id="all-skills-tab" data-bs-toggle="pill" data-bs-target="#all-skills" type="button" role="tab" aria-selected="true">
-                    Semua Keahlian ({{ $skills->count() }})
+                <button class="nav-link active px-3 py-2" id="all-skills-tab" data-bs-toggle="pill" data-bs-target="#all-skills" type="button" role="tab">
+                    Semua ({{ $skills->count() }})
                 </button>
             </li>
             @foreach($skillsByCategory as $category => $items)
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link px-4 rounded-pill" id="cat-{{ Str::slug($category) }}-tab" data-bs-toggle="pill" data-bs-target="#cat-{{ Str::slug($category) }}" type="button" role="tab" aria-selected="false">
+                    <button class="nav-link px-3 py-2" id="cat-{{ Str::slug($category) }}-tab" data-bs-toggle="pill" data-bs-target="#cat-{{ Str::slug($category) }}" type="button" role="tab">
                         {{ $category }} ({{ count($items) }})
                     </button>
                 </li>
@@ -298,35 +305,14 @@
             <div class="tab-pane fade show active" id="all-skills" role="tabpanel" aria-labelledby="all-skills-tab">
                 <div class="row g-3">
                     @foreach($skills as $skill)
-                        @php
-                            $levelLabel = 'Production Ready';
-                            $badgeClass = 'badge-subtle-success';
-                            if ($skill->proficiency < 85) {
-                                $levelLabel = 'Familiar / Proficient';
-                                $badgeClass = 'badge-subtle-info';
-                            } elseif ($skill->proficiency >= 90) {
-                                $levelLabel = 'Advanced / Production';
-                                $badgeClass = 'badge-subtle-primary';
-                            }
-                        @endphp
                         <div class="col-md-6 col-lg-4 reveal">
-                            <div class="skill-card d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
-                                                <i class="bi {{ $skill->icon ?? 'bi-check2-circle' }} fs-5"></i>
-                                            </div>
-                                            <div>
-                                                <h3 class="h6 mb-0 fw-bold" style="color: var(--text-primary);">{{ $skill->name }}</h3>
-                                                <span class="skill-category-badge">{{ $skill->category }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="skill-card d-flex align-items-center gap-3">
+                                <div class="p-2 rounded-2 bg-primary bg-opacity-10 text-primary flex-shrink-0">
+                                    <i class="bi {{ $skill->icon ?? 'bi-check2' }} fs-5"></i>
                                 </div>
-                                <div class="pt-2 mt-2 border-top border-subtle d-flex align-items-center justify-content-between">
-                                    <span class="badge {{ $badgeClass }}" style="font-size: 0.72rem;">{{ $levelLabel }}</span>
-                                    <span class="small font-mono text-muted">{{ $skill->proficiency }}% Mastery</span>
+                                <div class="flex-grow-1 min-w-0">
+                                    <h3 class="h6 mb-0 fw-bold text-truncate" style="color: var(--text-primary);">{{ $skill->name }}</h3>
+                                    <span class="small text-muted" style="font-size: 0.76rem;">{{ $skill->category }}</span>
                                 </div>
                             </div>
                         </div>
@@ -339,35 +325,14 @@
                 <div class="tab-pane fade" id="cat-{{ Str::slug($category) }}" role="tabpanel" aria-labelledby="cat-{{ Str::slug($category) }}-tab">
                     <div class="row g-3">
                         @foreach($items as $skill)
-                            @php
-                                $levelLabel = 'Production Ready';
-                                $badgeClass = 'badge-subtle-success';
-                                if ($skill->proficiency < 85) {
-                                    $levelLabel = 'Familiar / Proficient';
-                                    $badgeClass = 'badge-subtle-info';
-                                } elseif ($skill->proficiency >= 90) {
-                                    $levelLabel = 'Advanced / Production';
-                                    $badgeClass = 'badge-subtle-primary';
-                                }
-                            @endphp
                             <div class="col-md-6 col-lg-4 reveal">
-                                <div class="skill-card d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="d-flex align-items-center justify-content-between mb-2">
-                                            <div class="d-flex align-items-center gap-2">
-                                                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
-                                                    <i class="bi {{ $skill->icon ?? 'bi-check2-circle' }} fs-5"></i>
-                                                </div>
-                                                <div>
-                                                    <h3 class="h6 mb-0 fw-bold" style="color: var(--text-primary);">{{ $skill->name }}</h3>
-                                                    <span class="skill-category-badge">{{ $skill->category }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="skill-card d-flex align-items-center gap-3">
+                                    <div class="p-2 rounded-2 bg-primary bg-opacity-10 text-primary flex-shrink-0">
+                                        <i class="bi {{ $skill->icon ?? 'bi-check2' }} fs-5"></i>
                                     </div>
-                                    <div class="pt-2 mt-2 border-top border-subtle d-flex align-items-center justify-content-between">
-                                        <span class="badge {{ $badgeClass }}" style="font-size: 0.72rem;">{{ $levelLabel }}</span>
-                                        <span class="small font-mono text-muted">{{ $skill->proficiency }}% Mastery</span>
+                                    <div class="flex-grow-1 min-w-0">
+                                        <h3 class="h6 mb-0 fw-bold text-truncate" style="color: var(--text-primary);">{{ $skill->name }}</h3>
+                                        <span class="small text-muted" style="font-size: 0.76rem;">{{ $skill->category }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -380,15 +345,15 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 4: FEATURED PROJECTS / CASE STUDIES
+     SECTION 4: FEATURED PROJECTS
      ========================================================================== -->
 <section id="projects" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-kanban-fill"></i> Studi Kasus &amp; Portofolio Proyek</span>
-            <h2 class="section-title">Portofolio <span class="text-gradient">Proyek Unggulan</span></h2>
+            <span class="section-tag"><i class="bi bi-kanban"></i> Karya Terpilih</span>
+            <h2 class="section-title">Portofolio Proyek</h2>
             <p class="section-desc">
-                Eksplorasi proyek-proyek riil yang telah dibangun dari nol, mencakup sistem web finansial perusahaan, integrasi IoT mikrokontroler dengan cloud REST API, dan topologi jaringan enterprise.
+                Proyek yang telah saya rancang dan kembangkan, mencakup sistem web bisnis, aplikasi IoT mikrokontroler, dan perancangan jaringan komputer.
             </p>
         </div>
 
@@ -401,7 +366,7 @@
                             <img src="{{ $p->image ?? '/images/project-payroll.svg' }}" alt="{{ $p->title }}" loading="lazy">
                         </div>
 
-                        <div class="project-body d-flex flex-column flex-grow-1">
+                        <div class="project-body d-flex flex-column flex-grow-1 p-4">
                             <h3 class="h5 fw-bold mb-2 font-heading" style="color: var(--text-primary);">{{ $p->title }}</h3>
                             <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.65;">
                                 {{ $p->summary }}
@@ -422,7 +387,7 @@
                             <!-- Project Card Actions -->
                             <div class="d-flex align-items-center justify-content-between pt-3 border-top border-subtle mt-auto">
                                 <button type="button" class="btn btn-sm btn-outline-custom" data-bs-toggle="modal" data-bs-target="#projectModal{{ $p->id }}">
-                                    <i class="bi bi-file-earmark-code me-1"></i> Detail Arsitektur
+                                    <i class="bi bi-info-circle me-1"></i> Detail Fitur
                                 </button>
 
                                 <div class="d-flex gap-2">
@@ -442,33 +407,33 @@
                     </div>
                 </div>
 
-                <!-- Project Detail Modal (Rich Case Study) -->
+                <!-- Project Detail Modal -->
                 <div class="modal fade" id="projectModal{{ $p->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $p->id }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content glass-card border-subtle p-3">
                             <div class="modal-header border-subtle pb-3">
                                 <div>
-                                    <span class="badge badge-subtle-primary mb-1 font-mono">{{ $p->category }}</span>
+                                    <span class="badge border border-subtle text-primary mb-1 font-mono" style="font-size: 0.75rem;">{{ $p->category }}</span>
                                     <h4 class="modal-title fw-bold font-heading" style="color: var(--text-primary);" id="modalLabel{{ $p->id }}">{{ $p->title }}</h4>
                                 </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup dialog"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                             </div>
                             <div class="modal-body py-4">
                                 @if($p->image)
-                                    <div class="rounded-3 overflow-hidden mb-4 border border-subtle shadow-sm">
+                                    <div class="rounded-3 overflow-hidden mb-4 border border-subtle">
                                         <img src="{{ $p->image }}" alt="{{ $p->title }}" class="img-fluid w-100" style="max-height: 320px; object-fit: cover;">
                                     </div>
                                 @endif
 
                                 <div class="mb-4">
-                                    <h5 class="h6 fw-bold text-primary mb-2 font-heading"><i class="bi bi-info-circle me-1"></i> Ikhtisar &amp; Solusi Masalah:</h5>
-                                    <div class="text-subtle" style="line-height: 1.8; white-space: pre-line;">
+                                    <h5 class="h6 fw-bold text-primary mb-2 font-heading"><i class="bi bi-card-text me-1"></i> Penjelasan Proyek &amp; Solusi:</h5>
+                                    <div class="text-subtle" style="line-height: 1.8; white-space: pre-line; font-size: 0.95rem;">
                                         {{ $p->description }}
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
-                                    <h5 class="h6 fw-bold text-primary mb-2 font-heading"><i class="bi bi-layers me-1"></i> Arsitektur &amp; Teknologi yang Digunakan:</h5>
+                                    <h5 class="h6 fw-bold text-primary mb-2 font-heading"><i class="bi bi-tools me-1"></i> Teknologi yang Digunakan:</h5>
                                     <div class="d-flex flex-wrap gap-1">
                                         @if(is_array($p->technologies))
                                             @foreach($p->technologies as $tech)
@@ -488,7 +453,7 @@
                                     @endif
                                     @if($p->demo_url)
                                         <a href="{{ $p->demo_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary-custom">
-                                            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Live Demo
+                                            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Demo
                                         </a>
                                     @endif
                                 </div>
@@ -504,15 +469,15 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 5: EXPERIENCE / CAREER MILESTONES
+     SECTION 5: EXPERIENCE
      ========================================================================== -->
-<section id="experience" class="py-5 my-md-4 section-subtle-bg">
+<section id="experience" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-briefcase-fill"></i> Riwayat Profesional</span>
-            <h2 class="section-title">Pengalaman <span class="text-gradient">Kerja, Proyek &amp; Lab</span></h2>
+            <span class="section-tag"><i class="bi bi-briefcase"></i> Pengalaman</span>
+            <h2 class="section-title">Riwayat Proyek &amp; Kegiatan</h2>
             <p class="section-desc">
-                Pengalaman nyata dalam pengembangan perangkat lunak, administrasi jaringan komputer kampus, dan riset mikrokontroler.
+                Pengalaman nyata dalam pengembangan perangkat lunak, administrasi laboratorium jaringan komputer, dan riset mikrokontroler.
             </p>
         </div>
 
@@ -525,26 +490,26 @@
                             <div class="timeline-card">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
                                     <div>
-                                        <h3 class="h5 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $exp->role }}</h3>
+                                        <h3 class="h6 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $exp->role }}</h3>
                                         <div class="d-flex align-items-center gap-2">
-                                            <span class="fw-semibold text-primary">{{ $exp->company }}</span>
-                                            <span class="badge badge-subtle-info font-mono" style="font-size: 0.72rem;">{{ $exp->type }}</span>
+                                            <span class="fw-semibold text-primary small">{{ $exp->company }}</span>
+                                            <span class="badge border border-subtle text-muted" style="font-size: 0.72rem;">{{ $exp->type }}</span>
                                         </div>
                                     </div>
                                     <span class="timeline-badge">
-                                        <i class="bi bi-clock-history me-1"></i> {{ $exp->start_date }} — {{ $exp->end_date ?? 'Sekarang' }}
+                                        <i class="bi bi-calendar-event me-1"></i> {{ $exp->start_date }} — {{ $exp->end_date ?? 'Sekarang' }}
                                     </span>
                                 </div>
 
                                 @if($exp->description)
-                                    <p class="small text-subtle mb-3 mt-2" style="line-height: 1.75; white-space: pre-line;">
+                                    <p class="small text-subtle mb-3 mt-2" style="line-height: 1.7; white-space: pre-line;">
                                         {{ $exp->description }}
                                     </p>
                                 @endif
 
                                 @if($exp->skills_used)
                                     <div class="pt-2 border-top border-subtle">
-                                        <small class="text-muted d-block mb-2 font-mono" style="font-size: 0.75rem;">TEKNOLOGI &amp; TOOLS DIGUNAKAN:</small>
+                                        <small class="text-muted d-block mb-2 font-mono" style="font-size: 0.72rem;">TEKNOLOGI &amp; ALAT:</small>
                                         @foreach(explode(',', $exp->skills_used) as $item)
                                             <span class="tech-tag">{{ trim($item) }}</span>
                                         @endforeach
@@ -562,15 +527,15 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 6: EDUCATION / ACADEMIC BACKGROUND
+     SECTION 6: EDUCATION
      ========================================================================== -->
 <section id="education" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-mortarboard-fill"></i> Latar Belakang Akademis</span>
-            <h2 class="section-title">Riwayat <span class="text-gradient">Pendidikan</span></h2>
+            <span class="section-tag"><i class="bi bi-mortarboard"></i> Pendidikan</span>
+            <h2 class="section-title">Riwayat Akademis</h2>
             <p class="section-desc">
-                Pendidikan formal di bidang Teknologi Informasi dan Komputer yang membangun fondasi logika algoritma, basis data, dan rekayasa perangkat lunak.
+                Pendidikan formal di bidang Teknologi Informasi dan Teknik Komputer &amp; Jaringan yang membentuk fondasi teknis saya.
             </p>
         </div>
 
@@ -583,18 +548,18 @@
                             <div class="timeline-card">
                                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
                                     <div>
-                                        <h3 class="h5 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $edu->institution }}</h3>
+                                        <h3 class="h6 fw-bold mb-1 font-heading" style="color: var(--text-primary);">{{ $edu->institution }}</h3>
                                         <div class="d-flex flex-wrap align-items-center gap-2">
-                                            <span class="fw-semibold text-primary">{{ $edu->degree }}</span>
+                                            <span class="fw-semibold text-primary small">{{ $edu->degree }}</span>
                                             @if($edu->field_of_study)
-                                                <span class="text-muted">• {{ $edu->field_of_study }}</span>
+                                                <span class="text-muted small">• {{ $edu->field_of_study }}</span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center gap-2">
                                         @if($edu->gpa)
-                                            <span class="badge badge-subtle-success font-mono">
-                                                <i class="bi bi-star-fill me-1"></i> IPK: {{ $edu->gpa }}
+                                            <span class="badge border border-subtle text-success font-mono" style="font-size: 0.75rem;">
+                                                IPK: {{ $edu->gpa }}
                                             </span>
                                         @endif
                                         <span class="timeline-badge">
@@ -604,7 +569,7 @@
                                 </div>
 
                                 @if($edu->description)
-                                    <p class="small text-subtle mb-0 mt-2" style="line-height: 1.75;">
+                                    <p class="small text-subtle mb-0 mt-2" style="line-height: 1.7;">
                                         {{ $edu->description }}
                                     </p>
                                 @endif
@@ -620,48 +585,48 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 7: CERTIFICATES & CREDENTIALS
+     SECTION 7: CERTIFICATES
      ========================================================================== -->
-<section id="certificates" class="py-5 my-md-4 section-subtle-bg">
+<section id="certificates" class="py-5 my-md-4" style="background: var(--bg-secondary);">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-patch-check-fill"></i> Kredensial &amp; Lisensi Profesi</span>
-            <h2 class="section-title">Sertifikat &amp; <span class="text-gradient">Prestasi Resmi</span></h2>
+            <span class="section-tag"><i class="bi bi-patch-check"></i> Kredensial</span>
+            <h2 class="section-title">Sertifikasi Resmi</h2>
             <p class="section-desc">
-                Bukti kompetensi berstandar nasional dan industri dari Badan Nasional Sertifikasi Profesi (BNSP), MikroTik Academy, dan institusi terakreditasi.
+                Sertifikasi kompetensi resmi dari Badan Nasional Sertifikasi Profesi (BNSP) dan MikroTik Academy.
             </p>
         </div>
 
         <div class="row g-4">
             @forelse($certificates as $cert)
                 <div class="col-md-6 col-lg-4 reveal">
-                    <div class="cert-card d-flex flex-column h-100">
+                    <div class="glass-card p-4 d-flex flex-column h-100">
                         @if($cert->image)
                             <div class="rounded-3 overflow-hidden mb-3 border border-subtle">
-                                <img src="{{ $cert->image }}" alt="{{ $cert->title }}" class="img-fluid w-100" style="height: 160px; object-fit: cover;">
+                                <img src="{{ $cert->image }}" alt="{{ $cert->title }}" class="img-fluid w-100" style="height: 150px; object-fit: cover;">
                             </div>
                         @endif
 
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <span class="badge badge-subtle-primary" style="font-size: 0.75rem;">
+                            <span class="badge border border-subtle text-primary" style="font-size: 0.72rem;">
                                 {{ $cert->issuer }}
                             </span>
-                            <span class="small text-muted font-mono">{{ $cert->issue_date }}</span>
+                            <span class="small text-muted font-mono" style="font-size: 0.75rem;">{{ $cert->issue_date }}</span>
                         </div>
 
                         <h3 class="h6 fw-bold mb-2 font-heading" style="color: var(--text-primary);">{{ $cert->title }}</h3>
 
                         @if($cert->description)
-                            <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.65;">
+                            <p class="small text-subtle mb-3 flex-grow-1" style="line-height: 1.6;">
                                 {{ $cert->description }}
                             </p>
                         @endif
 
                         <div class="d-flex align-items-center justify-content-between pt-2 border-top border-subtle mt-auto">
                             @if($cert->credential_id)
-                                <small class="text-muted font-mono" style="font-size: 0.72rem;">ID: {{ $cert->credential_id }}</small>
+                                <small class="text-muted font-mono" style="font-size: 0.72rem;">No: {{ $cert->credential_id }}</small>
                             @else
-                                <span class="small text-success"><i class="bi bi-shield-check me-1"></i> Terverifikasi</span>
+                                <span class="small text-success" style="font-size: 0.75rem;"><i class="bi bi-check-circle me-1"></i> Terverifikasi</span>
                             @endif
 
                             @if($cert->credential_url)
@@ -680,15 +645,15 @@
 </section>
 
 <!-- ==========================================================================
-     SECTION 8: HIRE ME & CONTACT
+     SECTION 8: CONTACT
      ========================================================================== -->
 <section id="contact" class="py-5 my-md-4">
     <div class="container">
         <div class="text-center reveal mb-5">
-            <span class="section-tag"><i class="bi bi-envelope-check-fill"></i> Rekrut / Hubungi Saya</span>
-            <h2 class="section-title">Mari Terhubung &amp; <span class="text-gradient">Bekerja Sama</span></h2>
+            <span class="section-tag"><i class="bi bi-envelope"></i> Kontak</span>
+            <h2 class="section-title">Hubungi Saya</h2>
             <p class="section-desc">
-                Tertarik mendiskusikan peluang karir Full-Time, program magang, proyek rekayasa sistem, atau konfigurasi jaringan? Hubungi saya langsung melalui kontak berikut.
+                Tertarik mendiskusikan peluang kerja, magang, proyek freelance, atau ingin bertanya seputar proyek yang saya buat? Silakan hubungi saya melalui jalur berikut.
             </p>
         </div>
 
@@ -703,65 +668,54 @@
     }
 
     $cleanProfEmail = $profile->email ?? 'andikaamansyah427@gmail.com';
-    $gmailProfUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($cleanProfEmail) . '&su=' . urlencode('Peluang Kerja / Diskusi Tawaran Proyek IT');
-    $waProfUrl = 'https://api.whatsapp.com/send?phone=' . $cleanProfPhone . '&text=' . urlencode('Halo Andika, saya melihat portofolio Anda dan tertarik mendiskusikan peluang karir/proyek IT.');
+    $gmailProfUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' . urlencode($cleanProfEmail) . '&su=' . urlencode('Diskusi Tawaran Proyek / Peluang Kerja');
+    $waProfUrl = 'https://api.whatsapp.com/send?phone=' . $cleanProfPhone . '&text=' . urlencode('Halo Andika, saya melihat portofolio Anda dan ingin mendiskusikan peluang kerja/proyek.');
 @endphp
 
         <div class="row g-4 align-items-stretch">
-            <!-- Left: Direct Channels & Fast Recruiter Connect -->
+            <!-- Left: Direct Channels -->
             <div class="col-lg-5 reveal">
                 <div class="d-flex flex-column gap-3 h-100">
-                    <!-- Status Banner -->
-                    <div class="p-4 rounded-4 glass-card border-subtle">
-                        <div class="d-flex align-items-center gap-2 mb-2">
-                            <span class="status-indicator"></span>
-                            <span class="fw-bold text-success">Status: Siap Bekerja Segera</span>
-                        </div>
-                        <p class="small text-subtle mb-0" style="line-height: 1.6;">
-                            Saya sangat antusias untuk bergabung dan berkontribusi secara nyata dalam tim rekayasa perangkat lunak maupun tim infrastruktur IT di perusahaan Anda.
-                        </p>
-                    </div>
-
                     <!-- Email Card -->
-                    <div class="contact-info-card">
-                        <div class="p-3 rounded-circle bg-primary bg-opacity-10 text-primary fs-4">
-                            <i class="bi bi-envelope-at-fill"></i>
+                    <div class="p-3 rounded-3 border border-subtle d-flex align-items-center gap-3" style="background: var(--bg-card);">
+                        <div class="p-2 rounded-2 bg-primary bg-opacity-10 text-primary fs-4 flex-shrink-0">
+                            <i class="bi bi-envelope-at"></i>
                         </div>
-                        <div>
-                            <span class="small text-muted d-block">Kirim Email Langsung:</span>
-                            <a href="{{ $gmailProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-bold text-decoration-none hover-primary text-break" style="color: var(--text-primary);" title="Buka Gmail (Penerima: {{ $cleanProfEmail }})">
+                        <div class="min-w-0">
+                            <span class="small text-muted d-block" style="font-size: 0.75rem;">Email:</span>
+                            <a href="{{ $gmailProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none hover-primary text-break" style="color: var(--text-primary); font-size: 0.95rem;">
                                 {{ $cleanProfEmail }}
                             </a>
                         </div>
                     </div>
 
                     <!-- WhatsApp Card -->
-                    <div class="contact-info-card">
-                        <div class="p-3 rounded-circle bg-success bg-opacity-10 text-success fs-4">
+                    <div class="p-3 rounded-3 border border-subtle d-flex align-items-center gap-3" style="background: var(--bg-card);">
+                        <div class="p-2 rounded-2 bg-success bg-opacity-10 text-success fs-4 flex-shrink-0">
                             <i class="bi bi-whatsapp"></i>
                         </div>
-                        <div>
-                            <span class="small text-muted d-block">WhatsApp Langsung:</span>
-                            <a href="{{ $waProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-bold text-decoration-none hover-primary" style="color: var(--text-primary);" title="Hubungi via WhatsApp">
+                        <div class="min-w-0">
+                            <span class="small text-muted d-block" style="font-size: 0.75rem;">WhatsApp / Telepon:</span>
+                            <a href="{{ $waProfUrl }}" target="_blank" rel="noopener noreferrer" class="fw-semibold text-decoration-none hover-primary" style="color: var(--text-primary); font-size: 0.95rem;">
                                 {{ $profile->phone ?? '+62 882-2582-5512' }}
                             </a>
                         </div>
                     </div>
 
                     <!-- Location Card -->
-                    <div class="contact-info-card">
-                        <div class="p-3 rounded-circle bg-info bg-opacity-10 text-info fs-4">
-                            <i class="bi bi-geo-alt-fill"></i>
+                    <div class="p-3 rounded-3 border border-subtle d-flex align-items-center gap-3" style="background: var(--bg-card);">
+                        <div class="p-2 rounded-2 bg-info bg-opacity-10 text-info fs-4 flex-shrink-0">
+                            <i class="bi bi-geo-alt"></i>
                         </div>
-                        <div>
-                            <span class="small text-muted d-block">Domisili &amp; Lokasi Kerja:</span>
-                            <span class="fw-bold" style="color: var(--text-primary);">{{ $profile->location ?? 'Jakarta Utara / Bekasi, Indonesia' }} (Siap On-site / Remote)</span>
+                        <div class="min-w-0">
+                            <span class="small text-muted d-block" style="font-size: 0.75rem;">Lokasi Domisili:</span>
+                            <span class="fw-semibold" style="color: var(--text-primary); font-size: 0.95rem;">{{ $profile->location ?? 'Jakarta Utara / Bekasi, Indonesia' }}</span>
                         </div>
                     </div>
 
                     <!-- Social / Professional Channels -->
-                    <div class="glass-card p-4 mt-auto">
-                        <h4 class="h6 fw-bold mb-3 font-heading" style="color: var(--text-primary);">Jejaring Profesional:</h4>
+                    <div class="p-4 rounded-3 border border-subtle mt-auto" style="background: var(--bg-card);">
+                        <h4 class="h6 fw-bold mb-3 font-heading" style="color: var(--text-primary);">Tautan Profil:</h4>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($socialLinks as $soc)
                                 @php
@@ -777,7 +731,7 @@
                                 </a>
                             @endforeach
                             <a href="{{ route('portfolio.cv') }}" target="_blank" class="btn btn-sm btn-primary-custom ms-auto">
-                                <i class="bi bi-file-earmark-arrow-down-fill me-1"></i> Download CV (PDF)
+                                <i class="bi bi-file-earmark-pdf me-1"></i> CV (PDF)
                             </a>
                         </div>
                     </div>
@@ -787,8 +741,8 @@
             <!-- Right: Interactive Contact Form -->
             <div class="col-lg-7 reveal">
                 <div class="glass-card p-4 p-md-5 h-100">
-                    <h3 class="h4 fw-bold mb-2 font-heading" style="color: var(--text-primary);">Kirimkan Pesan / Tawaran</h3>
-                    <p class="small text-subtle mb-4">Formulir terhubung langsung dan akan direspons secara cepat.</p>
+                    <h3 class="h5 fw-bold mb-1 font-heading" style="color: var(--text-primary);">Kirimkan Pesan</h3>
+                    <p class="small text-subtle mb-4">Pesan akan langsung terkirim ke sistem dan segera saya respons.</p>
 
                     <div id="contactAlertContainer">
                         @if(session('success'))
@@ -804,15 +758,15 @@
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
-                                <label for="name" class="form-label small fw-semibold">Nama Lengkap / Instansi *</label>
-                                <input type="text" name="name" id="name" class="form-control form-control-custom @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Contoh: Budi Santoso (HR PT Solusi Teknologi)" required>
+                                <label for="name" class="form-label small fw-semibold">Nama Lengkap *</label>
+                                <input type="text" name="name" id="name" class="form-control form-control-custom @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Contoh: Budi Santoso" required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label small fw-semibold">Alamat Email *</label>
-                                <input type="email" name="email" id="email" class="form-control form-control-custom @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="hrd@perusahaan.com" required>
+                                <input type="email" name="email" id="email" class="form-control form-control-custom @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="budi@example.com" required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -825,15 +779,15 @@
                                 <label for="phone" class="form-label small fw-semibold mb-0">
                                     <i class="bi bi-whatsapp text-success me-1"></i> Nomor WhatsApp <span class="fw-normal text-subtle">(Opsional)</span>
                                 </label>
-                                <span class="badge bg-secondary bg-opacity-25 text-muted fw-normal" style="font-size: 0.72rem;">
-                                    Boleh dikosongkan jika hanya lewat email
+                                <span class="badge border border-subtle text-muted fw-normal" style="font-size: 0.72rem;">
+                                    Boleh dikosongkan
                                 </span>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-text bg-secondary bg-opacity-10 border-subtle text-success">
+                                <span class="input-group-text border-subtle text-success" style="background: var(--bg-secondary);">
                                     <i class="bi bi-whatsapp"></i>
                                 </span>
-                                <input type="tel" name="phone" id="phone" class="form-control form-control-custom @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Contoh: 081234567890">
+                                <input type="tel" name="phone" id="phone" class="form-control form-control-custom @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="08xxxxxxxxxx">
                             </div>
                             @error('phone')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -841,23 +795,23 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="subject" class="form-label small fw-semibold">Subjek / Topik Diskusi *</label>
-                            <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Undangan Interview / Diskusi Posisi Junior Web Developer" required>
+                            <label for="subject" class="form-label small fw-semibold">Subjek Pesan *</label>
+                            <input type="text" name="subject" id="subject" class="form-control form-control-custom @error('subject') is-invalid @enderror" value="{{ old('subject') }}" placeholder="Contoh: Peluang Kerja / Diskusi Proyek Web" required>
                             @error('subject')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="message" class="form-label small fw-semibold">Isi Pesan / Uraian Kebutuhan *</label>
-                            <textarea name="message" id="message" rows="5" class="form-control form-control-custom @error('message') is-invalid @enderror" placeholder="Tuliskan gambaran posisi pekerjaan, detail proyek, atau jadwal wawancara..." required>{{ old('message') }}</textarea>
+                            <label for="message" class="form-label small fw-semibold">Isi Pesan *</label>
+                            <textarea name="message" id="message" rows="5" class="form-control form-control-custom @error('message') is-invalid @enderror" placeholder="Tuliskan pesan atau kebutuhan yang ingin didiskusikan..." required>{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <button type="submit" class="btn btn-primary-custom w-100 py-3" id="contactSubmitBtn">
-                            <i class="bi bi-send-fill me-2"></i> Kirim Pesan / Tawaran Sekarang
+                            <i class="bi bi-send me-1"></i> Kirim Pesan
                         </button>
                     </form>
 
@@ -872,7 +826,7 @@
                                     e.preventDefault();
                                     const originalBtnText = submitBtn.innerHTML;
                                     submitBtn.disabled = true;
-                                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim pesan...';
+                                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Mengirim...';
                                     alertBox.innerHTML = '';
 
                                     try {
@@ -930,7 +884,7 @@
 </section>
 
 <!-- Back to Top Button -->
-<button type="button" class="back-to-top" id="backToTopBtn" aria-label="Kembali ke atas halaman">
+<button type="button" class="back-to-top" id="backToTopBtn" aria-label="Kembali ke atas">
     <i class="bi bi-arrow-up"></i>
 </button>
 

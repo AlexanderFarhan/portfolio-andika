@@ -57,13 +57,13 @@
                             <a class="nav-link active" href="#hero">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#about">Profil &amp; Filosofi</a>
+                            <a class="nav-link" href="#about">Tentang</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#skills">Keahlian</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#projects">Proyek Unggulan</a>
+                            <a class="nav-link" href="#projects">Proyek</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#experience">Pengalaman</a>
@@ -132,31 +132,31 @@
                 </div>
 
                 <div class="col-6 col-lg-3">
-                    <h5 class="fw-bold small text-uppercase mb-3" style="color: var(--text-primary); letter-spacing: 0.05em;">Navigasi Cepat</h5>
+                    <h5 class="fw-bold small text-uppercase mb-3" style="color: var(--text-primary); letter-spacing: 0.05em;">Navigasi</h5>
                     <ul class="list-unstyled small d-flex flex-column gap-2 mb-0">
-                        <li><a href="#about" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Profil &amp; Filosofi</a></li>
-                        <li><a href="#skills" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Matriks Keahlian</a></li>
-                        <li><a href="#projects" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Studi Kasus Proyek</a></li>
+                        <li><a href="#about" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Tentang Saya</a></li>
+                        <li><a href="#skills" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Keahlian Teknis</a></li>
+                        <li><a href="#projects" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Portofolio Proyek</a></li>
                         <li><a href="#experience" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Pengalaman Kerja &amp; Lab</a></li>
-                        <li><a href="#certificates" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Sertifikasi Resmi BNSP &amp; MTCNA</a></li>
-                        <li><a href="{{ route('portfolio.cv') }}" target="_blank" class="text-primary text-decoration-none fw-semibold"><i class="bi bi-file-earmark-pdf me-1"></i> Unduh CV Resmi (PDF)</a></li>
+                        <li><a href="#certificates" class="text-subtle text-decoration-none hover-primary"><i class="bi bi-chevron-right me-1 small"></i> Sertifikasi Resmi</a></li>
+                        <li><a href="{{ route('portfolio.cv') }}" target="_blank" class="text-primary text-decoration-none fw-semibold"><i class="bi bi-file-earmark-pdf me-1"></i> Unduh CV (PDF)</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-lg-4 text-lg-end">
-                    <div class="p-3 rounded-4 glass-card d-inline-block text-start w-100" style="max-width: 320px;">
+                    <div class="p-3 rounded-3 glass-card d-inline-block text-start w-100" style="max-width: 320px;">
                         <div class="d-flex align-items-center gap-2 mb-2">
                             <span class="status-indicator"></span>
-                            <span class="small fw-bold text-success">Status: Siap Bekerja</span>
+                            <span class="small fw-bold text-success">Ketersediaan: Siap Kerja</span>
                         </div>
-                        <div class="small text-muted mb-1">Target Posisi:</div>
+                        <div class="small text-muted mb-1">Fokus Minat:</div>
                         <div class="small fw-semibold mb-2" style="color: var(--text-primary);">
-                            Junior Web Developer • System Analyst • IT / Network Engineer
+                            Junior Web Developer • System Analyst • IT / Network Support
                         </div>
-                        <div class="small text-muted mb-1"><i class="bi bi-geo-alt-fill me-1 text-primary"></i> Domisili:</div>
+                        <div class="small text-muted mb-1"><i class="bi bi-geo-alt me-1 text-primary"></i> Domisili:</div>
                         <div class="small mb-3" style="color: var(--text-primary);">{{ $profile->location ?? 'Jakarta Utara / Bekasi, Indonesia' }}</div>
                         <a href="#contact" class="btn btn-sm btn-primary-custom w-100">
-                            <i class="bi bi-chat-dots-fill me-1"></i> Rekrut / Hubungi Saya
+                            <i class="bi bi-chat-text me-1"></i> Hubungi Saya
                         </a>
                     </div>
                 </div>
@@ -166,10 +166,10 @@
 
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 small text-muted">
                 <div>
-                    &copy; {{ date('Y') }} <strong>Andika Amansyah</strong> — Portofolio Profesional &amp; Resume IT.
+                    &copy; {{ date('Y') }} <strong>Andika Amansyah</strong> — Web Developer &amp; System Analyst.
                 </div>
                 <div>
-                    Dirancang dengan arsitektur bersih, aksesibel (WCAG 2.1 AA), dan dioptimalkan untuk evaluasi rekruter.
+                    Dibangun dengan Laravel 12 &amp; Bootstrap 5. Terbuka untuk peluang kerja &amp; kolaborasi proyek.
                 </div>
             </div>
         </div>
